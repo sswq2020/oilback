@@ -5,6 +5,16 @@ const hostList = {
     default: ""
 };
 
+export const imgHost = {
+    // dev: '//192.168.4.16:25092/hletoil', // 易凯
+    // dev: '//192.168.4.16:25084/hletoil', // 周扬
+    // dev: '//192.168.4.16:25091/hletoil', // 佘慧
+    dev: '//oil.hlet.com/hletoil',
+    test: '//10.1.15.106:8445/hletoil',
+    pro: '//oil.hletong.com',
+  };
+
+
 const IS_MOCK = false;
 const storageURL = ""
 
