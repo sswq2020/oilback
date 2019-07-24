@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import app from "./modules/app";
-import {inventoryManage} from "./modules/warehouseManage";
+import {inventoryManage} from "./modules/commodityManage";
 
 Vue.use(Vuex);
 

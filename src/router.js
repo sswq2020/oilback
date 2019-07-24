@@ -2,12 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 
-// #region 仓储管理
-/**入库登记*/
-const EnterStorageRegister = () => import('@/views/warehouseManage/enterStorageDetail/enterStorageRegister.vue')
-/**库存表*/
-const InventoryTable = () => import('@/views/warehouseManage/inventoryManage/inventoryTable.vue')
-// #endregion 仓储管理
+// #region 商品管理
+/**发布新商品*/
+const EnterStorageRegister = () => import('@/views/commodityManage/enterStorageRegister.vue')
+/**出售中的商品*/
+const InventoryTable = () => import('@/views/commodityManage/inventoryTable.vue')
+// #endregion
 
 Vue.use(Router)
 
