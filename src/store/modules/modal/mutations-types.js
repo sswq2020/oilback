@@ -1,3 +1,0 @@
-export const SET_MODAL_VISIBLE = 'SET_MODAL_VISIBLE';
-
-export const SET_DROP_DOWN_DATA = 'SET_DROP_DOWN_DATA';
