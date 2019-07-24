@@ -344,7 +344,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: storageURL + '/web/yc/storage/stockInventory/page',
+            router: storageURL + '/web/cm/commodity/commodityOnSale/page',
             result(params) {
                 return {
                     ...body,

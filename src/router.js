@@ -4,9 +4,9 @@ import Router from 'vue-router'
 
 // #region 商品管理
 /**发布新商品*/
-const EnterStorageRegister = () => import('@/views/commodityManage/enterStorageRegister.vue')
+const ReleaseNewCommodity = () => import('@/views/commodityManage/releaseNewCommodity.vue')
 /**出售中的商品*/
-const InventoryTable = () => import('@/views/commodityManage/inventoryTable.vue')
+const CommodityOnSale = () => import('@/views/commodityManage/commodityOnSale.vue')
 // #endregion
 
 Vue.use(Router)
@@ -34,16 +34,16 @@ let commonRoutes = {
             name: 'personal',
             component: () => import(/* webpackChunkName: "avatar" */ '@/views/personal/index'),
         },
-        // #region  仓储信息      
+        // #region  商品管理      
         {
-            path: '/web/yc/storage/stockRegisterDetail/page/register',
-            name: 'enterStorageRegister',
-            component: EnterStorageRegister
+            path: '/web/cm/commodity/releaseNewCommodity/page',
+            name: 'releaseNewCommodity',
+            component: ReleaseNewCommodity
         },        
         {
-            path: '/web/yc/storage/stockInventory/page',
-            name: 'inventoryTable',
-            component: InventoryTable
+            path: '/web/cm/commodity/commodityOnSale/page',
+            name: 'commodityOnSale',
+            component: CommodityOnSale
         },
 
         // #endregion           

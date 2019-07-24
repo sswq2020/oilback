@@ -346,7 +346,7 @@ const rowAdapter = (list) => {
 }
 
 export default {
-  name: "inventoryTable",
+  name: "commodityOnSale.vue",
   mixins: [baseMixin],
   components: {
     heltable,
@@ -355,7 +355,7 @@ export default {
   },
   data() {
     return {
-      breadTitle: ["仓储管理", "库存表"],
+      breadTitle: ["商品管理", "出售中的商品"],
       // #region 各种lodaing
       isListDataLoading: false,
       isbatchTransferOwnershipLoading: false,
@@ -546,7 +546,7 @@ export default {
     detail(item) {
       this.setFindDetail(item);
       this.$router.push({
-        path: "/web/yc/storage/stockInventory/page/inventoryDetail"
+        path: "/web/cm/commodity/commodityOnSale/page/inventoryDetail"
       });
     },
     init() {

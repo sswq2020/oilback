@@ -248,7 +248,7 @@ const RULES = {
 };
 
 export default {
-  name: "enterStorageRegister",
+  name: "releaseNewCommodity",
   mixins: [dictMixin],
   components: {
     hlBreadcrumb
@@ -256,7 +256,7 @@ export default {
   data() {
     return {
       loading: false,
-      breadTitle: ["仓储管理", "库存表", "入库登记"],
+      breadTitle: ["商品管理", "发布新商品"],
       form: { ...defualtFormParams },
       rules: RULES,
       productNameList: [],
@@ -271,7 +271,7 @@ export default {
   methods: {
     back() {
       this.$router.push({
-        path: "/web/yc/storage/stockInventory/page"
+        path: "/web/cm/commodity/commodityOnSale/page"
       });
     },
     async _addStockRegister_(params) {
