@@ -7,6 +7,8 @@ import Router from 'vue-router'
 const ReleaseNewCommodity = () => import('@/views/commodityManage/releaseNewCommodity.vue')
 /**出售中的商品*/
 const CommodityOnSale = () => import('@/views/commodityManage/commodityOnSale.vue')
+/**待售中的商品*/
+const CommodityForSale = () => import('@/views/commodityManage/commodityForSale.vue')
 // #endregion
 
 Vue.use(Router)
@@ -45,7 +47,11 @@ let commonRoutes = {
             name: 'commodityOnSale',
             component: CommodityOnSale
         },
-
+        {
+            path: '/web/cm/commodity/commodityForSale/page',
+            name: 'commodityForSale',
+            component: CommodityForSale
+        },
         // #endregion           
     ]
 }

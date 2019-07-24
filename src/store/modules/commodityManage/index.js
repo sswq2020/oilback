@@ -1,5 +1,9 @@
-import inventoryManage from "./inventoryManage/index.js";
+import releaseNewCommodity from "./releaseNewCommodity/index.js";
+import commodityOnSale from "./commodityOnSale/index.js";
+import commodityForSale from "./commodityForSale/index.js";
 
 export { 
-    inventoryManage
+    releaseNewCommodity,
+    commodityOnSale,
+    commodityForSale
 };

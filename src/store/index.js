@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import app from "./modules/app";
-import {inventoryManage} from "./modules/commodityManage";
+import {releaseNewCommodity,commodityOnSale,commodityForSale} from "./modules/commodityManage";
 
 Vue.use(Vuex);
 
@@ -20,7 +20,7 @@ const store = new Vuex.Store({
   },
   modules: {
     app,
-    inventoryManage
+    releaseNewCommodity,commodityOnSale,commodityForSale
   }
 });
 

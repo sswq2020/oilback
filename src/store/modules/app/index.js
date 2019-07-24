@@ -7,16 +7,12 @@ const store = {
         role:null,
         userId:null,
         username:null,
-        productTypeCodeData: {}, // 品名大类
-        deliveryStoreTypeData: {}, // 交割库类型
     },
     getters: {
       role: state => state.role,
       userId: state => state.userId,
       username: state => state.username,
       IS_SHIPPER: state => state.role === "1", // 判断是否是货主
-      productTypeCodeData: state => state.productTypeCodeData, 
-      deliveryStoreTypeData: state => state.deliveryStoreTypeData, 
     },
     mutations: {
       [type.SET_ROLE](state,payload){
@@ -27,12 +23,6 @@ const store = {
       },
       [type.SET_USER_NAME](state,payload){
         state.username = payload
-      },
-      [type.SET_YC_PRODUCT_TYPE](state,payload) {
-        state.productTypeCodeData = payload;
-      },    
-      [type.SET_YC_DELIVERY_STORE](state,payload) {
-        state.deliveryStoreTypeData = payload;
       },
     },
     actions: {
