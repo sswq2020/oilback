@@ -1,5 +1,10 @@
 console.log('环境--------' + process.env.NODE_ENV)
+const path = require("path");
 const Time = new Date().getTime();
+function resolve(dir) {
+    return path.join(__dirname, dir);
+}
+
 module.exports = {
     publicPath: process.env.NODE_ENV === 'pro'
         ? '/'
@@ -30,16 +35,11 @@ module.exports = {
         if (process.env.NODE_ENV === 'test') {
             config.output.filename(`[name].${Time}.[hash].js`).end();
         }
-    },
-    configureWebpack: {
-        resolve: {
-            alias: {
-                'src': '@/src',
-                'api': '@/src/api',
-                'views': '@/src/views',
-                'common': '@/src/common',
-                'components': '@/src/components',
-            }
-        }
+        config.resolve.alias.set("@", resolve("src"));
+        config.resolve.alias.set("components", resolve("src/components"));
+        config.resolve.alias.set("common", resolve("src/common"));
+        config.resolve.alias.set("views", resolve("src/views"));
+        config.resolve.alias.set("api", resolve("src/api"))
+        config.resolve.alias.set("util", resolve("src/util"))
     },
 }
