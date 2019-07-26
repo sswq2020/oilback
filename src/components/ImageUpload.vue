@@ -17,6 +17,7 @@ import {hostList} from 'api/mock'
 import {ENV} from 'common/env'
 import DICT from 'util/dict'
 export default {
+  name:'ImageUpload',
   data() {
     return {
       fileList: [],
