@@ -5,7 +5,7 @@
 <script>
 import commodityForm from './commodityForm'
 export default {
-  name:'releaseNewCommodity',
+  name:'editOldCommodity',
   components:{
     commodityForm
   }

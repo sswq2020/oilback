@@ -15,7 +15,7 @@ let Authorization = cookies.HLETTYPE + ' ' + cookies.HLETID
 let uploadUrl = '/apis';
 let validUrl = 'http://10.1.15.106:8102';
 
-let storageURL = '';
+let oilURL = '';
 
 
 // window.globelApi2 = 'http://10.1.15.106:8445'//test环境
@@ -28,18 +28,18 @@ switch (env) {
         baseURL = '/api';
         redirectUrl = 'http://localhost:8080/';
         loginUrl = 'http://localhost:3000/index.html';
-        storageURL = ''
+        oilURL = ''
         break;
     case 'production':
         loginUrl = 'https://login.hletong.com/';
         redirectUrl = 'https://cloudStorage.hletong.com/';
-        storageURL = ''
+        oilURL = ''
         break;
     case 'test':
         baseURL = 'http://10.1.15.106:8445';
         redirectUrl = 'http://yc.hlet.com';
         loginUrl = 'http://login.hlet.com';
-        storageURL = 'hlyc'
+        oilURL = 'hletoil'
         break;
     default:
         break;
@@ -338,16 +338,26 @@ export default {
      * @description 发布新商品
      * */
     addStockRegister(params){
-        return fetch(storageURL + '/web/yc/storage/stockRegister/add', params)          
+        return fetch(oilURL + '/web/yc/storage/stockRegister/add', params)          
     },
     /**
      * @author sswq
      * @param params
-     * @description 查询出售中的列表
+     * @description 一级二级目录
      * */
-    getInventoryTable(params){
-        return fetch(storageURL + '/web/cm/commodity/commodityOnSale/page', params)          
+    getClass(){
+        return fetch(oilURL + '/web/cm/productInterface/getClassify', '','get')          
     },
+    /**
+     * @author sswq
+     * @param params
+     * @description 二级目录下动态加载的
+     * */
+    getParameterById(id){
+        return fetch(oilURL + '/web/cm/productInterface/getParameterById',{id},'get')          
+    },
+
+
     // #endregion
 
     // #region  字典项
@@ -356,7 +366,7 @@ export default {
      * @description 查询所有基础信息下拉数据源
      * */
     getAllBaseInfo() {
-        return fetch(storageURL + '/web/yc/inventory/transfer/base', '', 'get')
+        return fetch(oilURL + '/web/yc/inventory/transfer/base', '', 'get')
     },
     /**
      * @author xh
@@ -370,7 +380,7 @@ export default {
      * @description 获取银行列表
      * */
     getBankList(params) {
-        return fetch(storageURL + '/web/yc/bank/info', params, 'get')
+        return fetch(oilURL + '/web/yc/bank/info', params, 'get')
     },
     // #endregion
 

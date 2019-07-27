@@ -2,21 +2,28 @@ import pathToRegexp from "path-to-regexp";
 import mockjs from "mockjs";
 
 const hostList = {
-    default: ""
+    // dev: '//192.168.4.16:25092/hletoil', // 易凯/
+    // dev: '//192.168.4.16:25084/hletoil', // 周扬
+    development: '//oil.hlet.com/hletoil', // 测试
+    // dev: '//192.168.4.16:25091/hletoil', // 佘慧   13888888888   888888       admin 888888
+    // dev: '//test.hletong.com/hletoil', // 佘慧   13888888888   888888       admin 888888
+    test: '//test.hletong.com/hletoil',
+    pro: '//yq.hletong.com',
+    default:""
 };
 
 export const imgHost = {
     // dev: '//192.168.4.16:25092/hletoil', // 易凯
     // dev: '//192.168.4.16:25084/hletoil', // 周扬
     // dev: '//192.168.4.16:25091/hletoil', // 佘慧
-    dev: '//oil.hlet.com/hletoil',
+    development: '//oil.hlet.com/hletoil',
     test: '//10.1.15.106:8445/hletoil',
     pro: '//oil.hletong.com',
-  };
+};
 
 
-const IS_MOCK = false;
-const storageURL = ""
+const IS_MOCK = true;
+const oilURL = ""
 
 const dict = { 'SUCCESS': "000000" }
 
@@ -42,216 +49,206 @@ const body_fail = {
     "mesg": "系统错误"
 }
 
-const shipperManageList = {
-    "id|+1": "@INTEGER(1,2019690999)",
-    "mock1": "12344435", //业务单号
-    "mock2": "CYJY@INTEGER(2019690000,2019690999)", //业务单号
-    "mock3": "@PICK('盖蓬费', '超损费','车船运费')", // 款项
-    "mock4": "@float(200,999)", // 金额(元)
-    "mock5": "@PICK(1,0)", // 数据来源
-    "mock6": "集配货运", // 数据来源 名称
-    "mock7": "惠龙易通@CITY()公司", // 转出账户名
-    "mock8": "65521464564654987654", // 转出账户号
-    "mock9": "@CNAME()", // 转入账户名 
-    "mock10": "65521464564654987654", // 转入账户号
-    "mock11": "@PICK('中国','中信')银行", // 转入账户开户机构名称
-}
 
-const InventoryTableList = {
-    "id|+1": "@INTEGER(1,2019690999)",
-    "availableNumInventory": 0,
-    "availableWeightInventory": 0,
-    "createdBy": "",
-    "createdTime": "",
-    "disableNumInventory": 0,
-    "disableWeightInventory": 0,
-    "incomingId": "CYJY@INTEGER(2019690000,2019690999)", //入库单号
-    "incomingTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 入库时间
-    "incomingType": "1",
-    "isDeleted": 0,
-    "measuring": "1",
-    "remark": "",
-    "updatedBy": "",
-    "updatedTime": "",
-    "version": 0,
-    "volumeNumSold": 0,
-    "volumeWeightSold": 0,
-    "deliveryStoreId": "",
-    "deliveryStore": "@PICK('仓库一','仓库二')", // 仓库
-    "cargoId": "@PICK('1','2')",
-    "cargoName": "@PICK('货主1','货主2')", // 货主
-    "pilePositionId": "",
-    "pilePosition": "A",// 区桩位
-    "piles": '054', // 层数
-    "productNameId": "",
-    "productName": "H型钢", // 品名
-    "materialId": "",
-    "materialName": "Q235", // 材质
-    "specificationsId": "",
-    "specificationsName": "350*175", // 规格
-    "originPlaceId": "",
-    "originPlaceName": "江苏镇江沙钢", // 产地
-    "totalNumInventory": 96, // 库存数量
-    "numUnit": "支", // 数量单位
-    "totalWeightInventory": 6, // 库存重量
-    "weightUnit": "吨", // 重量单位
-    "measuringTypeEnum": { code: "1", text: "理算" }, // 计量方式
-    "wareHousingTypeEnum": { code: "1", text: "过货入库" }, //入库类型
-    "incomingDays": 0 //入库天数
-}
+const classData =[
+    {
+        "id": 1,
+        "name": "汽油",
+        "sort": "1"
+    },
+    {
+        "id": 10,
+        "name": "98",
+        "parentId": "1",
+        "path": "1/",
+        "sort": "3"
+    },
+    {
+        "id": 11,
+        "name": "5",
+        "parentId": "2",
+        "path": "2/",
+        "sort": "1"
+    },
+    {
+        "id": 12,
+        "name": "0",
+        "parentId": "2",
+        "path": "2/",
+        "sort": "2"
+    },
+    {
+        "id": 13,
+        "name": "-10",
+        "parentId": "2",
+        "path": "2/",
+        "sort": "3"
+    },
+    {
+        "id": 14,
+        "name": "-20",
+        "parentId": "2",
+        "path": "2/",
+        "sort": "4"
+    },
+    {
+        "id": 300,
+        "name": "-300",
+        "parentId": "3",
+        "path": "3/",
+        "sort": "5"
+    },
+    {
+        "id": 301,
+        "name": "-301",
+        "parentId": "3",
+        "path": "3/",
+        "sort": "6"
+    },
+    {
+        "id": 302,
+        "name": "-302",
+        "parentId": "3",
+        "path": "3/",
+        "sort": "7"
+    },
+    {
+        "id": 400,
+        "name": "-400",
+        "parentId": "4",
+        "path": "4/",
+        "sort": "5"
+    },
+    {
+        "id": 401,
+        "name": "-401",
+        "parentId": "4",
+        "path": "4/",
+        "sort": "6"
+    },
+    {
+        "id": 402,
+        "name": "-402",
+        "parentId": "4",
+        "path": "4/",
+        "sort": "7"
+    },
+    {
+        "id": 500,
+        "name": "-500",
+        "parentId": "5",
+        "path": "5/",
+        "sort": "5"
+    },
+    {
+        "id": 501,
+        "name": "-501",
+        "parentId": "5",
+        "path": "5/",
+        "sort": "6"
+    },
+    {
+        "id": 502,
+        "name": "-502",
+        "parentId": "5",
+        "path": "5/",
+        "sort": "7"
+    },
+    {
+        "id": 600,
+        "name": "-600",
+        "parentId": "6",
+        "path": "6/",
+        "sort": "6"
+    },
+    {
+        "id": 601,
+        "name": "-601",
+        "parentId": "6",
+        "path": "6/",
+        "sort": "7"
+    },
+    {
+        "id": 602,
+        "name": "-602",
+        "parentId": "6",
+        "path": "6/",
+        "sort": "8"
+    },
+    {
+        "id": 700,
+        "name": "-700",
+        "parentId": "7",
+        "path": "7/",
+        "sort": "7"
+    },
+    {
+        "id": 701,
+        "name": "-701",
+        "parentId": "7",
+        "path": "7/",
+        "sort": "8"
+    },
+    {
+        "id": 702,
+        "name": "-702",
+        "parentId": "7",
+        "path": "7/",
+        "sort": "9"
+    },
+    {
+        "id": 2,
+        "name": "柴油",
+        "sort": "2"
+    },
+    {
+        "id": 3,
+        "name": "燃料类",
+        "sort": "3"
+    },
+    {
+        "id": 4,
+        "name": "石脑油",
+        "sort": "4"
+    },
+    {
+        "id": 5,
+        "name": "MTBE",
+        "sort": "5"
+    },
+    {
+        "id": 6,
+        "name": "航空煤油",
+        "sort": "6"
+    },
+    {
+        "id": 7,
+        "name": "粗白油",
+        "sort": "7"
+    },
+    {
+        "id": 8,
+        "name": "92",
+        "parentId": "1",
+        "path": "1/",
+        "sort": "1"
+    },
+    {
+        "id": 9,
+        "name": "95",
+        "parentId": "1",
+        "path": "1/",
+        "sort": "2"
+    },
 
-const InventoryDetailList = {
-    "id|+1": "@INTEGER(1,2019690999)", // 主键
-    "createdBy": "",
-    "createdTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
-    "isDeleted": 0,
-    "remark": "",
-    "state": "@PICK('0','1','2','3')",
-    "updatedBy": "",
-    "updatedTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
-    "version": 0,
-    "totalNumInventory": 96, // 库存数量
-    "numUnit": "支", // 数量单位
-    "totalWeightInventory": 6, // 库存重量
-    "weightUnit": "吨", // 重量单位
-    "operateNum": 34, // 操作数量
-    "operateWeight": 185, // 操作重量
-    "stockInventoryId|+1": "@INTEGER(1,2019690999)" // 库存id
-}
+]
 
-const StockRegisterDetailList = {
-    ...InventoryTableList,
-    "num": 23,
-    "weight": 243,
-    "registerId": "SH1905060002"
-}
-
-const StockRegisterList = {
-    ...InventoryTableList,
-    "num": 23, // 实收数量
-    "weight": 243,//实收重量
-    "supposedNum": 56, // 应收数量
-    "supposedWeight": 130, // 应收重量
-    "registerTime": '@DATE("yyyy-MM-dd HH:mm:ss")'
-}
-
-const StockRemovalDetailList = {
-    ...InventoryTableList,
-    "removalId|+1": "@INTEGER(1,2019690999)",
-    "actualRemovalNum": 65,
-    "actualRemovalWeight": 99,
-    "applyRemovalTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
-    "supposedRemovalNum": 65,
-    "supposedRemovalWeight": 84,
-    "consignee": '@CNAME()',
-    'pickUpPassword': 12323,
-    'outsideType': '库存发货'
-}
-
-
-const StockRemovalList = {
-    ...InventoryTableList,
-    "removalId|+1": "@INTEGER(1,2019690999)",
-    "actualRemovalNum": 65,
-    "actualRemovalWeight": 99,
-    "applyRemovalTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
-    "supposedRemovalNum": 65,
-    "supposedRemovalWeight": 84,
-}
-
-const TransferinfoList = {
-    ...InventoryTableList,
-    availableNumInventory: "@INTEGER(100,250)",
-    availableWeightInventory: "@INTEGER(100,250)"
-}
-
-const TransferDetailList = {
-    ...InventoryTableList,
-    newShipperName: "@CNAME()", // 新货主
-    originalShipperName: "@CNAME()", // 原货主
-    realTransferNums: 34, // 实际过户数量
-    realTransferWeights: 168, // 实际过户重量
-    transferNums: 65, // 过户数量
-    transferWeights: 897, // 过户重量
-    transferTime: '@DATE("yyyy-MM-dd HH:mm:ss")', // 过户时间
-    transferType: "@PICK('收货入库','过货入库')" // 过户类型
-}
-
-const RetrievalList = {
-    ...InventoryTableList,
-    "removalId|+1": "@INTEGER(1,2019690999)",
-    "actualRemovalNum": 65,
-    "actualRemovalWeight": 99,
-    "applyRemovalTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
-    "supposedRemovalNum": 65,
-    "supposedRemovalWeight": 84,
-    "pickUpPassword": "",
-}
-
-const PledgeinfolIST = {
-    "id|+1": "@INTEGER(1,2019690999)",
-    "cargoName": "@CNAME()",
-    "cargoId": "@INTEGER(1,2019690999)",
-    "createdBy": "system",
-    "createdTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
-    "pledgeCode": "@INTEGER(34345656546,99345656546)",
-    "inventoryTotalNums": "@INTEGER(2,1000)",
-    "inventoryTotalWeight": "@INTEGER(11,100)",
-    "isDeleted": "@PICK(0,1)",
-    "remark": "@CTITLE(2,10)",
-    "inventoryAvailableWeight": "@PICK(0,67,100,150)",
-    "totalPledgeNums": "@INTEGER(1000,2000)",
-    "totalPledgeWeight": "@INTEGER(100,200)",
-    "updatedBy": "admin",
-    "updatedTime": '@DATE("yyyy-MM-dd HH:mm:ss")'
-}
-
-const PledgeDetailList = {
-    "id|+1": "@INTEGER(1,2019690999)",
-    "cargoName": "@CNAME()",
-    "cargoId": "@INTEGER(1,2019690999)",
-    "createdBy": "system",
-    "createdTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
-    "inventoryTotalNums": "@INTEGER(2,1000)",
-    "inventoryTotalWeight": "@INTEGER(11,100)",
-    "pledgeCargo": "@CNAME()",
-    "pledgeCode": "@INTEGER(34345656546,99345656546)",
-    "pledgeNums": "@INTEGER(1000,2000)",
-    "pledgeType": "@PICK(0,1)",
-    "pledgeWeight": "@INTEGER(100,200)",
-    "pledgeTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
-    "updatedBy": "admin",
-    "updatedTime": '@DATE("yyyy-MM-dd HH:mm:ss")'
-}
-
-const ReleasePledgeDetailList = {
-    "id|+1": "@INTEGER(1,2019690999)",
-    "cargoName": "@CNAME()",
-    "cargoId": "@INTEGER(1,2019690999)",
-    "createdBy": "system",
-    "createdTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
-    "inventoryTotalNums": "@INTEGER(2,1000)",
-    "inventoryTotalWeight": "@INTEGER(11,100)",
-    "pledgeCargo": "@CNAME()",
-    "releaseCode": "@INTEGER(34345656546,99345656546)",
-    "releaseNums": "@INTEGER(1000,2000)",
-    "pledgeType": "@PICK(0,1)",
-    "releaseWeight": "@INTEGER(100,200)",
-    "releaseTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
-    "updatedBy": "admin",
-    "updatedTime": '@DATE("yyyy-MM-dd HH:mm:ss")'
-}
-
-const stockRemovalBill = {
-    ...InventoryTableList,
-    "removalId|+1": "@INTEGER(1,2019690999)", // 出库单号
-    "actualRemovalNum": 65,
-    "actualRemovalWeight": 99,
-    "applyRemovalTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
-    "consignee": '@CNAME()',
-    'pickUpPassword': 12323,
-    'outsideType': '库存发货'
-}
+const paramsData = 
+    {
+        classifyId:"7",
+        "id": "@INTEGER(2,2019690999)",
+        paraName:"@CTITLE(2,4)"
+    }
 
 
 const cargoMap = { "1": "小红", "2": "熊安明", "c8254b4eb6154d9d91992acdf0df248a": "1", "fba7fb0eabc64ee882233e85d9b62d26": "kkkkkyinkai", "95105a94a7c5487c93616d505958c850": "test1" }
@@ -268,675 +265,6 @@ const MockRole = {
 
 const mockRouterMap = {
     [hostList.default]: [
-        // #region 基础信息
-
-        // #region  查询货主管理列表
-        {
-            isMock: IS_MOCK,
-            methods: 'get',
-            router: storageURL + '/web/settlement/pageList/shipperManage',
-            result(params) {
-                return {
-                    ...body,
-                    ...{
-                        data: {
-                            'list|1-10': [shipperManageList],
-                            "paginator": {
-                                "currentPage": params.page,
-                                "pageSize": params.pageSize,
-                                "totalCount": 1000,
-                                "totalPage": 1000 / params.pageSize
-                            }
-                        },
-                    },
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  删除货主
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: '/web/Shipper/delete',
-            result(params) {
-                return {
-                    ...body,
-                };
-            }
-        },
-        // #endregion    
-
-        // #region  编辑货主
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: '/web/Shipper/update',
-            result() {
-                return {
-                    ...body,
-                };
-            }
-        },
-        // #endregion    
-
-        // #region  新增货主
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: '/web/Shipper/create',
-            result() {
-                return {
-                    ...body,
-                };
-            }
-        },
-        // #endregion    
-
-        // #endregion
-
-        // #region 仓储信息
-
-        // #region  入库登记
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/base/stockRegister/add',
-            result(params) {
-                return {
-                    ...body
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  获取库存表列表
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/cm/commodity/commodityOnSale/page',
-            result(params) {
-                return {
-                    ...body,
-                    ...{
-                        data: {
-                            'list|10-20': [InventoryTableList],
-                            "paginator": {
-                                "currentPage": params.page,
-                                "pageSize": params.pageSize,
-                                "totalCount": 1000,
-                                "totalPage": 1000 / params.pageSize
-                            }
-                        },
-                    },
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  获取库存明细分页
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/base/stockInventoryDetail/page',
-            result(params) {
-                return {
-                    ...body,
-                    ...{
-                        data: {
-                            'list|10-20': [InventoryDetailList],
-                            "paginator": {
-                                "currentPage": params.page,
-                                "pageSize": params.pageSize,
-                                "totalCount": 1000,
-                                "totalPage": 1000 / params.pageSize
-                            }
-                        },
-                    },
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  查询选中的是否还有余量
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/InventoryTable/surplus',
-            result() {
-                return {
-                    ...body,
-                    ...{
-                        data: {
-                            HasSurPlus: Math.random() > 0.0001 ? true : false
-                        },
-                    },
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  选中的进行冻结
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/inventory/frozen',
-            result() {
-                return {
-                    ...body,
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  选中的进行解冻
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/inventory/unfrozen',
-            result() {
-                return {
-                    ...body,
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  取消出库
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/base/stockInventoryDetail/cancelRemoval',
-            result() {
-                return {
-                    ...body,
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  待验收出库选中某一仓库,根据申请出库重量，给出详细的列表信息
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/base/stockRemoval/list',
-            result() {
-                return {
-                    ...body,
-                    'data|1-2': [RetrievalList]
-
-                };
-            }
-        },
-        // #endregion 
-
-        // #region 获取过户信息
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/inventory/transferinfo',
-            result() {
-                return {
-                    ...body,
-                    "data|1-2": [TransferinfoList]
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  过户的最大可用量量
-        {
-            isMock: IS_MOCK,
-            methods: 'get',
-            router: storageURL + '/web/yc/inventory/transfer/available',
-            result() {
-                return {
-                    ...body,
-                    data: '55'
-                };
-            }
-        },
-        // #endregion 
-
-        // #region 操作过户
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/inventory/transfer',
-            result() {
-                return {
-                    ...body,
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  待验收出库列表
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/storage/stockRemoval/page',
-            result(params) {
-                return {
-                    ...body,
-                    data: {
-                        'list|10-20': [StockRemovalList],
-                        "paginator": {
-                            "currentPage": params.page,
-                            "pageSize": params.pageSize,
-                            "totalCount": 1000,
-                            "totalPage": 1000 / params.pageSize
-                        }
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  验收出库
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/base/stockRemoval/removal',
-            result() {
-                return {
-                    ...body,
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  出库申请
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/base/stockRemoval/apply',
-            result() {
-                return {
-                    ...body,
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  待验收入库列表
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/storage/stockRegister/page',
-            result(params) {
-                return {
-                    ...body,
-                    data: {
-                        'list|10-20': [StockRegisterList],
-                        "paginator": {
-                            "currentPage": params.page,
-                            "pageSize": params.pageSize,
-                            "totalCount": 1000,
-                            "totalPage": 1000 / params.pageSize
-                        }
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  验收入库
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/base/stockRegister/examine',
-            result() {
-                return {
-                    ...body,
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  获取质押解押管理列表
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/pledgeinfo/page',
-            result(params) {
-                return {
-                    ...body,
-                    data: {
-                        'list|10-20': [PledgeinfolIST],
-                        "paginator": {
-                            "currentPage": params.page,
-                            "pageSize": params.pageSize,
-                            "totalCount": 1000,
-                            "totalPage": 1000 / params.pageSize
-                        }
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  解押管理页面专门获取质押信息
-        {
-            isMock: IS_MOCK,
-            methods: 'get',
-            router: storageURL + '/web/yc/pledgeinfo/cargo/info',
-            result(params) {
-                return {
-                    ...body,
-                    data: {
-                        "bankId": "1", //质权方id(银行id)
-                        "bankName": "中国银行", // 质权方名称
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  获取质押总量
-        {
-            isMock: IS_MOCK,
-            methods: 'get',
-            router: storageURL + '/web/yc/pledgeinfo/pledgeNum',
-            result() {
-                return {
-                    ...body,
-                    data: {
-                        totalPledgeNums: 78,
-                        totalPledgeWeight: 200
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  获取可用总量
-        {
-            isMock: IS_MOCK,
-            methods: 'get',
-            router: storageURL + '/web/yc/pledgeinfo/available',
-            result() {
-                return {
-                    ...body,
-                    data: 185
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  质押操作
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/pledgeinfo/pledge',
-            result() {
-                return {
-                    ...body
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  解押操作
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/releaseinfo/release',
-            result() {
-                return {
-                    ...body
-                };
-            }
-        },
-        // #endregion         
-
-        // #region  出库明细列表
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/storage/stockRemovalDetail/page',
-            result(params) {
-                return {
-                    ...body,
-                    data: {
-                        'list|10-20': [StockRemovalDetailList],
-                        "paginator": {
-                            "currentPage": params.page,
-                            "pageSize": params.pageSize,
-                            "totalCount": 1000,
-                            "totalPage": 1000 / params.pageSize
-                        }
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  出库单
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/storage/stockRemovalDetail/get',
-            result() {
-                return {
-                    ...body,
-                    data: {
-                        "createdBy": "",
-                        "createdTime": "",
-                        "summation": "",
-                        "list|1-2": [stockRemovalBill]
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  入库明细列表
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/storage/stockRegisterDetail/page',
-            result(params) {
-                return {
-                    ...body,
-                    data: {
-                        'list|10-20': [StockRegisterDetailList],
-                        "paginator": {
-                            "currentPage": params.page,
-                            "pageSize": params.pageSize,
-                            "totalCount": 1000,
-                            "totalPage": 1000 / params.pageSize
-                        }
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  入库单
-        {
-            isMock: IS_MOCK,
-            methods: 'get',
-            router: storageURL + '/web/yc/storage/stockRegisterDetail/get',
-            result() {
-                return {
-                    ...body,
-                    data: {
-                        ...InventoryTableList,
-                        "num": 23,
-                        "weight": 243,
-                        "registerId": "SH1905060002",
-                        "registerTime":'@DATE("yyyy-MM-dd HH:mm:ss")',
-                        "summation":87,
-                        "remark":"备注",
-                        "productTypeCode":"34234"
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  过户明细列表
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/inventory/transfer/detail',
-            result(params) {
-                return {
-                    ...body,
-                    data: {
-                        'list|10-20': [TransferDetailList],
-                        "paginator": {
-                            "currentPage": params.page,
-                            "pageSize": params.pageSize,
-                            "totalCount": 1000,
-                            "totalPage": 1000 / params.pageSize
-                        }
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  过户单
-        {
-            isMock: IS_MOCK,
-            methods: 'get',
-            router: storageURL + '/web/yc/inventory/transfer/bill',
-            result() {
-                return {
-                    ...body,
-                    data: {
-                        ...TransferDetailList,
-                        "num": 23,
-                        "weight": 243,
-                        "registerId": "SH1905060002",
-                        "registerTime":'@DATE("yyyy-MM-dd HH:mm:ss")',
-                        "summation":87,
-                        "remark":"备注",
-                        "chineseWeights":"" // 中文重量
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-
-        // #region  质押明细列表
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/pledgeinfo/detail',
-            result(params) {
-                return {
-                    ...body,
-                    data: {
-                        'list|10-20': [PledgeDetailList],
-                        "paginator": {
-                            "currentPage": params.page,
-                            "pageSize": params.pageSize,
-                            "totalCount": 1000,
-                            "totalPage": 1000 / params.pageSize
-                        }
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  质押单
-        {
-            isMock: IS_MOCK,
-            methods: 'get',
-            router: storageURL + '/web/yc/pledgeinfo/bill',
-            result() {
-                return {
-                    ...body,
-                    data: {
-                        "bankName": "中国银行", //质权方名称
-                        "cargoId": "1",
-                        "cargoName": "@CNAME()", // 开始时间
-                        "createdTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
-                        "id": "11213",
-                        "inventoryTotalNums": 98, // 库存数量
-                        "inventoryTotalWeight": 86, // 库存总重量
-                        "pledgeCargo": "@CNAME()",  // 质押方
-                        "pledgeCode": "67216312", // 质押单号
-                        "pledgeNums": 76, // 质押数量
-                        "pledgeType": "0", // 质押类型
-                        "pledgeWeight": 976, //质押重量
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  解押明细列表
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: storageURL + '/web/yc/releaseinfo/detail',
-            result(params) {
-                return {
-                    ...body,
-                    data: {
-                        'list|10-20': [ReleasePledgeDetailList],
-                        "paginator": {
-                            "currentPage": params.page,
-                            "pageSize": params.pageSize,
-                            "totalCount": 1000,
-                            "totalPage": 1000 / params.pageSize
-                        }
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-        // #region  解押单
-        {
-            isMock: IS_MOCK,
-            methods: 'get',
-            router: storageURL + '/web/yc/releaseinfo/bill',
-            result() {
-                return {
-                    ...body,
-                    data: {
-                        "bankName": "中国银行", //质权方名称
-                        "cargoId": "1",
-                        "cargoName": "@CNAME()", // 货主
-                        "createdTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 开始时间
-                        "id": "11213",
-                        "inventoryTotalNums": 98, // 库存数量
-                        "inventoryTotalWeight": 86, // 库存总重量
-                        "pledgeCargo": "@CNAME()",  // 质押方
-                        "releaseCode": "67216312", // 解押单号
-                        "releaseNums": 76, // 解押数量
-                        "releaseWeight": 976, //解押重量
-                    },
-
-                };
-            }
-        },
-        // #endregion 
-
-
-        // #endregion
-
         // #region 系统参数
 
         // #region  获取用户信息
@@ -1074,6 +402,31 @@ const mockRouterMap = {
                 };
             }
         },
+        {
+            isMock: IS_MOCK,
+            methods: 'get',
+            router: '/web/cm/productInterface/getClassify',
+            result() {
+                return {
+                    ...body,
+                    data:classData
+                };
+            }
+        },
+        {
+            isMock: IS_MOCK,
+            methods: 'get',
+            router: '/web/cm/productInterface/getParameterById',
+            result(params) {
+                return {
+                    ...body,
+                    'data|3-4':[{...paramsData,...{classifyId:params.id}}]
+                };
+            }
+        },        
+
+
+
         // #endregion     
 
         // 数据字段项

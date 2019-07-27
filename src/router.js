@@ -5,6 +5,8 @@ import Router from 'vue-router'
 // #region 商品管理
 /**发布新商品*/
 const ReleaseNewCommodity = () => import('@/views/commodityManage/releaseNewCommodity.vue')
+/**编辑商品*/
+const EditOldCommodity = () => import('@/views/commodityManage/editOldCommodity.vue')
 /**出售中的商品*/
 const CommodityOnSale = () => import('@/views/commodityManage/commodityOnSale.vue')
 /**待售中的商品*/
@@ -41,7 +43,12 @@ let commonRoutes = {
             path: '/web/cm/commodity/releaseNewCommodity/page',
             name: 'releaseNewCommodity',
             component: ReleaseNewCommodity
-        },        
+        },
+        {
+            path: '/web/cm/commodity/editOldCommodity/page',
+            name: 'editOldCommodity',
+            component: EditOldCommodity
+        },           
         {
             path: '/web/cm/commodity/commodityOnSale/page',
             name: 'commodityOnSale',
