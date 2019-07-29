@@ -365,6 +365,23 @@ export default {
         return fetch(oilURL + '/web/cm/commodity/commodityOnSale/page',params)          
     },
 
+    /**
+     * @author sswq
+     * @param params
+     * @description 下架
+     * */
+    DoTakenOff(params){
+        return fetch(oilURL + '/web/cm/commodity/commodityOnSale/takenoff',params)          
+    },
+    /**
+     * @author sswq
+     * @param params
+     * @description 上架
+     * */
+    DoShelves(params){
+        return fetch(oilURL + '/web/cm/commodity/commodityOnSale/shelves',params)          
+    },
+
     // #endregion
 
     // #region  字典项

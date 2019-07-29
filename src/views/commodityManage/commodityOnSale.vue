@@ -1,8 +1,15 @@
 <template>
   <div class="container single-page">
     <hlBreadcrumb :data="breadTitle">
-      <el-button type="primary" plain  size="small" icon="el-icon-plus">发布新商品</el-button>
-      <el-button type="primary" plain  size="small" @click="takenoff"  icon="el-icon-download">下架</el-button>
+      <el-button type="primary" plain size="small" icon="el-icon-plus">发布新商品</el-button>
+      <el-button
+        type="primary"
+        plain
+        size="small"
+        @click="takenoff(null)"
+        :disabled="!selectedItems.length"
+        icon="el-icon-download"
+      >下架</el-button>
     </hlBreadcrumb>
     <div class="search-box">
       <div class="form-item">
@@ -83,7 +90,11 @@
         <template slot-scope="scope">
           <div class="goods">
             <div class="avatar">
-              <img width="65" height="64" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"/>
+              <img
+                width="65"
+                height="64"
+                src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+              />
             </div>
             <div class="goods-content">
               <div class="productName">{{listData.list[scope.$index].productName}}</div>
@@ -96,17 +107,19 @@
       <el-table-column label="售价" width="200px">
         <template slot-scope="scope">
           <div class="price">
-            {{listData.list[scope.$index].price}} <i class="el-icon-edit"></i>
+            {{listData.list[scope.$index].price}}
+            <i class="el-icon-edit"></i>
           </div>
         </template>
       </el-table-column>
       <el-table-column label="库存" width="200px">
         <template slot-scope="scope">
           <div class="price">
-            {{listData.list[scope.$index].totalNumInventory}} <i class="el-icon-edit"></i>
+            {{listData.list[scope.$index].totalNumInventory}}
+            <i class="el-icon-edit"></i>
           </div>
         </template>
-      </el-table-column>      
+      </el-table-column>
 
       <el-table-column
         :align="item.align || 'center'"
@@ -166,7 +179,7 @@ const defaulttableHeader = [
   },
   {
     prop: "releaseTime",
-    label: "发布时间",
+    label: "发布时间"
   }
 ];
 
@@ -194,6 +207,11 @@ export default {
     ids() {
       return this.selectedItems.map(item => {
         return item.id;
+      });
+    },
+    productCodes() {
+      return this.selectedItems.map(item => {
+        return item.productCode;
       });
     }
   },
@@ -258,12 +276,37 @@ export default {
         path: "/web/cm/commodity/commodityOnSale/page/inventoryDetail"
       });
     },
-    takenoff(item = null){
-      if(item) {
-
+    takenoff(item = null) {
+      debugger
+      let that = this;
+      let id;
+      let productCode;
+      let info;
+      if (item) {
+        id = item.id
+        productCode = item.productCode
       }else {
-
+        id = this.ids;
+        productCode = this.productCodes.join();
       }
+      info = `商品编码${productCode}`;
+      this.$confirm(`确定要下架${info}`, "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+        .then(async () => {
+          const res = await that.$api.DoTakenOff([{ id }]);
+          switch (res.code) {
+            case Dict.SUCCESS:
+              that.$messageSuccess(`下架成功`);
+              that.getListData();
+              break;
+            default:
+              that.$messageError(`下架成功,${res.mesg}`);
+              break;
+          }
+        });
     },
     init() {
       setTimeout(() => {
@@ -292,45 +335,44 @@ export default {
   }
 }
 
-.goods{
-  position:relative;
-  padding:9px 10px 11px 15px;
-  font-size:0px;
-  .avatar{
-      display:inline-block;
-      vertical-align:top;
-      img {
-          border-radius:2px
-      }
+.goods {
+  position: relative;
+  padding: 9px 10px 11px 15px;
+  font-size: 0px;
+  .avatar {
+    display: inline-block;
+    vertical-align: top;
+    img {
+      border-radius: 2px;
+    }
   }
-  .goods-content{
-      display:inline-block;
-      vertical-align:top;
-      margin-left:15px;
-      height: 76px;
-      .productName{
-        font-size:12px;
-        color: #3C8BFF;
-      }
-      .productCode {
-        font-size:12px;
-        color: #333;        
-      }
-  }
-}
-
-.price{
-  text-align: center
-}
-
-.el-icon-edit{
-  padding:5px;
-  font-size:16px;
-  color:#3C8BFF;
-  &:hover{
-      color:rgb(255, 83, 60);
-      cursor: pointer ;
+  .goods-content {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 15px;
+    height: 76px;
+    .productName {
+      font-size: 12px;
+      color: #3c8bff;
+    }
+    .productCode {
+      font-size: 12px;
+      color: #333;
+    }
   }
 }
 
+.price {
+  text-align: center;
+}
+
+.el-icon-edit {
+  padding: 5px;
+  font-size: 16px;
+  color: #3c8bff;
+  &:hover {
+    color: rgb(255, 83, 60);
+    cursor: pointer;
+  }
+}
 </style>

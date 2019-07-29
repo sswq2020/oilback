@@ -366,6 +366,34 @@ const mockRouterMap = {
         },        
         // #endregion     
 
+        // #region  下架
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/cm/commodity/commodityOnSale/takenoff',
+            result() {
+                return {
+                    ...body
+                };
+            }
+        },        
+        // #endregion     
+
+        // #region  上架
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/cm/commodity/commodityOnSale/shelves',
+            result() {
+                return {
+                    ...body
+                };
+            }
+        },        
+        // #endregion  
+
+
+
         // #region  字典项
         {
             isMock: IS_MOCK,
