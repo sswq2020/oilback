@@ -2,34 +2,171 @@
   <div class="container single-page">
     <hlBreadcrumb :data="breadTitle">
       <el-button
-        class="hlB_buts"
+        type="primary"
+        plain
         size="small"
+        @click="GoReleaseNewCommodity"
+        icon="el-icon-plus"
+      >发布新商品</el-button>
+      <el-button
+        type="primary"
+        plain
+        size="small"
+        @click="shelves(null)"
+        :disabled="!selectedItems.length"
         icon="el-icon-download"
-        @click="edit"
-      >编辑商品</el-button>
+      >上架</el-button>
     </hlBreadcrumb>
+    <div class="search-box">
+      <div class="form-item">
+        <label>一级目录</label>
+        <div class="form-control">
+          <el-select v-model="form.mock1" placeholder="请选择" size="small">
+            <el-option
+              v-for="(item,index) in firstClassList"
+              :key="index"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </div>
+      </div>
+      <div class="form-item">
+        <label>二级目录</label>
+        <div class="form-control">
+          <el-select v-model="form.mock2" placeholder="请选择" size="small">
+            <el-option
+              v-for="(item,index) in secondClassList"
+              :key="index"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </div>
+      </div>
+      <div class="form-item">
+        <label>商品编码</label>
+        <div class="form-control">
+          <el-input v-model="form.mock4" placeholder="请输入内容" size="small"></el-input>
+        </div>
+      </div>
+      <div class="form-item">
+        <label>售价</label>
+        <div class="form-control">
+          <el-input v-model="form.mock5" placeholder="最低价" size="small"></el-input>至
+          <el-input v-model="form.mock6" placeholder="最高价" size="small"></el-input>
+        </div>
+      </div>
+      <div class="form-item">
+        <el-button
+          type="primary"
+          :loading="isListDataLoading"
+          @click="getListDataBylistParams"
+          size="small"
+        >查询</el-button>
+        <el-button size="small" @click="clearListParams">重置</el-button>
+      </div>
+    </div>
+    <heltable
+      ref="tb"
+      @pageChange="changePage"
+      :total="listData.paginator.totalCount"
+      :currentPage="listParams.page"
+      :pageSize="listParams.pageSize"
+      :pageSizes="[5]"
+      :data="listData.list"
+      :multiple="true"
+      @selection-change="selectChange"
+      :loading="isListDataLoading"
+    >
+      <el-table-column label="商品信息" width="500px">
+        <template slot-scope="scope">
+          <div class="goods">
+            <div class="avatar">
+              <img
+                width="65"
+                height="64"
+                src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+              />
+            </div>
+            <div class="goods-content">
+              <div class="productName">{{listData.list[scope.$index].productName}}</div>
+              <div class="productCode">商品编码:{{listData.list[scope.$index].productCode}}</div>
+            </div>d
+          </div>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="售价" width="200px">
+        <template slot-scope="scope">
+          <div class="price">
+            {{listData.list[scope.$index].price}}
+            <i
+              @click="open(listData.list[scope.$index])"
+              class="el-icon-edit"
+            ></i>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="库存" width="200px">
+        <template slot-scope="scope">
+          <div class="price">
+            {{listData.list[scope.$index].totalNumInventory}}
+            <i
+              @click="open(listData.list[scope.$index])"
+              class="el-icon-edit"
+            ></i>
+          </div>
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        :align="item.align || 'center'"
+        :prop="item.prop"
+        :label="item.label"
+        :key="item.id"
+        v-for="(item) in tableHeader"
+        :show-overflow-tooltip="showOverflowTooltip"
+      >
+        <template slot-scope="scope">
+          <span>{{listData.list[scope.$index][item.prop]}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="操作" width="250px" align="center">
+        <template slot-scope="scope">
+          <el-button type="text" @click="GoEditOldCommodity(listData.list[scope.$index])">编辑商品</el-button>
+          <el-button type="text" @click="shelves(listData.list[scope.$index])">上架</el-button>
+        </template>
+      </el-table-column>
+    </heltable>
+    <pricedialog
+      :title="editProductName"
+      :priceLoading="priceLoading"
+      :confirmCb="(data)=>{this.updatePrice(data)}"
+    ></pricedialog>
   </div>
 </template>
 
 <script>
-// import NP from "number-precision";
-import { mapGetters, mapMutations } from "vuex";
-import { baseMixin } from "@/common/mixin.js";
+import { mapMutations, mapActions } from "vuex";
+import { classMixin } from "@/common/mixin.js";
 // import { judgeAuth } from "@/util/util.js";
-import { normalTime } from "@/util/util.js";
-import _ from "lodash";
 import Dict from "@/util/dict.js";
+import heltable from "@/components/hl_table";
 import hlBreadcrumb from "@/components/hl-breadcrumb";
+import pricedialog from "./pricedialog.vue";
+
 const defaultFormData = {
-  cargoId: null,
-  deliveryStoreId: null,
-  productNameId: null,
-  materialId: null,
-  specificationsId: null,
-  originPlaceId: null
+  mock1: null,
+  mock2: null,
+  mock3: null,
+  mock4: null,
+  mock5: null,
+  mock6: null
 };
 const defaultListParams = {
-  pageSize: 20,
+  pageSize: 5,
   page: 1
 };
 const defaultListData = {
@@ -41,232 +178,57 @@ const defaultListData = {
 };
 const defaulttableHeader = [
   {
-    prop: "deliveryStore",
-    label: "仓库",
-    width: "180"
-  },
-  {
-    prop: "incomingDays",
-    label: "入库天数",
-    width: "180",
+    prop: "totalNumOnSale",
+    label: "总销量",
     align: "right"
   },
   {
-    prop: "cargoName",
-    label: "货主",
-    width: "180"
-  },
-  {
-    prop: "pilePosition",
-    label: "区桩位",
-    width: "180"
-  },
-  {
-    prop: "piles",
-    label: "层数",
-    width: "180",
-    align: "right"
-  },
-  {
-    prop: "productName",
-    label: "品名",
-    width: "180"
-  },
-  {
-    prop: "materialName",
-    label: "材质",
-    width: "180"
-  },
-  {
-    prop: "specificationsName",
-    label: "规格",
-    width: "180"
-  },
-  {
-    prop: "originPlaceName",
-    label: "产地",
-    width: "180"
-  },
-  {
-    prop: "totalNumInventoryText",
-    label: "库存数量",
-    width: "180"
-  },
-  // {
-  //   prop: "numUnitText",
-  //   label: "数量单位",
-  //   width: "180"
-  // },
-  {
-    prop: "totalWeightInventoryText",
-    label: "库存重量",
-    width: "180"
-  },
-  // {
-  //   prop: "weightUnitText",
-  //   label: "重量单位",
-  //   width: "180"
-  // },
-  {
-    prop: "measuringText",
-    label: "计量方式",
-    width: "180"
-  },
-  {
-    prop: "incomingTypeText",
-    label: "入库类型",
-    width: "180"
-  },
-  {
-    prop: "incomingId",
-    label: "入库单号",
-    width: "180"
-  },
-  {
-    prop: "incomingTimeStr",
-    label: "入库时间",
-    width: "180"
+    prop: "releaseTime",
+    label: "发布时间"
   }
 ];
 
-const rowAdapter = list => {
-  if (!list) {
-    return [];
-  }
-  if (list.length > 0) {
-    list = list.map(row => {
-      return (row = {
-        ...row,
-        piles: row.piles || "-",
-        numUnitText: (row.numUnitTypeEnum && row.numUnitTypeEnum.text) || "-",
-        weightUnitText:
-          (row.weightUnitTypeEnum && row.weightUnitTypeEnum.text) || "-",
-        measuringText:
-          (row.measuringTypeEnum && row.measuringTypeEnum.text) || "-",
-        incomingTypeText:
-          (row.incomingTypeEnum && row.incomingTypeEnum.text) || "-",
-        incomingTimeStr: normalTime(row.incomingTime),
-        totalNumInventoryText: `${
-          row.totalNumInventory ? row.totalNumInventory : "-"
-        }${
-          row.numUnitTypeEnum && row.totalNumInventory
-            ? row.numUnitTypeEnum.text
-            : ""
-        }`,
-        totalWeightInventoryText: `${
-          row.totalWeightInventory
-        }${(row.weightUnitTypeEnum && row.weightUnitTypeEnum.text) || "-"}`
-      });
-    });
-  }
-  return list;
-};
-
 export default {
-  name: "commodityForSale.vue",
-  mixins: [baseMixin],
+  name: "commodityForSale",
+  mixins: [classMixin],
   components: {
+    heltable,
     hlBreadcrumb,
+    pricedialog
   },
   data() {
     return {
       breadTitle: ["商品管理", "待售中的商品"],
-      // #region 各种lodaing
       isListDataLoading: false,
-      isbatchTransferOwnershipLoading: false,
-      isbatchFrozenLoading: false,
-      isbatchUnFrozenLoading: false,
-      isbatchCheckOutLoading: false,
-      // #endgion
-
-      // #region 各个弹窗的visible
-      batchTransferOwnershipVisible: false,
-      batchFrozenVisible: false,
-      batchUnFrozenVisible: false,
-      batchCheckOutVisible: false,
-      // #endgion
-
-      // #region 查询的基本数据结构
       listParams: { ...defaultListParams }, // 页数
       form: { ...defaultFormData }, // 查询参数
       listData: { ...defaultListData }, // 返回list的数据结构
-      // #endgion
-      /**表格相关*/
       tableHeader: defaulttableHeader,
       showOverflowTooltip: true,
-      /*多选的row*/
       selectedItems: [],
-      titles: ["批量出库登记", "批量过户", "批量冻结", "批量解冻"]
+      editProductName: "编辑修改",
+      priceLoading: false
     };
   },
   computed: {
-    ...mapGetters("app", ["role", "userId", "username", "IS_SHIPPER"]),
-    /**选中的必须是同一个货主才能过户,不限制仓库*/
-    equalShipperItems() {
-      let arr = this.selectedItems.map(item => item.cargoId);
-      return new Set(arr).size === 1;
-    },
-    /**选中的必须是同一个货主和同一仓库才能出库*/
-    equalShipperAndStoreItems() {
-      let arr = this.selectedItems.map(item => item.deliveryStoreId);
-      const flag = new Set(arr).size === 1;
-      return this.equalShipperItems && flag;
-    },
-    /**简单的判断是没有余量*/
-    IsNoSurplus() {
-      return this.selectedItems.some(item => {
-        return item.availableWeightInventory === 0;
-      });
-    },
-    /**没有余量的序号列出来*/
-    IndexNoSurplus() {
-      return this.selectedItems
-        .map((item, index) => {
-          return {
-            num: index + 1,
-            bool: item.availableWeightInventory === 0
-          };
-        })
-        .filter(item => {
-          return item.bool;
-        })
-        .map(item => {
-          return item.num;
-        });
-    },
     /**请求参数估计只要id*/
     ids() {
       return this.selectedItems.map(item => {
         return item.id;
       });
     },
-    /**过户管理和出库申请都需要的stockId*/
-    stockIds() {
+    productCodes() {
       return this.selectedItems.map(item => {
-        return {
-          stockId: item.id
-        };
-      });
-    },
-    /**冻结解冻的请求参数*/
-    stockInventoryIds() {
-      return this.selectedItems.map(item => {
-        return {
-          stockInventoryId: item.id
-        };
+        return item.productCode;
       });
     }
   },
   methods: {
-    ...mapMutations("releaseNewCommodity", ["setIsEdit","setCommodityId"]),
+    ...mapMutations("releaseNewCommodity", ["setIsEdit", "setCommodityId"]),
+    ...mapMutations("commodityOnSale", ["setPricedialog"]),
+    ...mapActions("commodityOnSale", ["openPriceDialog"]),
     selectChange(selection) {
       this.selectedItems = selection.slice();
-    },
-    _filter() {
-      if (this.IS_SHIPPER) {
-        this.form.cargoId = this.userId;
-      }
-      return _.clone(Object.assign({}, this.form, this.listParams));
     },
     clearListParams() {
       this.form = { ...defaultFormData };
@@ -282,14 +244,15 @@ export default {
       this.listParams = { ...defaultListParams };
       this.getListData();
     },
+    _filter() {},
     async getListData() {
-      let obj = this._filter();
+      // let obj = this._filter();
       this.isListDataLoading = true;
-      const res = await this.$api.getInventoryTable(obj);
+      const res = await this.$api.getCommodityOnSaleList(this.form);
       this.isListDataLoading = false;
       switch (res.code) {
         case Dict.SUCCESS:
-          this.listData = { ...res.data, list: rowAdapter(res.data.list) };
+          this.listData = res.data;
           break;
         default:
           this.listData = { ...defaultListData };
@@ -297,83 +260,92 @@ export default {
           break;
       }
     },
-    async batchTransferOwnership() {
-      if (this.IsNoSurplus) {
-        const str = this.IndexNoSurplus.join();
-        this.$messageError(`选中的第${str}数据无余量，不可过户`);
-        return;
-      }
-      this.batchTransferOwnershipVisible = false;
-      this.setTransferOwnership(this.stockIds);
+    open(item) {
+      const { id, price, totalNumInventory, productName, productCode } = item;
+      this.editProductName = `编辑商品${productName},编码为${productCode}`;
+      this.openPriceDialog({ id, price, totalNumInventory });
+    },
+    GoReleaseNewCommodity() {
       this.$router.push({
-        path: "/web/settlement/pageList/transferOwnershipManage"
+        path: "/web/cm/commodity/releaseNewCommodity/page"
       });
     },
-    async batchFrozen() {
-      this.isbatchFrozenLoading = true;
-      const res = await this.$api.frozen(this.stockInventoryIds);
-      this.isbatchFrozenLoading = false;
-      switch (res.code) {
-        case Dict.SUCCESS:
-          this.$messageSuccess("冻结成功");
-          this.batchFrozenVisible = false;
-          this.getListData();
-          break;
-        default:
-          this.$messageError(res.mesg);
-          break;
-      }
-    },
-    async batchUnFrozen() {
-      this.isbatchUnFrozenLoading = true;
-      const res = await this.$api.unfrozen(this.stockInventoryIds);
-      this.isbatchUnFrozenLoading = false;
-      switch (res.code) {
-        case Dict.SUCCESS:
-          this.$messageSuccess("解冻结成功");
-          this.batchUnFrozenVisible = false;
-          this.getListData();
-          break;
-        default:
-          this.$messageError(res.mesg);
-          break;
-      }
-    },
-    async batchCheckOut() {
-      if (this.IsNoSurplus) {
-        const str = this.IndexNoSurplus.join();
-        this.$messageError(`选中的第${str}数据无余量，不可出库申请`);
-        return;
-      }
-      this.batchCheckOutVisible = false;
-      this.setCheckout(this.stockIds);
-      this.$router.push({
-        path: "/web/yc/storage/stockRemovalDetail/page/applyCheckOut"
-      });
-    },
-    GoEnterRegister() {
-      this.$router.push({
-        path: "/web/yc/storage/stockRegisterDetail/page/register"
-      });
-    },
-    edit() {
+    GoEditOldCommodity(item) {
+      const { id } = item;
       this.setIsEdit(true);
-      this.setCommodityId('876we')
+      this.setCommodityId(id);
       this.$router.push({
         path: "/web/cm/commodity/editOldCommodity/page"
       });
     },
+    shelves(item = null) {
+      let that = this;
+      let id,productCode,info;
+      if (item) {
+        id = item.id;
+        productCode = item.productCode;
+      } else {
+        id = this.ids;
+        productCode = this.productCodes.join();
+      }
+      info = `商品编码${productCode}`;
+      this.$confirm(`确定要上架${info}`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(async () => {
+        const res = await that.$api.DoShelves([{ id }]);
+        switch (res.code) {
+          case Dict.SUCCESS:
+            that.$messageSuccess(`上架成功`);
+            that.getListData();
+            break;
+          default:
+            that.$messageError(`上架成功,${res.mesg}`);
+            break;
+        }
+      });
+    },
+    async updatePrice(data) {
+      this.priceLoading = true;
+      const res = await this.$api.updateCommodity(data);
+      this.priceLoading = false;
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.$messageSuccess(`修改成功`);
+          this.setPricedialog(false)
+          this.getListData();
+          break;
+        default:
+          this.$messageError(res.mesg);
+          break;
+      }
+    },
     init() {
-      // setTimeout(() => {
-      //   this.clearListParams();
-      //   this.perm();
-      // }, 20);
+      setTimeout(() => {
+        this.clearListParams();
+        this.perm();
+      }, 20);
       this.perm();
     },
     perm() {}
   },
   mounted() {
     this.init();
+  },
+  watch: {
+    "form.mock1": {
+      handler(newV, oldV) {
+        if (newV !== oldV) {
+          this.form.mock2 = null;
+          if (newV) {
+            setTimeout(() => {
+              this.secondClassList = this.firstClassList[newV].children;
+            }, 20);
+          }
+        }
+      }
+    }
   }
 };
 </script>
@@ -387,6 +359,47 @@ export default {
     .el-button {
       margin-top: 17px;
     }
+  }
+}
+
+.goods {
+  position: relative;
+  padding: 9px 10px 11px 15px;
+  font-size: 0px;
+  .avatar {
+    display: inline-block;
+    vertical-align: top;
+    img {
+      border-radius: 2px;
+    }
+  }
+  .goods-content {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 15px;
+    height: 76px;
+    .productName {
+      font-size: 12px;
+      color: #3c8bff;
+    }
+    .productCode {
+      font-size: 12px;
+      color: #333;
+    }
+  }
+}
+
+.price {
+  text-align: center;
+}
+
+.el-icon-edit {
+  padding: 5px;
+  font-size: 16px;
+  color: #3c8bff;
+  &:hover {
+    color: rgb(255, 83, 60);
+    cursor: pointer;
   }
 }
 </style>

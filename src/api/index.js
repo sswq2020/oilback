@@ -388,6 +388,14 @@ export default {
     updateCommodity(params){
         return fetch(oilURL + '/web/cm/productInterface/update',params)          
     },
+    /**
+     * @author sswq
+     * @param params
+     * @description 根据id获取商品的详细信息
+     * */
+    getDetailCommodity(params){
+        return fetch(oilURL + '/web/cm/productInterface/detail',params)          
+    },
     // #endregion
 
     // #region  字典项

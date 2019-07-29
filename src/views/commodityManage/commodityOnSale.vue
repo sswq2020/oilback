@@ -53,8 +53,8 @@
       <div class="form-item">
         <label>售价</label>
         <div class="form-control">
-          <el-input v-model="form.mock5" placeholder="请输入内容" size="small"></el-input>至
-          <el-input v-model="form.mock6" placeholder="请输入内容" size="small"></el-input>
+          <el-input v-model="form.mock5" placeholder="最低价" size="small"></el-input>至
+          <el-input v-model="form.mock6" placeholder="最高价" size="small"></el-input>
         </div>
       </div>
       <div class="form-item">
@@ -189,7 +189,7 @@ const defaulttableHeader = [
 ];
 
 export default {
-  name: "commodityOnSale.vue",
+  name: "commodityOnSale",
   mixins: [classMixin],
   components: {
     heltable,
