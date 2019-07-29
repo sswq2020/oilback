@@ -1,50 +1,14 @@
 <template>
   <div class="container single-page">
     <hlBreadcrumb :data="breadTitle">
-      <el-button
-        class="hlB_buts"
-        size="small"
-        icon="el-icon-download"
-        v-if="!IS_SHIPPER"
-        @click="GoEnterRegister"
-      >入库登记</el-button>
-      <el-button
-        class="hlB_buts"
-        size="small"
-        icon="el-icon-bank-card"
-        :disabled="!equalShipperAndStoreItems"
-        @click="()=>{this.batchCheckOutVisible = true}"
-      >出库申请</el-button>
-      <el-button
-        class="hlB_buts"
-        size="small"
-        icon="el-icon-bank-card"
-        :disabled="!equalShipperItems"
-        v-if="!IS_SHIPPER"
-        @click="()=>{this.batchTransferOwnershipVisible = true}"
-      >过户</el-button>
-      <el-button
-        class="hlB_buts"
-        size="small"
-        icon="el-icon-bank-card"
-        :disabled="stockInventoryIds.length===0"
-        v-if="!IS_SHIPPER"
-        @click="()=>{this.batchFrozenVisible=true}"
-      >冻结</el-button>
-      <el-button
-        class="hlB_buts"
-        size="small"
-        icon="el-icon-bank-card"
-        :disabled="stockInventoryIds.length===0"
-        v-if="!IS_SHIPPER"
-        @click="()=>{this.batchUnFrozenVisible = true}"
-      >解冻</el-button>
+      <el-button type="primary" plain  size="small" icon="el-icon-plus">发布新商品</el-button>
+      <el-button type="primary" plain  size="small" @click="takenoff"  icon="el-icon-download">下架</el-button>
     </hlBreadcrumb>
     <div class="search-box">
       <div class="form-item">
-        <label>货主</label>
-        <div class="form-control" v-if="!IS_SHIPPER">
-          <el-select v-model="form.cargoId" placeholder="请选择" size="small">
+        <label>一级类目</label>
+        <div class="form-control">
+          <el-select v-model="form.mock1" placeholder="请选择" size="small">
             <el-option
               v-for="(item,index) in cargoList"
               :key="index"
@@ -53,14 +17,11 @@
             ></el-option>
           </el-select>
         </div>
-        <div class="form-control" v-if="IS_SHIPPER">
-          <el-input size="small" :value="username" :disabled="true"></el-input>
-        </div>
       </div>
       <div class="form-item">
-        <label>仓库</label>
+        <label>二级类目</label>
         <div class="form-control">
-          <el-select v-model="form.deliveryStoreId" placeholder="请选择" size="small">
+          <el-select v-model="form.mock2" placeholder="请选择" size="small">
             <el-option
               v-for="(item,index) in deliveryStoreList"
               :key="index"
@@ -71,9 +32,9 @@
         </div>
       </div>
       <div class="form-item">
-        <label>品名</label>
+        <label>品牌</label>
         <div class="form-control">
-          <el-select v-model="form.productNameId" placeholder="请选择" size="small">
+          <el-select v-model="form.mock3" placeholder="请选择" size="small">
             <el-option
               v-for="(item,index) in productNameList"
               :key="index"
@@ -84,42 +45,16 @@
         </div>
       </div>
       <div class="form-item">
-        <label>材质</label>
+        <label>商品编码</label>
         <div class="form-control">
-          <el-select v-model="form.materialId" placeholder="请选择" size="small">
-            <el-option
-              v-for="(item,index) in materialList"
-              :key="index"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+          <el-input v-model="form.mock4" placeholder="请输入内容" size="small"></el-input>
         </div>
       </div>
       <div class="form-item">
-        <label>规格</label>
+        <label>售价</label>
         <div class="form-control">
-          <el-select v-model="form.specificationsId" placeholder="请选择" size="small">
-            <el-option
-              v-for="(item,index) in specificationsList"
-              :key="index"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </div>
-      </div>
-      <div class="form-item">
-        <label>产地</label>
-        <div class="form-control">
-          <el-select v-model="form.originPlaceId" placeholder="请选择" size="small">
-            <el-option
-              v-for="(item,index) in originPlaceList"
-              :key="index"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+          <el-input v-model="form.mock5" placeholder="请输入内容" size="small"></el-input>至
+          <el-input v-model="form.mock6" placeholder="请输入内容" size="small"></el-input>
         </div>
       </div>
       <div class="form-item">
@@ -138,14 +73,43 @@
       :total="listData.paginator.totalCount"
       :currentPage="listParams.page"
       :pageSize="listParams.pageSize"
-      :pageSizes="[20]"
+      :pageSizes="[5]"
       :data="listData.list"
       :multiple="true"
       @selection-change="selectChange"
       :loading="isListDataLoading"
     >
+      <el-table-column label="商品信息" width="500px">
+        <template slot-scope="scope">
+          <div class="goods">
+            <div class="avatar">
+              <img width="65" height="64" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"/>
+            </div>
+            <div class="goods-content">
+              <div class="productName">{{listData.list[scope.$index].productName}}</div>
+              <div class="productCode">商品编码:{{listData.list[scope.$index].productCode}}</div>
+            </div>d
+          </div>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="售价" width="200px">
+        <template slot-scope="scope">
+          <div class="price">
+            {{listData.list[scope.$index].price}} <i class="el-icon-edit"></i>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="库存" width="200px">
+        <template slot-scope="scope">
+          <div class="price">
+            {{listData.list[scope.$index].totalNumInventory}} <i class="el-icon-edit"></i>
+          </div>
+        </template>
+      </el-table-column>      
+
       <el-table-column
-        :align="item.align || 'left'"
+        :align="item.align || 'center'"
         :prop="item.prop"
         :label="item.label"
         :key="item.id"
@@ -157,73 +121,34 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" fixed="right" width="100px" align="left">
+      <el-table-column label="操作" width="250px" align="center">
         <template slot-scope="scope">
-          <el-button type="text" @click="detail(listData.list[scope.$index])">查看明细</el-button>
+          <el-button type="text" @click="edit(listData.list[scope.$index])">编辑商品</el-button>
+          <el-button type="text" @click="takenoff(listData.list[scope.$index])">下架</el-button>
         </template>
       </el-table-column>
     </heltable>
-    <transitiondialog
-      :data="selectedItems"
-      :tableHeader="tableHeader.slice(0,8)"
-      :confirmCb="batchCheckOut"
-      :visible="batchCheckOutVisible"
-      :loading="isbatchCheckOutLoading"
-      :cancelCb="()=>{this.batchCheckOutVisible = false}"
-      :title="titles[0]"
-    ></transitiondialog>
-    <transitiondialog
-      :data="selectedItems"
-      :tableHeader="tableHeader.slice(0,8)"
-      :confirmCb="batchTransferOwnership"
-      :visible="batchTransferOwnershipVisible"
-      :loading="isbatchTransferOwnershipLoading"
-      :cancelCb="()=>{this.batchTransferOwnershipVisible = false}"
-      :title="titles[1]"
-    ></transitiondialog>
-    <transitiondialog
-      :data="selectedItems"
-      :tableHeader="tableHeader.slice(0,8)"
-      :confirmCb="batchFrozen"
-      :visible="batchFrozenVisible"
-      :loading="isbatchFrozenLoading"
-      :cancelCb="()=>{this.batchFrozenVisible = false}"
-      :title="titles[2]"
-    ></transitiondialog>
-    <transitiondialog
-      :data="selectedItems"
-      :tableHeader="tableHeader.slice(0,8)"
-      :confirmCb="batchUnFrozen"
-      :visible="batchUnFrozenVisible"
-      :loading="isbatchUnFrozenLoading"
-      :cancelCb="()=>{this.batchUnFrozenVisible = false}"
-      :title="titles[3]"
-    ></transitiondialog>
   </div>
 </template>
 
 <script>
-// import NP from "number-precision";
-import { mapGetters, mapMutations } from "vuex";
+// import { mapGetters, mapMutations } from "vuex";
 import { baseMixin } from "@/common/mixin.js";
 // import { judgeAuth } from "@/util/util.js";
-import { normalTime } from "@/util/util.js";
-import _ from "lodash";
 import Dict from "@/util/dict.js";
 import heltable from "@/components/hl_table";
 import hlBreadcrumb from "@/components/hl-breadcrumb";
-import transitiondialog from "@/components/transitiondialog";
 
 const defaultFormData = {
-  cargoId: null,
-  deliveryStoreId: null,
-  productNameId: null,
-  materialId: null,
-  specificationsId: null,
-  originPlaceId: null
+  mock1: null,
+  mock2: null,
+  mock3: null,
+  mock4: null,
+  mock5: null,
+  mock6: null
 };
 const defaultListParams = {
-  pageSize: 20,
+  pageSize: 5,
   page: 1
 };
 const defaultListData = {
@@ -235,224 +160,47 @@ const defaultListData = {
 };
 const defaulttableHeader = [
   {
-    prop: "deliveryStore",
-    label: "仓库",
-    width: "180"
+    prop: "totalNumOnSale",
+    label: "总销量",
+    align: "right"
   },
   {
-    prop: "incomingDays",
-    label: "入库天数",
-    width: "180",
-    align:"right"
-  },
-  {
-    prop: "cargoName",
-    label: "货主",
-    width: "180"
-  },
-  {
-    prop: "pilePosition",
-    label: "区桩位",
-    width: "180"
-  },
-  {
-    prop: "piles",
-    label: "层数",
-    width: "180",
-    align:"right"
-  },
-  {
-    prop: "productName",
-    label: "品名",
-    width: "180"
-  },
-  {
-    prop: "materialName",
-    label: "材质",
-    width: "180"
-  },
-  {
-    prop: "specificationsName",
-    label: "规格",
-    width: "180"
-  },
-  {
-    prop: "originPlaceName",
-    label: "产地",
-    width: "180"
-  },
-  {
-    prop: "totalNumInventoryText",
-    label: "库存数量",
-    width: "180"
-  },
-  // {
-  //   prop: "numUnitText",
-  //   label: "数量单位",
-  //   width: "180"
-  // },
-  {
-    prop: "totalWeightInventoryText",
-    label: "库存重量",
-    width: "180"
-  },
-  // {
-  //   prop: "weightUnitText",
-  //   label: "重量单位",
-  //   width: "180"
-  // },
-  {
-    prop: "measuringText",
-    label: "计量方式",
-    width: "180"
-  },
-  {
-    prop: "incomingTypeText",
-    label: "入库类型",
-    width: "180"
-  },
-  {
-    prop: "incomingId",
-    label: "入库单号",
-    width: "180"
-  },
-  {
-    prop: "incomingTimeStr",
-    label: "入库时间",
-    width: "180"
+    prop: "releaseTime",
+    label: "发布时间",
   }
 ];
-
-const rowAdapter = (list) => {
-    if (!list) {
-        return []
-    }
-    if (list.length > 0) {
-        list = list.map((row) => {
-            return row = { 
-              ...row,
-              piles:row.piles || "-",
-              numUnitText:row.numUnitTypeEnum&&row.numUnitTypeEnum.text || "-",
-              weightUnitText:row.weightUnitTypeEnum&&row.weightUnitTypeEnum.text || "-",
-              measuringText:row.measuringTypeEnum&&row.measuringTypeEnum.text || "-",
-              incomingTypeText:row.incomingTypeEnum&&row.incomingTypeEnum.text || "-",
-              incomingTimeStr:normalTime(row.incomingTime),
-              totalNumInventoryText:`${row.totalNumInventory ? row.totalNumInventory : "-"}${(row.numUnitTypeEnum&&row.totalNumInventory) ? row.numUnitTypeEnum.text : ""}`,
-              totalWeightInventoryText:`${row.totalWeightInventory}${row.weightUnitTypeEnum&&row.weightUnitTypeEnum.text || "-"}`,
-            }
-        })
-    }
-    return list
-}
 
 export default {
   name: "commodityOnSale.vue",
   mixins: [baseMixin],
   components: {
     heltable,
-    hlBreadcrumb,
-    transitiondialog
+    hlBreadcrumb
   },
   data() {
     return {
       breadTitle: ["商品管理", "出售中的商品"],
-      // #region 各种lodaing
       isListDataLoading: false,
-      isbatchTransferOwnershipLoading: false,
-      isbatchFrozenLoading: false,
-      isbatchUnFrozenLoading: false,
-      isbatchCheckOutLoading: false,
-      // #endgion
-
-      // #region 各个弹窗的visible
-      batchTransferOwnershipVisible: false,
-      batchFrozenVisible: false,
-      batchUnFrozenVisible: false,
-      batchCheckOutVisible: false,
-      // #endgion
-
-      // #region 查询的基本数据结构
       listParams: { ...defaultListParams }, // 页数
       form: { ...defaultFormData }, // 查询参数
       listData: { ...defaultListData }, // 返回list的数据结构
-      // #endgion
-      /**表格相关*/
       tableHeader: defaulttableHeader,
       showOverflowTooltip: true,
-      /*多选的row*/
-      selectedItems: [],
-      titles: ["批量出库登记", "批量过户", "批量冻结", "批量解冻"]
+      selectedItems: []
     };
   },
   computed: {
-    ...mapGetters("app", ["role", "userId", "username", "IS_SHIPPER"]),
-    /**选中的必须是同一个货主才能过户,不限制仓库*/
-    equalShipperItems() {
-      let arr = this.selectedItems.map(item => item.cargoId);
-      return new Set(arr).size === 1;
-    },
-    /**选中的必须是同一个货主和同一仓库才能出库*/
-    equalShipperAndStoreItems() {
-      let arr = this.selectedItems.map(item => item.deliveryStoreId);
-      const flag = new Set(arr).size === 1;
-      return this.equalShipperItems && flag
-    },    
-    /**简单的判断是没有余量*/
-    IsNoSurplus() {
-      return this.selectedItems.some(item=>{
-        return item.availableWeightInventory === 0
-      })
-    },
-    /**没有余量的序号列出来*/
-    IndexNoSurplus(){
-      return this.selectedItems.map((item,index) =>{
-        return {
-          num: index + 1,
-          bool:item.availableWeightInventory === 0
-        }
-      }).filter((item)=>{
-        return item.bool
-      }).map((item)=>{
-        return item.num
-      })
-    },
     /**请求参数估计只要id*/
     ids() {
       return this.selectedItems.map(item => {
         return item.id;
       });
-    },
-    /**过户管理和出库申请都需要的stockId*/
-    stockIds() {
-      return this.selectedItems.map(item => {
-        return {
-          stockId: item.id
-        };
-      });
-    },
-    /**冻结解冻的请求参数*/
-    stockInventoryIds() {
-      return this.selectedItems.map(item => {
-        return {
-          stockInventoryId: item.id
-        };
-      });
     }
   },
   methods: {
-    ...mapMutations("inventoryManage", [
-      "setTransferOwnership",
-      "setCheckout",
-      "setFindDetail"
-    ]),
+    // ...mapMutations("", []),
     selectChange(selection) {
       this.selectedItems = selection.slice();
-    },
-    _filter() {
-      if (this.IS_SHIPPER) {
-        this.form.cargoId = this.userId;
-      }
-      return _.clone(Object.assign({}, this.form, this.listParams));
     },
     clearListParams() {
       this.form = { ...defaultFormData };
@@ -468,45 +216,18 @@ export default {
       this.listParams = { ...defaultListParams };
       this.getListData();
     },
+    _filter() {},
     async getListData() {
-      let obj = this._filter();
+      // let obj = this._filter();
       this.isListDataLoading = true;
-      const res = await this.$api.getInventoryTable(obj);
+      const res = await this.$api.getCommodityOnSaleList(this.form);
       this.isListDataLoading = false;
       switch (res.code) {
         case Dict.SUCCESS:
-          this.listData ={...res.data, list: rowAdapter(res.data.list) };
+          this.listData = res.data;
           break;
         default:
           this.listData = { ...defaultListData };
-          this.$messageError(res.mesg);
-          break;
-      }
-    },
-    async batchTransferOwnership() {
-      if(this.IsNoSurplus){
-          const str = this.IndexNoSurplus.join();
-          this.$messageError(`选中的第${str}数据无余量，不可过户`);
-          return;
-      }
-        this.batchTransferOwnershipVisible = false;
-        this.setTransferOwnership(this.stockIds);
-        this.$router.push({
-          path: "/web/settlement/pageList/transferOwnershipManage"
-        });
-
-    },
-    async batchFrozen() {
-      this.isbatchFrozenLoading = true;
-      const res = await this.$api.frozen(this.stockInventoryIds);
-      this.isbatchFrozenLoading = false;
-      switch (res.code) {
-        case Dict.SUCCESS:
-          this.$messageSuccess("冻结成功");
-          this.batchFrozenVisible = false;
-          this.getListData();
-          break;
-        default:
           this.$messageError(res.mesg);
           break;
       }
@@ -526,18 +247,6 @@ export default {
           break;
       }
     },
-    async batchCheckOut() {
-      if(this.IsNoSurplus){
-          const str = this.IndexNoSurplus.join();
-          this.$messageError(`选中的第${str}数据无余量，不可出库申请`);
-          return;
-      }
-      this.batchCheckOutVisible = false;
-      this.setCheckout(this.stockIds);
-      this.$router.push({
-        path: "/web/yc/storage/stockRemovalDetail/page/applyCheckOut"
-      });
-    },
     GoEnterRegister() {
       this.$router.push({
         path: "/web/yc/storage/stockRegisterDetail/page/register"
@@ -548,6 +257,13 @@ export default {
       this.$router.push({
         path: "/web/cm/commodity/commodityOnSale/page/inventoryDetail"
       });
+    },
+    takenoff(item = null){
+      if(item) {
+
+      }else {
+
+      }
     },
     init() {
       setTimeout(() => {
@@ -575,11 +291,46 @@ export default {
     }
   }
 }
-.tip {
-  margin: 10px 0 20px 0;
-  .line {
-    font-size: 20px;
-    color: red;
+
+.goods{
+  position:relative;
+  padding:9px 10px 11px 15px;
+  font-size:0px;
+  .avatar{
+      display:inline-block;
+      vertical-align:top;
+      img {
+          border-radius:2px
+      }
+  }
+  .goods-content{
+      display:inline-block;
+      vertical-align:top;
+      margin-left:15px;
+      height: 76px;
+      .productName{
+        font-size:12px;
+        color: #3C8BFF;
+      }
+      .productCode {
+        font-size:12px;
+        color: #333;        
+      }
   }
 }
+
+.price{
+  text-align: center
+}
+
+.el-icon-edit{
+  padding:5px;
+  font-size:16px;
+  color:#3C8BFF;
+  &:hover{
+      color:rgb(255, 83, 60);
+      cursor: pointer ;
+  }
+}
+
 </style>

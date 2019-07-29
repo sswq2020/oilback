@@ -170,7 +170,7 @@ export default {
   },
   data() {
     return {
-      breadTitle: ["商品管理", "出售中的商品"],
+      breadTitle: ["商品管理", "待售中的商品"],
       // #region 各种lodaing
       isListDataLoading: false,
       isbatchTransferOwnershipLoading: false,
