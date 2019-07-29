@@ -392,6 +392,19 @@ const mockRouterMap = {
         },        
         // #endregion  
 
+        // #region  修改商品
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/cm/productInterface/update',
+            result() {
+                return {
+                    ...body
+                };
+            }
+        },        
+        // #endregion 
+
 
 
         // #region  字典项

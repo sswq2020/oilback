@@ -364,7 +364,6 @@ export default {
     getCommodityOnSaleList(params){
         return fetch(oilURL + '/web/cm/commodity/commodityOnSale/page',params)          
     },
-
     /**
      * @author sswq
      * @param params
@@ -381,7 +380,14 @@ export default {
     DoShelves(params){
         return fetch(oilURL + '/web/cm/commodity/commodityOnSale/shelves',params)          
     },
-
+    /**
+     * @author sswq
+     * @param params
+     * @description 修改商品
+     * */
+    updateCommodity(params){
+        return fetch(oilURL + '/web/cm/productInterface/update',params)          
+    },
     // #endregion
 
     // #region  字典项
