@@ -13,40 +13,27 @@
     </hlBreadcrumb>
     <div class="search-box">
       <div class="form-item">
-        <label>一级类目</label>
+        <label>一级目录</label>
         <div class="form-control">
           <el-select v-model="form.mock1" placeholder="请选择" size="small">
             <el-option
-              v-for="(item,index) in cargoList"
+              v-for="(item,index) in firstClassList"
               :key="index"
-              :label="item.label"
-              :value="item.value"
+              :label="item.name"
+              :value="item.id"
             ></el-option>
           </el-select>
         </div>
       </div>
       <div class="form-item">
-        <label>二级类目</label>
+        <label>二级目录</label>
         <div class="form-control">
           <el-select v-model="form.mock2" placeholder="请选择" size="small">
             <el-option
-              v-for="(item,index) in deliveryStoreList"
+              v-for="(item,index) in secondClassList"
               :key="index"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </div>
-      </div>
-      <div class="form-item">
-        <label>品牌</label>
-        <div class="form-control">
-          <el-select v-model="form.mock3" placeholder="请选择" size="small">
-            <el-option
-              v-for="(item,index) in productNameList"
-              :key="index"
-              :label="item.label"
-              :value="item.value"
+              :label="item.name"
+              :value="item.id"
             ></el-option>
           </el-select>
         </div>
@@ -146,7 +133,7 @@
 
 <script>
 // import { mapGetters, mapMutations } from "vuex";
-import { baseMixin } from "@/common/mixin.js";
+import { classMixin } from "@/common/mixin.js";
 // import { judgeAuth } from "@/util/util.js";
 import Dict from "@/util/dict.js";
 import heltable from "@/components/hl_table";
@@ -185,7 +172,7 @@ const defaulttableHeader = [
 
 export default {
   name: "commodityOnSale.vue",
-  mixins: [baseMixin],
+  mixins: [classMixin],
   components: {
     heltable,
     hlBreadcrumb
@@ -277,7 +264,6 @@ export default {
       });
     },
     takenoff(item = null) {
-      debugger
       let that = this;
       let id;
       let productCode;
@@ -319,7 +305,21 @@ export default {
   },
   mounted() {
     this.init();
-  }
+  },
+  watch: {
+    "form.mock1": {
+      handler(newV, oldV) {
+        if (newV !== oldV) {
+          this.form.mock2 = null;
+          if (newV) {
+            setTimeout(() => {
+              this.secondClassList = this.firstClassList[newV].children;
+            }, 20);
+          }
+        }
+      }
+    }
+  }  
 };
 </script>
 

@@ -143,7 +143,6 @@ import Dict from "util/dict.js";
 import { imgHost } from "api/mock";
 import ENV from "common/env.js";
 import _ from "lodash";
-import { setTimeout } from 'timers';
 const imgUrl = `${imgHost[ENV]}/dfs/open/files/info/get?url=`;
 const defualtFormParams = {
   fileId: null, // 图片上传成功后返回的id
