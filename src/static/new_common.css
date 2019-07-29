@@ -50,9 +50,9 @@
 .el-table {
   color: #666;
 }
-.el-table .cell {
+/* .el-table .cell {
   max-height: 33px !important;
-}
+} */
 .el-table th {
   color: #333 !important;
   font-size: 12px;
