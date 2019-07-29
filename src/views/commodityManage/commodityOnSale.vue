@@ -1,7 +1,13 @@
 <template>
   <div class="container single-page">
     <hlBreadcrumb :data="breadTitle">
-      <el-button type="primary" plain size="small" icon="el-icon-plus">发布新商品</el-button>
+      <el-button
+        type="primary"
+        plain
+        size="small"
+        @click="GoReleaseNewCommodity"
+        icon="el-icon-plus"
+      >发布新商品</el-button>
       <el-button
         type="primary"
         plain
@@ -95,7 +101,10 @@
         <template slot-scope="scope">
           <div class="price">
             {{listData.list[scope.$index].price}}
-            <i class="el-icon-edit"></i>
+            <i
+              @click="open(listData.list[scope.$index])"
+              class="el-icon-edit"
+            ></i>
           </div>
         </template>
       </el-table-column>
@@ -103,7 +112,10 @@
         <template slot-scope="scope">
           <div class="price">
             {{listData.list[scope.$index].totalNumInventory}}
-            <i class="el-icon-edit"></i>
+            <i
+              @click="open(listData.list[scope.$index])"
+              class="el-icon-edit"
+            ></i>
           </div>
         </template>
       </el-table-column>
@@ -123,21 +135,27 @@
 
       <el-table-column label="操作" width="250px" align="center">
         <template slot-scope="scope">
-          <el-button type="text" @click="edit(listData.list[scope.$index])">编辑商品</el-button>
+          <el-button type="text" @click="GoEditOldCommodity(listData.list[scope.$index])">编辑商品</el-button>
           <el-button type="text" @click="takenoff(listData.list[scope.$index])">下架</el-button>
         </template>
       </el-table-column>
     </heltable>
+    <pricedialog
+      :title="editProductName"
+      :priceLoading="priceLoading"
+      :confirmCb="(data)=>{this.updatePrice(data)}"
+    ></pricedialog>
   </div>
 </template>
 
 <script>
-// import { mapGetters, mapMutations } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 import { classMixin } from "@/common/mixin.js";
 // import { judgeAuth } from "@/util/util.js";
 import Dict from "@/util/dict.js";
 import heltable from "@/components/hl_table";
 import hlBreadcrumb from "@/components/hl-breadcrumb";
+import pricedialog from "./pricedialog.vue";
 
 const defaultFormData = {
   mock1: null,
@@ -175,7 +193,8 @@ export default {
   mixins: [classMixin],
   components: {
     heltable,
-    hlBreadcrumb
+    hlBreadcrumb,
+    pricedialog
   },
   data() {
     return {
@@ -186,7 +205,9 @@ export default {
       listData: { ...defaultListData }, // 返回list的数据结构
       tableHeader: defaulttableHeader,
       showOverflowTooltip: true,
-      selectedItems: []
+      selectedItems: [],
+      editProductName: "编辑修改",
+      priceLoading: false
     };
   },
   computed: {
@@ -203,7 +224,9 @@ export default {
     }
   },
   methods: {
-    // ...mapMutations("", []),
+    ...mapMutations("releaseNewCommodity", ["setIsEdit", "setCommodityId"]),
+    ...mapMutations("commodityOnSale", ["setPricedialog"]),
+    ...mapActions("commodityOnSale", ["openPriceDialog"]),
     selectChange(selection) {
       this.selectedItems = selection.slice();
     },
@@ -237,62 +260,66 @@ export default {
           break;
       }
     },
-    async batchUnFrozen() {
-      this.isbatchUnFrozenLoading = true;
-      const res = await this.$api.unfrozen(this.stockInventoryIds);
-      this.isbatchUnFrozenLoading = false;
+    open(item) {
+      const { id, price, totalNumInventory, productName, productCode } = item;
+      this.editProductName = `编辑商品${productName},编码为${productCode}`;
+      this.openPriceDialog({ id, price, totalNumInventory });
+    },
+    GoReleaseNewCommodity() {
+      this.$router.push({
+        path: "/web/cm/commodity/releaseNewCommodity/page"
+      });
+    },
+    GoEditOldCommodity(item) {
+      const { id } = item;
+      this.setIsEdit(true);
+      this.setCommodityId(id);
+      this.$router.push({
+        path: "/web/cm/commodity/editOldCommodity/page"
+      });
+    },
+    takenoff(item = null) {
+      let that = this;
+      let id,productCode,info;
+      if (item) {
+        id = item.id;
+        productCode = item.productCode;
+      } else {
+        id = this.ids;
+        productCode = this.productCodes.join();
+      }
+      info = `商品编码${productCode}`;
+      this.$confirm(`确定要下架${info}`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(async () => {
+        const res = await that.$api.DoTakenOff([{ id }]);
+        switch (res.code) {
+          case Dict.SUCCESS:
+            that.$messageSuccess(`下架成功`);
+            that.getListData();
+            break;
+          default:
+            that.$messageError(`下架成功,${res.mesg}`);
+            break;
+        }
+      });
+    },
+    async updatePrice(data) {
+      this.priceLoading = true;
+      const res = await this.$api.updateCommodity(data);
+      this.priceLoading = false;
       switch (res.code) {
         case Dict.SUCCESS:
-          this.$messageSuccess("解冻结成功");
-          this.batchUnFrozenVisible = false;
+          this.$messageSuccess(`修改成功`);
+          this.setPricedialog(false)
           this.getListData();
           break;
         default:
           this.$messageError(res.mesg);
           break;
       }
-    },
-    GoEnterRegister() {
-      this.$router.push({
-        path: "/web/yc/storage/stockRegisterDetail/page/register"
-      });
-    },
-    detail(item) {
-      this.setFindDetail(item);
-      this.$router.push({
-        path: "/web/cm/commodity/commodityOnSale/page/inventoryDetail"
-      });
-    },
-    takenoff(item = null) {
-      let that = this;
-      let id;
-      let productCode;
-      let info;
-      if (item) {
-        id = item.id
-        productCode = item.productCode
-      }else {
-        id = this.ids;
-        productCode = this.productCodes.join();
-      }
-      info = `商品编码${productCode}`;
-      this.$confirm(`确定要下架${info}`, "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
-        .then(async () => {
-          const res = await that.$api.DoTakenOff([{ id }]);
-          switch (res.code) {
-            case Dict.SUCCESS:
-              that.$messageSuccess(`下架成功`);
-              that.getListData();
-              break;
-            default:
-              that.$messageError(`下架成功,${res.mesg}`);
-              break;
-          }
-        });
     },
     init() {
       setTimeout(() => {
@@ -319,7 +346,7 @@ export default {
         }
       }
     }
-  }  
+  }
 };
 </script>
 
