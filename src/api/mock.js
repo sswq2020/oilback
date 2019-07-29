@@ -50,6 +50,17 @@ const body_fail = {
 }
 
 
+const commodityOnSaleList = {
+    "id|+1": "@INTEGER(1,2019690999)",
+    "price": "@INTEGER(1,2019690999)", // 售价
+    "totalNumInventory": "@INTEGER(1000,5000)", // 库存数量
+    "totalNumOnSale": "@INTEGER(1000,5000)", // 总销量
+    "productName": "@CTITLE(2,4)", // 商品名称
+    "productCode": "@INTEGER(1,2019690999)", // 商品编码
+    "releaseTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
+    "fileId":"@INTEGER(1,2019690999)"
+}
+
 const classData =[
     {
         "id": 1,
@@ -332,6 +343,28 @@ const mockRouterMap = {
         // #endregion   
 
         // #endregion
+
+        // #region  出售中的商品列表
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/cm/commodity/commodityOnSale/page',
+            result(params) {
+                return {
+                    ...body,
+                    data: {
+                        'list|4-7': [commodityOnSaleList],
+                        "paginator": {
+                            "currentPage": params.page,
+                            "pageSize": params.pageSize,
+                            "totalCount": 1000,
+                            "totalPage": 1000 / params.pageSize
+                        }
+                    },
+                };
+            }
+        },        
+        // #endregion     
 
         // #region  字典项
         {

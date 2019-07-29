@@ -356,7 +356,14 @@ export default {
     getParameterById(id){
         return fetch(oilURL + '/web/cm/productInterface/getParameterById',{id},'get')          
     },
-
+    /**
+     * @author sswq
+     * @param params
+     * @description 出售中的商品列表
+     * */
+    getCommodityOnSaleList(params){
+        return fetch(oilURL + '/web/cm/commodity/commodityOnSale/page',params)          
+    },
 
     // #endregion
 
