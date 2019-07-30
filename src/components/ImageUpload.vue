@@ -75,8 +75,8 @@ export default {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  width: 104px;
-  height: 104px;;
+  width: 90px;
+  height: 90px;;
   padding: 8px;
 }
 .avatar-uploader:hover {
@@ -85,14 +85,14 @@ export default {
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 104px;
-  height: 104px;
-  line-height: 104px;
+  width: 90px;
+  height: 90px;
+  line-height: 90px;
   text-align: center;
 }
 .avatar {
-  width: 104px;
-  height: 104px;
+  width: 90px;
+  height: 90px;
   display: block;
 }
 </style>
