@@ -307,13 +307,15 @@ export default {
     },
     takenoff(item = null) {
       let that = this;
-      let id, serialNumber, info;
+      let params, serialNumber, info,url;
       if (item) {
-        id = item.id;
+        params = {'id':item.id,'sellState':"1"}
         serialNumber = item.serialNumber;
+        url = 'updateCommodity'
       } else {
-        id = this.ids;
+        params = this.ids.map((item)=>{return {'id':item.id,'sellState':"1"}});
         serialNumber = this.serialNumbers.join();
+        url = 'batchUpdateCommodity'
       }
       info = `商品编码${serialNumber}`;
       this.$confirm(`确定要下架${info}`, "提示", {
@@ -321,7 +323,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(async () => {
-        const res = await that.$api.DoTakenOff([{ id }]);
+        const res = await that.$api[url](params);
         switch (res.code) {
           case Dict.SUCCESS:
             that.$messageSuccess(`下架成功`);
@@ -341,6 +343,7 @@ export default {
         case Dict.SUCCESS:
           this.$messageSuccess(`修改成功`);
           this.setPricedialog(false);
+          debugger
           this.getListData();
           break;
         default:

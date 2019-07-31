@@ -136,7 +136,7 @@
       <el-table-column label="操作" width="250px" align="center">
         <template slot-scope="scope">
           <el-button type="text" @click="GoEditOldCommodity(listData.list[scope.$index])">编辑商品</el-button>
-          <el-button type="text" @click="takenoff(listData.list[scope.$index])">下架</el-button>
+          <el-button type="text" @click="takenoff(listData.list[scope.$index])">上架</el-button>
         </template>
       </el-table-column>
     </heltable>
@@ -302,13 +302,15 @@ export default {
     },
     shelves(item = null) {
       let that = this;
-      let id,serialNumber,info;
+      let params, serialNumber, info, url;
       if (item) {
-        id = item.id;
+        params = {'id':item.id,'sellState':"0"}
         serialNumber = item.serialNumber;
+        url = 'updateCommodity'
       } else {
-        id = this.ids;
+        params = this.ids.map((item)=>{return {'id':item.id,'sellState':"0"}});
         serialNumber = this.serialNumbers.join();
+        url = 'batchUpdateCommodity'
       }
       info = `商品编码${serialNumber}`;
       this.$confirm(`确定要上架${info}`, "提示", {
@@ -316,7 +318,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(async () => {
-        const res = await that.$api.DoShelves([{ id }]);
+        const res = await that.$api[url](params);
         switch (res.code) {
           case Dict.SUCCESS:
             that.$messageSuccess(`上架成功`);

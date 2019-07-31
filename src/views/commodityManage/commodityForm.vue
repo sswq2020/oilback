@@ -196,7 +196,8 @@ const defualtFormParams = {
 
 export default {
   name: "commodityForm",
-  mixins: [classMixin, dictMixin],
+  mixins: [classMixin],
+  // mixins: [classMixin, dictMixin],
   components: {
     hlBreadcrumb,
     ImageBox,
