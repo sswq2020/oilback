@@ -90,7 +90,9 @@
               />
             </div>
             <div class="goods-content">
-              <div class="productName">{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandardEnum.text || '-'}}</div>
+              <div
+                class="productName"
+              >{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandardEnum.text || '-'}}</div>
               <div class="serialNumber">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
             </div>d
           </div>
@@ -136,7 +138,7 @@
       <el-table-column label="操作" width="250px" align="center">
         <template slot-scope="scope">
           <el-button type="text" @click="GoEditOldCommodity(listData.list[scope.$index])">编辑商品</el-button>
-          <el-button type="text" @click="takenoff(listData.list[scope.$index])">上架</el-button>
+          <el-button type="text" @click="shelves(listData.list[scope.$index])">上架</el-button>
         </template>
       </el-table-column>
     </heltable>
@@ -169,7 +171,7 @@ const defaultFormData = {
 const defaultListParams = {
   pageSize: 5,
   page: 1,
-  sellState:"1"
+  sellState: "1"
 };
 const defaultListData = {
   paginator: {
@@ -260,17 +262,25 @@ export default {
         return false;
       }
       if (number3(startPrice) && number3(endPrice)) {
-        return true;
+        if (Number(endPrice) >= Number(startPrice)) {
+          return true;
+        } else {
+          this.$messageError("最高价必须大于或等于最低价");
+          return false;
+        }
       } else {
         this.$messageError("价格必须是正数可以包含3位小数");
         return false;
       }
     },
     async getListData() {
-      const flag= this._filter();
-      if(!flag) return;
+      const flag = this._filter();
+      if (!flag) return;
       this.isListDataLoading = true;
-      const res = await this.$api.getCommodityOnSaleList({...this.form,...this.listParams});
+      const res = await this.$api.getCommodityOnSaleList({
+        ...this.form,
+        ...this.listParams
+      });
       this.isListDataLoading = false;
       switch (res.code) {
         case Dict.SUCCESS:
@@ -283,8 +293,18 @@ export default {
       }
     },
     open(item) {
-      const { id, price, totalWeightInventory, firstCatalogName,secondCatalogName,emissionStandardEnum, serialNumber } = item;
-      this.editProductName = `编辑商品${firstCatalogName+secondCatalogName+emissionStandardEnum.text},编码为${serialNumber}`;
+      const {
+        id,
+        price,
+        totalWeightInventory,
+        firstCatalogName,
+        secondCatalogName,
+        emissionStandardEnum,
+        serialNumber
+      } = item;
+      this.editProductName = `编辑商品${firstCatalogName +
+        secondCatalogName +
+        emissionStandardEnum.text},编码为${serialNumber}`;
       this.openPriceDialog({ id, price, totalWeightInventory });
     },
     GoReleaseNewCommodity() {
@@ -304,13 +324,15 @@ export default {
       let that = this;
       let params, serialNumber, info, url;
       if (item) {
-        params = {'id':item.id,'sellState':"0"}
+        params = { id: item.id, sellState: "0" };
         serialNumber = item.serialNumber;
-        url = 'updateCommodity'
+        url = "updateCommodity";
       } else {
-        params = this.ids.map((item)=>{return {'id':item.id,'sellState':"0"}});
+        params = this.ids.map(item => {
+          return { id: item, sellState: "0" };
+        });
         serialNumber = this.serialNumbers.join();
-        url = 'batchUpdateCommodity'
+        url = "batchUpdateCommodity";
       }
       info = `商品编码${serialNumber}`;
       this.$confirm(`确定要上架${info}`, "提示", {
@@ -337,7 +359,7 @@ export default {
       switch (res.code) {
         case Dict.SUCCESS:
           this.$messageSuccess(`修改成功`);
-          this.setPricedialog(false)
+          this.setPricedialog(false);
           this.getListData();
           break;
         default:
@@ -363,7 +385,7 @@ export default {
         if (newV !== oldV) {
           this.form.mock2 = null;
           if (newV) {
-           const index = _.findIndex(this.firstClassList, o => {
+            const index = _.findIndex(this.firstClassList, o => {
               return o.id == newV;
             });
             this.secondClassList = this.firstClassList[index].children;

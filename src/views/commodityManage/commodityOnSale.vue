@@ -262,7 +262,12 @@ export default {
         return false;
       }
       if (number3(startPrice) && number3(endPrice)) {
-        return true;
+        if (Number(endPrice) >= Number(startPrice)) {
+          return true;
+        } else {
+          this.$messageError("最高价必须大于或等于最低价");
+          return false;
+        }
       } else {
         this.$messageError("价格必须是正数可以包含3位小数");
         return false;
@@ -313,7 +318,7 @@ export default {
         serialNumber = item.serialNumber;
         url = 'updateCommodity'
       } else {
-        params = this.ids.map((item)=>{return {'id':item.id,'sellState':"1"}});
+        params = this.ids.map((item)=>{return {'id':item,'sellState':"1"}});
         serialNumber = this.serialNumbers.join();
         url = 'batchUpdateCommodity'
       }
