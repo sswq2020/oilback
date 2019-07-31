@@ -232,13 +232,23 @@ export default {
         path: "/web/cm/commodity/releaseNewCommodity/page"
       });
     },
+    GoOnSale(){
+      this.$router.push({
+        path: "/web/cm/commodity/commodityOnSale/page"
+      });      
+    },
+    GoForSale(){
+      this.$router.push({
+        path: "/web/cm/commodity/commodityForSale/page"
+      });      
+    },
     async _addCommodity_(params) {
       this.loading = true;
       const res = await this.$api.addCommodity(params);
       this.loading = false;
       switch (res.code) {
         case Dict.SUCCESS:
-          this.$messageSuccess("新增商品");
+          this.$messageSuccess("新增商品成功");
           this.back();
           break;
         default:
@@ -246,6 +256,24 @@ export default {
           break;
       }
     },
+    async _updateCommodity_(params) {
+      this.loading = true;
+      const res = await this.$api.updateCommodity(params);
+      this.loading = false;
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.$messageSuccess("编辑商品成功");
+          if(this.form.sellState==="0"){
+            this.GoOnSale();
+          }else {
+            this.GoForSale();
+          }
+          break;
+        default:
+          this.$messageError(res.mesg);
+          break;
+      }
+    },    
     _findName(arr = [], id) {
       let copy = _.clone(arr);
       const index = _.findIndex(copy, o => {
@@ -290,7 +318,12 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           const params = this._filter();
+          if(this.isEdit){
+            this._updateCommodity_(params);
+          }else {
           this._addCommodity_(params);
+          }
+
         } else {
           return false;
         }

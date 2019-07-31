@@ -402,7 +402,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: '/web/cm/productInterface/update',
+            router: '/web/hyw/product/product/update',
             result() {
                 return {
                     ...body
