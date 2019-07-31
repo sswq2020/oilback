@@ -361,6 +361,16 @@ export default {
           this.$messageError(res.mesg);
           break;
       }
+    },
+    async _getFilesInfo(fileId) {
+      const res = await this.$api.getFilesInfo({ fileId });
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.url = res.data.url;
+        default:
+          this.$messageError(res.mesg);
+          break;
+      }      
     }
   },
   mounted() {
@@ -413,6 +423,15 @@ export default {
         if (newV !== oldV) {
           this._getParameter(newV);
         }
+      }
+    },
+    "form.fileId": {
+      handler(newV, oldV) {
+       if(newV) {
+         if(newV !== oldV && this.url === "#") {
+           this._getFilesInfo(newV)
+         }
+       }
       }
     }
   }
