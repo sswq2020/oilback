@@ -98,26 +98,26 @@
               :md="12"
               :sm="12"
               :xs="24"
-              v-for="(domain, index) in form.parameterList"
-              :key="domain.id"
+              v-for="(item, index) in form.parameterList"
+              :key="item.id"
             >
               <el-form-item
-                :label="domain.paraName"
+                :label="item.paraName"
                 :prop="'parameterList.' + index + '.paraValue'"
                 :rules="{required: true, message: '必填', trigger: 'blur'}"
               >
-                <el-input v-model="domain.paraValue"></el-input>
+                <el-input v-model="item.paraValue"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
         </div>
-        <div class="form-block">
+        <div class="form-block">sellState
           <div class="head">销售状态</div>
           <el-row :gutter="50">
             <el-col :md="12" :sm="12" :xs="24">
               <el-form-item label="销售状态" prop="sellState" :rules="[{ required: true, message: '必填' }]">
-                <el-radio v-model="form.sellState" label="1">放入出售中</el-radio>
-                <el-radio v-model="form.sellState" label="2">放入待售中</el-radio>
+                <el-radio v-model="form.sellState" label="0">放入出售中</el-radio>
+                <el-radio v-model="form.sellState" label="1">放入待售中</el-radio>
               </el-form-item>
             </el-col>
           </el-row>
@@ -125,8 +125,6 @@
         <div class="bottom">
           <el-form-item>
             <el-button type="primary" :loading="loading" @click="submitForm('form')">发布</el-button>
-            <el-button @click="addDomain">新增</el-button>
-            <el-button @click="back">取消</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -174,7 +172,10 @@ export default {
       url:
         "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg", // 后台改成上传成功后返回的url
       form: { ...defualtFormParams },
-      paramsList:[]
+      paramsList:[],
+      /**参数列表一般是由一二级目录决定，但是编辑页面一开始进入的时候是唯一的外部触发*/
+      ExternalTrigger:false
+
     };
   },
   computed: {
@@ -284,12 +285,6 @@ export default {
         }
       });
     },
-    addDomain() {
-      this.form.parameterList.push({
-        value: "",
-        key: Date.now()
-      });
-    },
     async _getParameter(id) {
       const res = await this.$api.getParameterById(id);
       switch (res.code) {
@@ -311,12 +306,12 @@ export default {
     }
   },
   mounted() {
-    if (this.isEdit) {
-      if(!this.commodityId) {
-        this.back();
-      }
+    if (this.isEdit&&this.commodityId) {
       console.log("这是编辑页面");
     } else {
+      if(this.$route.name === "editOldCommodity") {
+        this.back();
+      }
       console.log("这是新增页面");
     }
   },
@@ -334,7 +329,8 @@ export default {
           this.form.secondCatalogId = null;
           if (newV) {
             setTimeout(() => {
-              this.secondClassList = this.firstClassList[newV].children;
+              const index = _.findIndex(this.firstClassList,(o)=>{return o.id === newV})
+              this.secondClassList = this.firstClassList[index].children;
             }, 20);
           }
         }
