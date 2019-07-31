@@ -83,18 +83,25 @@
         <template slot-scope="scope">
           <div class="goods">
             <div class="avatar">
-              <img
+              <!--测试上线前改为下面的-->
+              <img v-if="listData.list[scope.$index].fileId"
                 width="65"
                 height="64"
                 src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
               />
+             <!-- <img v-if="listData.list[scope.$index].fileId"
+                width="65"
+                height="64"
+                :src="listData.list[scope.$index].url"
+              /> -->
+              <span v-else>未设置图片</span>
             </div>
             <div class="goods-content">
               <div
                 class="productName"
               >{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandardEnum.text || '-'}}</div>
               <div class="serialNumber">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
-            </div>d
+            </div>
           </div>
         </template>
       </el-table-column>
@@ -348,7 +355,6 @@ export default {
         case Dict.SUCCESS:
           this.$messageSuccess(`修改成功`);
           this.setPricedialog(false);
-          debugger
           this.getListData();
           break;
         default:

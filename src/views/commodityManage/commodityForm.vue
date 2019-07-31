@@ -176,10 +176,7 @@ import hlBreadcrumb from "components/hl-breadcrumb";
 import ImageBox from "components/ImageBox";
 import ImageUpload from "components/ImageUpload";
 import Dict from "util/dict.js";
-import { imgHost } from "api/mock";
-import ENV from "common/env.js";
 import _ from "lodash";
-const imgUrl = `${imgHost[ENV]}/dfs/open/files/info/get?url=`;
 const defualtFormParams = {
   fileId: "1111111", // 图片上传成功后返回的id
   firstCatalogId: null,
@@ -217,9 +214,6 @@ export default {
   },
   computed: {
     ...mapState("releaseNewCommodity", ["isEdit", "commodityId"]),
-    computedUrl() {
-      return imgUrl + this.url;
-    },
     breadTitle() {
       return this.isEdit
         ? ["商品管理", "编辑商品"]
@@ -303,6 +297,7 @@ export default {
               this.form.secondCatalogId
             )
           },
+          {url:this.url},
           {
             sellStateEnum:null,
             emissionStandardEnum:null
@@ -367,6 +362,7 @@ export default {
       switch (res.code) {
         case Dict.SUCCESS:
           this.url = res.data.url;
+          break;
         default:
           this.$messageError(res.mesg);
           break;
@@ -375,14 +371,14 @@ export default {
   },
   mounted() {
     if (this.isEdit && this.commodityId) {
-      console.log("这是编辑页面");
+      console.info("这是编辑页面");
       this.ExternalTrigger = true;
       this._getDetailCommodity(this.commodityId);
     } else {
       if (this.$route.name === "editOldCommodity") {
         this.back();
       }
-      console.log("这是新增页面");
+      console.info("这是新增页面");
     }
   },
   created() {},
