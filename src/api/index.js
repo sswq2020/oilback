@@ -335,18 +335,10 @@ export default {
     /**
      * @author sswq
      * @param params
-     * @description 发布新商品
-     * */
-    addStockRegister(params){
-        return fetch(oilURL + '/web/yc/storage/stockRegister/add', params)          
-    },
-    /**
-     * @author sswq
-     * @param params
      * @description 一级二级目录
      * */
     getClass(){
-        return fetch(oilURL + '/web/cm/productInterface/getClassify', '','get')          
+        return fetch(oilURL + '/productInterface/getClassify', '','get')          
     },
     /**
      * @author sswq
@@ -354,7 +346,7 @@ export default {
      * @description 二级目录下动态加载的
      * */
     getParameterById(id){
-        return fetch(oilURL + '/web/cm/productInterface/getParameterById',{id},'get')          
+        return fetch(oilURL + '/productInterface/getParameterById',{id},'get')          
     },
     /**
      * @author sswq
@@ -362,7 +354,7 @@ export default {
      * @description 出售中的商品列表
      * */
     getCommodityOnSaleList(params){
-        return fetch(oilURL + '/web/cm/commodity/commodityOnSale/page',params)          
+        return fetch(oilURL + '/web/hyw/product/product/page',params)          
     },
     /**
      * @author sswq
@@ -386,7 +378,15 @@ export default {
      * @description 修改商品
      * */
     updateCommodity(params){
-        return fetch(oilURL + '/web/cm/productInterface/update',params)          
+        return fetch(oilURL + '/web/hyw/product/product/update',params)          
+    },
+    /**
+     * @author sswq
+     * @param params
+     * @description 批量更新商品
+     * */
+    batchUpdateCommodity(params){
+        return fetch(oilURL + '/web/hyw/product/product/switchState',params)          
     },
     /**
      * @author sswq
@@ -429,7 +429,14 @@ export default {
     getBankList(params) {
         return fetch(oilURL + '/web/yc/bank/info', params, 'get')
     },
+    /**
+     * @author sswq
+     * @description 获取文件信息
+     * */
+    getFilesInfo(params) {
+        return fetch('/dfs/open/files/info/get', params, 'get')
+    },
     // #endregion
-
+    
     
 }
