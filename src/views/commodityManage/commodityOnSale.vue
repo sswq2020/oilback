@@ -90,7 +90,9 @@
               />
             </div>
             <div class="goods-content">
-              <div class="productName">{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandardEnum.text || '-'}}</div>
+              <div
+                class="productName"
+              >{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandardEnum.text || '-'}}</div>
               <div class="productCode">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
             </div>d
           </div>
@@ -157,6 +159,7 @@ import Dict from "@/util/dict.js";
 import heltable from "@/components/hl_table";
 import hlBreadcrumb from "@/components/hl-breadcrumb";
 import pricedialog from "./pricedialog.vue";
+import { number3 } from "util/validate.js";
 
 const defaultFormData = {
   firstCatalogId: null,
@@ -168,7 +171,7 @@ const defaultFormData = {
 const defaultListParams = {
   pageSize: 5,
   page: 1,
-  sellState:"0"
+  sellState: "0"
 };
 const defaultListData = {
   paginator: {
@@ -245,11 +248,34 @@ export default {
       this.listParams = { ...defaultListParams };
       this.getListData();
     },
-    _filter() {},
+    _filter() {
+      const { startPrice, endPrice } = this.form;
+      if (!startPrice && !endPrice) {
+        return true;
+      }
+      if (!startPrice && endPrice) {
+        this.$messageError("最低价应填");
+        return false;
+      }
+      if (startPrice && !endPrice) {
+        this.$messageError("最高价应填");
+        return false;
+      }
+      if (number3(startPrice) && number3(endPrice)) {
+        return true;
+      } else {
+        this.$messageError("价格必须是正数可以包含3位小数");
+        return false;
+      }
+    },
     async getListData() {
-      // let obj = this._filter();
+      const flag= this._filter();
+      if(!flag) return;
       this.isListDataLoading = true;
-      const res = await this.$api.getCommodityOnSaleList({...this.form,...this.listParams});
+      const res = await this.$api.getCommodityOnSaleList({
+        ...this.form,
+        ...this.listParams
+      });
       this.isListDataLoading = false;
       switch (res.code) {
         case Dict.SUCCESS:
@@ -281,7 +307,7 @@ export default {
     },
     takenoff(item = null) {
       let that = this;
-      let id,productCode,info;
+      let id, productCode, info;
       if (item) {
         id = item.id;
         productCode = item.productCode;
@@ -314,7 +340,7 @@ export default {
       switch (res.code) {
         case Dict.SUCCESS:
           this.$messageSuccess(`修改成功`);
-          this.setPricedialog(false)
+          this.setPricedialog(false);
           this.getListData();
           break;
         default:
@@ -340,7 +366,7 @@ export default {
         if (newV !== oldV) {
           this.form.secondCatalogId = null;
           if (newV) {
-           const index = _.findIndex(this.firstClassList, o => {
+            const index = _.findIndex(this.firstClassList, o => {
               return o.id == newV;
             });
             this.secondClassList = this.firstClassList[index].children;

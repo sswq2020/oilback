@@ -2,7 +2,7 @@
   <div class="container single-page">
     <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
     <div class="form">
-      <el-form ref="form" :model="form" label-width="125px" size="small">
+      <el-form ref="form" :model="form" label-width="165px" size="small">
         <div class="form-block">
           <el-row>
             <el-col :md="12" :sm="12" :xs="24">
