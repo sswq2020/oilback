@@ -11,8 +11,8 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :md="12" :sm="12" :xs="24">
-              <el-form-item label="一级目录" prop="mock1" :rules="[{ required: true, message: '必选'  }]">
-                <el-select v-model="form.mock1" placeholder="请选择" size="small">
+              <el-form-item label="一级目录" prop="firstCatalogId" :rules="[{ required: true, message: '必选'  }]">
+                <el-select v-model="form.firstCatalogId" placeholder="请选择" size="small">
                   <el-option
                     v-for="(item,index) in firstClassList"
                     :key="index"
@@ -23,8 +23,8 @@
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
-              <el-form-item label="二级目录" prop="mock2" :rules="[{ required: true, message:'必选'  }]">
-                <el-select v-model="form.mock2" placeholder="请选择" size="small">
+              <el-form-item label="二级目录" prop="secondCatalogId" :rules="[{ required: true, message:'必选'  }]">
+                <el-select v-model="form.secondCatalogId" placeholder="请选择" size="small">
                   <el-option
                     v-for="(item,index) in secondClassList"
                     :key="index"
@@ -35,41 +35,41 @@
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
-              <el-form-item label="排放标准" prop="mock3" :rules="[{ required: true, message: '必填' }]">
-                <el-input v-model="form.mock3"></el-input>
+              <el-form-item label="排放标准" prop="emissionStandard" :rules="[{ required: true, message: '必填' }]">
+                <el-input v-model="form.emissionStandard"></el-input>
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
               <el-form-item
                 label="密度(kg/m³)"
-                prop="mock4"
+                prop="density"
                 :rules="[{ required: true, message: '必填' }]"
               >
-                <el-input v-model="form.mock4"></el-input>
+                <el-input v-model="form.density"></el-input>
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
-              <el-form-item label="产品编号" prop="mock5" :rules="[{ required: true, message: '必填' }]">
-                <el-input v-model="form.mock5"></el-input>
+              <el-form-item label="产品编号" prop="serialNumber" :rules="[{ required: true, message: '必填' }]">
+                <el-input v-model="form.serialNumber"></el-input>
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
-              <el-form-item label="生产商" prop="mock6" :rules="[{ required: true, message: '必填' }]">
-                <el-input v-model="form.mock6"></el-input>
+              <el-form-item label="生产商" prop="manufacturerId" :rules="[{ required: true, message: '必填' }]">
+                <el-input v-model="form.manufacturerId"></el-input>
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
               <el-form-item
                 label="商品价格(元/吨)"
-                prop="mock7"
+                prop="price"
                 :rules="[{ required: true, message: '必填' }]"
               >
-                <el-input v-model="form.mock7"></el-input>
+                <el-input v-model="form.price"></el-input>
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
-              <el-form-item label="库存(件)" prop="mock8" :rules="[{ required: true, message: '必填' }]">
-                <el-input v-model="form.mock8"></el-input>
+              <el-form-item label="库存(吨)" prop="totalWeightInventory" :rules="[{ required: true, message: '必填' }]">
+                <el-input v-model="form.totalWeightInventory"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -91,22 +91,22 @@
             </el-col>
           </el-row>
         </div>
-        <div class="form-block" v-show="form.domains.length">
+        <div class="form-block" v-show="form.parameterList.length">
           <div class="head">参数信息</div>
           <el-row :gutter="50">
             <el-col
               :md="12"
               :sm="12"
               :xs="24"
-              v-for="(domain, index) in form.domains"
+              v-for="(domain, index) in form.parameterList"
               :key="domain.id"
             >
               <el-form-item
                 :label="domain.paraName"
-                :prop="'domains.' + index + '.value'"
+                :prop="'parameterList.' + index + '.paraValue'"
                 :rules="{required: true, message: '必填', trigger: 'blur'}"
               >
-                <el-input v-model="domain.value"></el-input>
+                <el-input v-model="domain.paraValue"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -115,9 +115,9 @@
           <div class="head">销售状态</div>
           <el-row :gutter="50">
             <el-col :md="12" :sm="12" :xs="24">
-              <el-form-item label="销售状态" prop="mock9" :rules="[{ required: true, message: '必填' }]">
-                <el-radio v-model="form.mock9" label="1">放入出售中</el-radio>
-                <el-radio v-model="form.mock9" label="2">放入待售中</el-radio>
+              <el-form-item label="销售状态" prop="sellState" :rules="[{ required: true, message: '必填' }]">
+                <el-radio v-model="form.sellState" label="1">放入出售中</el-radio>
+                <el-radio v-model="form.sellState" label="2">放入待售中</el-radio>
               </el-form-item>
             </el-col>
           </el-row>
@@ -136,9 +136,10 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import { classMixin } from "@/common/mixin.js";
 import hlBreadcrumb from "components/hl-breadcrumb";
 import ImageBox from "components/ImageBox";
-import ImageUpload from "components/ImageUpload_";
+import ImageUpload from "components/ImageUpload";
 import Dict from "util/dict.js";
 import { imgHost } from "api/mock";
 import ENV from "common/env.js";
@@ -146,21 +147,22 @@ import _ from "lodash";
 const imgUrl = `${imgHost[ENV]}/dfs/open/files/info/get?url=`;
 const defualtFormParams = {
   fileId: null, // 图片上传成功后返回的id
-  mock1: null,
-  mock2: null,
-  mock3: null,
-  mock4: null,
-  mock5: null,
-  mock6: null,
-  mock7: null,
-  mock8: null,
-  mock9: "1",
-  mock10: null,
-  domains: []
+  firstCatalogId: null,
+  secondCatalogId: null,
+  emissionStandard: null,
+  density: null,
+  serialNumber: null,
+  manufacturerId: null,
+  price: null,
+  totalWeightInventory: null,
+  sellState: "1",
+  firstCatalogId0: null,
+  parameterList: []
 };
 
 export default {
   name: "commodityForm",
+    mixins: [classMixin],
   components: {
     hlBreadcrumb,
     ImageBox,
@@ -172,8 +174,6 @@ export default {
       url:
         "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg", // 后台改成上传成功后返回的url
       form: { ...defualtFormParams },
-      firstClassList: [],
-      secondClassList: [],
       paramsList:[]
     };
   },
@@ -267,12 +267,12 @@ export default {
       return params;
     },
     uploadSuceess(res) {
-      // const {ext,id,mtUrl,name,stUrl,url} = res  联调测试的时候得到的值
-      this.form.fileId = res.uid;
+      this.url = res.data.url;
+      this.form.fileId = res.data.id;
     },
     uploadDelete() {
-      this.form.fileId = null;
       this.url = "#";
+      this.form.fileId = null;
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
@@ -285,39 +285,10 @@ export default {
       });
     },
     addDomain() {
-      this.form.domains.push({
+      this.form.parameterList.push({
         value: "",
         key: Date.now()
       });
-    },
-    _handleClass(arr) {
-      if (!arr || !arr.length) {
-        return [];
-      }
-      if (arr.length) {
-        arr.forEach(item => {
-          if (!item.parentId) {
-            item.parentId = "top";
-          }
-        });
-      }
-      let group = _.groupBy(arr, "parentId");
-      let top = group.top;
-      top.forEach(item => {
-        item.children = group[item.id];
-      });
-      return top;
-    },
-    async _getClass() {
-      const res = await this.$api.getClass();
-      switch (res.code) {
-        case Dict.SUCCESS:
-          this.firstClassList = this._handleClass(res.data);
-          break;
-        default:
-          this.$messageError(res.mesg);
-          break;
-      }
     },
     async _getParameter(id) {
       const res = await this.$api.getParameterById(id);
@@ -325,8 +296,8 @@ export default {
         case Dict.SUCCESS:
           if (res.data && res.data.length) {
             this.paramsList = _.cloneDeep(res.data) // 万一以后有用
-            this.form.domains = res.data.map(item => {
-              return { ...item, value: "" };
+            this.form.parameterList = res.data.map(item => {
+              return { ...item, paraValue: "" };
             });
           }
           break;
@@ -357,10 +328,10 @@ export default {
     this.setCommodityId(null)
   },
   watch: {
-    "form.mock1": {
+    "form.firstCatalogId": {
       handler(newV, oldV) {
         if (newV !== oldV) {
-          this.form.mock2 = null;
+          this.form.secondCatalogId = null;
           if (newV) {
             setTimeout(() => {
               this.secondClassList = this.firstClassList[newV].children;
@@ -369,11 +340,11 @@ export default {
         }
       }
     },
-    "form.mock2": {
+    "form.secondCatalogId": {
       handler(newV, oldV) {
         if (!newV) {
           setTimeout(()=>{
-            this.form.domains = []
+            this.form.parameterList = []
           },20)
           return;
         }
