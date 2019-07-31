@@ -11,7 +11,11 @@
           </el-row>
           <el-row :gutter="20">
             <el-col :md="12" :sm="12" :xs="24">
-              <el-form-item label="一级目录" prop="firstCatalogId" :rules="[{ required: true, message: '必选'  }]">
+              <el-form-item
+                label="一级目录"
+                prop="firstCatalogId"
+                :rules="[{ required: true, message: '必选'  }]"
+              >
                 <el-select v-model="form.firstCatalogId" placeholder="请选择" size="small">
                   <el-option
                     v-for="(item,index) in firstClassList"
@@ -23,7 +27,11 @@
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
-              <el-form-item label="二级目录" prop="secondCatalogId" :rules="[{ required: true, message:'必选'  }]">
+              <el-form-item
+                label="二级目录"
+                prop="secondCatalogId"
+                :rules="[{ required: true, message:'必选'  }]"
+              >
                 <el-select v-model="form.secondCatalogId" placeholder="请选择" size="small">
                   <el-option
                     v-for="(item,index) in secondClassList"
@@ -35,7 +43,11 @@
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
-              <el-form-item label="排放标准" prop="emissionStandard" :rules="[{ required: true, message: '必填' }]">
+              <el-form-item
+                label="排放标准"
+                prop="emissionStandard"
+                :rules="[{ required: true, message: '必填' }]"
+              >
                 <el-input v-model="form.emissionStandard"></el-input>
               </el-form-item>
             </el-col>
@@ -49,12 +61,20 @@
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
-              <el-form-item label="产品编号" prop="serialNumber" :rules="[{ required: true, message: '必填' }]">
+              <el-form-item
+                label="产品编号"
+                prop="serialNumber"
+                :rules="[{ required: true, message: '必填' }]"
+              >
                 <el-input v-model="form.serialNumber"></el-input>
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
-              <el-form-item label="生产商" prop="manufacturerId" :rules="[{ required: true, message: '必填' }]">
+              <el-form-item
+                label="生产商"
+                prop="manufacturerId"
+                :rules="[{ required: true, message: '必填' }]"
+              >
                 <el-input v-model="form.manufacturerId"></el-input>
               </el-form-item>
             </el-col>
@@ -68,7 +88,11 @@
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
-              <el-form-item label="库存(吨)" prop="totalWeightInventory" :rules="[{ required: true, message: '必填' }]">
+              <el-form-item
+                label="库存(吨)"
+                prop="totalWeightInventory"
+                :rules="[{ required: true, message: '必填' }]"
+              >
                 <el-input v-model="form.totalWeightInventory"></el-input>
               </el-form-item>
             </el-col>
@@ -111,11 +135,16 @@
             </el-col>
           </el-row>
         </div>
-        <div class="form-block">sellState
+        <div class="form-block">
+          sellState
           <div class="head">销售状态</div>
           <el-row :gutter="50">
             <el-col :md="12" :sm="12" :xs="24">
-              <el-form-item label="销售状态" prop="sellState" :rules="[{ required: true, message: '必填' }]">
+              <el-form-item
+                label="销售状态"
+                prop="sellState"
+                :rules="[{ required: true, message: '必填' }]"
+              >
                 <el-radio v-model="form.sellState" label="0">放入出售中</el-radio>
                 <el-radio v-model="form.sellState" label="1">放入待售中</el-radio>
               </el-form-item>
@@ -144,7 +173,7 @@ import ENV from "common/env.js";
 import _ from "lodash";
 const imgUrl = `${imgHost[ENV]}/dfs/open/files/info/get?url=`;
 const defualtFormParams = {
-  fileId: null, // 图片上传成功后返回的id
+  fileId: "1111111", // 图片上传成功后返回的id
   firstCatalogId: null,
   secondCatalogId: null,
   emissionStandard: null,
@@ -154,13 +183,12 @@ const defualtFormParams = {
   price: null,
   totalWeightInventory: null,
   sellState: "1",
-  firstCatalogId0: null,
   parameterList: []
 };
 
 export default {
   name: "commodityForm",
-    mixins: [classMixin],
+  mixins: [classMixin],
   components: {
     hlBreadcrumb,
     ImageBox,
@@ -172,14 +200,14 @@ export default {
       url:
         "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg", // 后台改成上传成功后返回的url
       form: { ...defualtFormParams },
-      paramsList:[],
+      paramsList: [],
       /**参数列表一般是由一二级目录决定，但是编辑页面一开始进入的时候是唯一的外部触发*/
-      ExternalTrigger:false
-
+      ExternalTrigger: false,
+      reservaSecondClassId:null
     };
   },
   computed: {
-    ...mapState("releaseNewCommodity", ["isEdit","commodityId"]),
+    ...mapState("releaseNewCommodity", ["isEdit", "commodityId"]),
     computedUrl() {
       return imgUrl + this.url;
     },
@@ -190,7 +218,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations("releaseNewCommodity", ["setIsEdit","setCommodityId"]),
+    ...mapMutations("releaseNewCommodity", ["setIsEdit", "setCommodityId"]),
     back() {
       this.$router.push({
         path: "/web/cm/commodity/releaseNewCommodity/page"
@@ -290,7 +318,7 @@ export default {
       switch (res.code) {
         case Dict.SUCCESS:
           if (res.data && res.data.length) {
-            this.paramsList = _.cloneDeep(res.data) // 万一以后有用
+            this.paramsList = _.cloneDeep(res.data); // 万一以后有用
             this.form.parameterList = res.data.map(item => {
               return { ...item, paraValue: "" };
             });
@@ -301,37 +329,50 @@ export default {
           break;
       }
     },
-    init() {
-      this._getClass();
+    async _getDetailCommodity(id) {
+      const res = await this.$api.getDetailCommodity({ id });
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.reservaSecondClassId = _.cloneDeep(res.data.secondCatalogId)
+          this.form = {...res.data,secondCatalogId:null};
+          break;
+        default:
+          this.$messageError(res.mesg);
+          break;
+      }
     }
   },
   mounted() {
-    if (this.isEdit&&this.commodityId) {
+    if (this.isEdit && this.commodityId) {
       console.log("这是编辑页面");
+      this.ExternalTrigger = true;
+      this._getDetailCommodity(this.commodityId);
     } else {
-      if(this.$route.name === "editOldCommodity") {
+      if (this.$route.name === "editOldCommodity") {
         this.back();
       }
       console.log("这是新增页面");
     }
   },
-  created() {
-    this.init();
-  },
+  created() {},
   beforeDestroy() {
     this.setIsEdit(false);
-    this.setCommodityId(null)
+    this.setCommodityId(null);
   },
   watch: {
     "form.firstCatalogId": {
       handler(newV, oldV) {
         if (newV !== oldV) {
-          this.form.secondCatalogId = null;
           if (newV) {
-            setTimeout(() => {
-              const index = _.findIndex(this.firstClassList,(o)=>{return o.id === newV})
-              this.secondClassList = this.firstClassList[index].children;
-            }, 20);
+            const index = _.findIndex(this.firstClassList, o => {
+              return o.id == newV;
+            });
+            this.secondClassList = this.firstClassList[index].children;
+            if(this.ExternalTrigger) {
+              this.form.secondCatalogId = this.reservaSecondClassId;
+            }else {
+              this.form.secondCatalogId = null
+            }
           }
         }
       }
@@ -339,10 +380,14 @@ export default {
     "form.secondCatalogId": {
       handler(newV, oldV) {
         if (!newV) {
-          setTimeout(()=>{
-            this.form.parameterList = []
-          },20)
+          setTimeout(() => {
+            this.form.parameterList = [];
+          }, 20);
           return;
+        }
+        if (this.ExternalTrigger) {
+          this.ExternalTrigger = false;
+          return
         }
         if (newV !== oldV) {
           this._getParameter(newV);
