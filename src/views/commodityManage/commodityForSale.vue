@@ -151,6 +151,7 @@
 <script>
 import { mapMutations, mapActions } from "vuex";
 import { classMixin } from "@/common/mixin.js";
+import _ from "lodash";
 // import { judgeAuth } from "@/util/util.js";
 import Dict from "@/util/dict.js";
 import heltable from "@/components/hl_table";
@@ -339,9 +340,10 @@ export default {
         if (newV !== oldV) {
           this.form.mock2 = null;
           if (newV) {
-            setTimeout(() => {
-              this.secondClassList = this.firstClassList[newV].children;
-            }, 20);
+           const index = _.findIndex(this.firstClassList, o => {
+              return o.id == newV;
+            });
+            this.secondClassList = this.firstClassList[index].children;
           }
         }
       }
