@@ -46,9 +46,16 @@
               <el-form-item
                 label="排放标准"
                 prop="emissionStandard"
-                :rules="[{ required: true, message: '必填' }]"
+                :rules="[{ required: true, message: '必选' }]"
               >
-                <el-input v-model="form.emissionStandard"></el-input>
+                <el-select v-model="form.emissionStandard" placeholder="请选择" size="small">
+                  <el-option
+                    v-for="(item,index) in HywEmissionStandardList"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
@@ -136,7 +143,6 @@
           </el-row>
         </div>
         <div class="form-block">
-          sellState
           <div class="head">销售状态</div>
           <el-row :gutter="50">
             <el-col :md="12" :sm="12" :xs="24">
@@ -145,8 +151,7 @@
                 prop="sellState"
                 :rules="[{ required: true, message: '必填' }]"
               >
-                <el-radio v-model="form.sellState" label="0">放入出售中</el-radio>
-                <el-radio v-model="form.sellState" label="1">放入待售中</el-radio>
+                <el-radio v-for="item in HywSellStateList" :key="item.id"  v-model="form.sellState" :label="item.id">{{item.name}}</el-radio>
               </el-form-item>
             </el-col>
           </el-row>
@@ -163,7 +168,7 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import { classMixin } from "@/common/mixin.js";
+import { classMixin, dictMixin } from "@/common/mixin.js";
 import hlBreadcrumb from "components/hl-breadcrumb";
 import ImageBox from "components/ImageBox";
 import ImageUpload from "components/ImageUpload";
@@ -188,7 +193,7 @@ const defualtFormParams = {
 
 export default {
   name: "commodityForm",
-  mixins: [classMixin],
+  mixins: [classMixin, dictMixin],
   components: {
     hlBreadcrumb,
     ImageBox,
@@ -203,7 +208,7 @@ export default {
       paramsList: [],
       /**参数列表一般是由一二级目录决定，但是编辑页面一开始进入的时候是唯一的外部触发*/
       ExternalTrigger: false,
-      reservaSecondClassId:null
+      reservaSecondClassId: null
     };
   },
   computed: {
@@ -224,13 +229,13 @@ export default {
         path: "/web/cm/commodity/releaseNewCommodity/page"
       });
     },
-    async _addStockRegister_(params) {
+    async _addCommodity_(params) {
       this.loading = true;
-      const res = await this.$api.addStockRegister(params);
+      const res = await this.$api.addCommodity(params);
       this.loading = false;
       switch (res.code) {
         case Dict.SUCCESS:
-          this.$messageSuccess("入库登记成功");
+          this.$messageSuccess("新增商品");
           this.back();
           break;
         default:
@@ -241,10 +246,10 @@ export default {
     _findName(arr = [], id) {
       let copy = _.clone(arr);
       const index = _.findIndex(copy, o => {
-        return o.value == id;
+        return o.id == id;
       });
       if (index > -1) {
-        return copy[index].label;
+        return copy[index].name;
       } else {
         return null;
       }
@@ -255,40 +260,15 @@ export default {
           {},
           this.form,
           {
-            productName: this._findName(
-              this.productNameList,
-              this.form.productNameId
+            firstCatalogName: this._findName(
+              this.firstClassList,
+              this.form.firstCatalogId
             )
           },
           {
-            materialName: this._findName(
-              this.materialList,
-              this.form.materialId
-            )
-          },
-          {
-            specificationsName: this._findName(
-              this.specificationsList,
-              this.form.specificationsId
-            )
-          },
-          {
-            originPlaceName: this._findName(
-              this.originPlaceList,
-              this.form.originPlaceId
-            )
-          },
-          { cargoName: this._findName(this.cargoList, this.form.cargoId) },
-          {
-            deliveryStore: this._findName(
-              this.deliveryStoreList,
-              this.form.deliveryStoreId
-            )
-          },
-          {
-            pilePosition: this._findName(
-              this.pilePositionList,
-              this.form.pilePositionId
+            secondCatalogName: this._findName(
+              this.secondClassList,
+              this.form.secondCatalogId
             )
           }
         )
@@ -306,8 +286,8 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // const params = this._filter();
-          // this._addStockRegister_(params);
+          const params = this._filter();
+          this._addCommodity_(params);
         } else {
           return false;
         }
@@ -333,8 +313,8 @@ export default {
       const res = await this.$api.getDetailCommodity({ id });
       switch (res.code) {
         case Dict.SUCCESS:
-          this.reservaSecondClassId = _.cloneDeep(res.data.secondCatalogId)
-          this.form = {...res.data,secondCatalogId:null};
+          this.reservaSecondClassId = _.cloneDeep(res.data.secondCatalogId);
+          this.form = { ...res.data, secondCatalogId: null };
           break;
         default:
           this.$messageError(res.mesg);
@@ -368,10 +348,10 @@ export default {
               return o.id == newV;
             });
             this.secondClassList = this.firstClassList[index].children;
-            if(this.ExternalTrigger) {
+            if (this.ExternalTrigger) {
               this.form.secondCatalogId = this.reservaSecondClassId;
-            }else {
-              this.form.secondCatalogId = null
+            } else {
+              this.form.secondCatalogId = null;
             }
           }
         }
@@ -387,7 +367,7 @@ export default {
         }
         if (this.ExternalTrigger) {
           this.ExternalTrigger = false;
-          return
+          return;
         }
         if (newV !== oldV) {
           this._getParameter(newV);

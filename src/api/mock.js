@@ -411,6 +411,19 @@ const mockRouterMap = {
         },
         // #endregion 
 
+        // #region  新增商品
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/product/product/add',
+            result() {
+                return {
+                    ...body
+                };
+            }
+        },
+        // #endregion         
+
         // #region  商品详情页/编辑查询
         {
             isMock: IS_MOCK,
@@ -422,8 +435,8 @@ const mockRouterMap = {
                     data: {
                         id:params.id,
                         fileId:'121212',
-                        firstCatalogId: "1",
-                        secondCatalogId: "10",
+                        firstCatalogId: 1,
+                        secondCatalogId: 10,
                         emissionStandard: "0",
                         density: 'mock',
                         serialNumber: 'mock',
@@ -546,49 +559,42 @@ const mockRouterMap = {
                     ...body,
                     "data": [
                         {
-                            "entryCode": "YcDeliveryStoreType",
-                            "entryName": "交割库类型",
+                            "entryCode": "HywEmissionStandard",
+                            "entryName": "排放标准",
                             "items": [
                                 {
                                     "disabled": false,
                                     "id": "0",
                                     "orderBy": 0,
                                     "selected": 0,
-                                    "text": "室内库"
+                                    "text": "排放标准1"
                                 },
                                 {
                                     "disabled": false,
                                     "id": "1",
                                     "orderBy": 1,
                                     "selected": 0,
-                                    "text": "室外库"
+                                    "text": "排放标准2"
                                 }
                             ]
                         },
                         {
-                            "entryCode": "YcProductType",
-                            "entryName": "品名大类",
+                            "entryCode": "HywSellState",
+                            "entryName": "销售状态",
                             "items": [
                                 {
                                     "disabled": false,
-                                    "id": "00",
+                                    "id": "0",
                                     "orderBy": 0,
                                     "selected": 0,
-                                    "text": "钢材"
+                                    "text": "待售中"
                                 },
                                 {
                                     "disabled": false,
-                                    "id": "01",
+                                    "id": "1",
                                     "orderBy": 1,
                                     "selected": 0,
-                                    "text": "石油"
-                                },
-                                {
-                                    "disabled": false,
-                                    "id": "02",
-                                    "orderBy": 2,
-                                    "selected": 0,
-                                    "text": "木材"
+                                    "text": "出售中"
                                 }
                             ]
                         }

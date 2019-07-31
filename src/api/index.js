@@ -396,6 +396,15 @@ export default {
     getDetailCommodity(params){
         return fetch(oilURL + '/web/hyw/product/product/get',params,'get')          
     },
+    /**
+     * @author sswq
+     * @param params
+     * @description 新增商品
+     */
+    addCommodity(params){
+        return fetch(oilURL + '/web/hyw/product/product/add',params)          
+    },
+
     // #endregion
 
     // #region  字典项
