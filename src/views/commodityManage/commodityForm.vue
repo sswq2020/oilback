@@ -302,6 +302,10 @@ export default {
               this.secondClassList,
               this.form.secondCatalogId
             )
+          },
+          {
+            sellStateEnum:null,
+            emissionStandardEnum:null
           }
         )
       );
