@@ -21,7 +21,7 @@
       <div class="form-item">
         <label>一级目录</label>
         <div class="form-control">
-          <el-select v-model="form.mock1" placeholder="请选择" size="small">
+          <el-select v-model="form.firstCatalogId" placeholder="请选择" size="small">
             <el-option
               v-for="(item,index) in firstClassList"
               :key="index"
@@ -34,7 +34,7 @@
       <div class="form-item">
         <label>二级目录</label>
         <div class="form-control">
-          <el-select v-model="form.mock2" placeholder="请选择" size="small">
+          <el-select v-model="form.secondCatalogId" placeholder="请选择" size="small">
             <el-option
               v-for="(item,index) in secondClassList"
               :key="index"
@@ -47,14 +47,14 @@
       <div class="form-item">
         <label>商品编码</label>
         <div class="form-control">
-          <el-input v-model="form.mock4" placeholder="请输入内容" size="small"></el-input>
+          <el-input v-model="form.productNumber" placeholder="请输入内容" size="small"></el-input>
         </div>
       </div>
       <div class="form-item">
         <label>售价</label>
         <div class="form-control">
-          <el-input v-model="form.mock5" placeholder="最低价" size="small"></el-input>至
-          <el-input v-model="form.mock6" placeholder="最高价" size="small"></el-input>
+          <el-input v-model="form.startPrice" placeholder="最低价" size="small"></el-input>至
+          <el-input v-model="form.endPrice" placeholder="最高价" size="small"></el-input>
         </div>
       </div>
       <div class="form-item">
@@ -90,8 +90,8 @@
               />
             </div>
             <div class="goods-content">
-              <div class="productName">{{listData.list[scope.$index].productName}}</div>
-              <div class="productCode">商品编码:{{listData.list[scope.$index].productCode}}</div>
+              <div class="productName">{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandardEnum.text || '-'}}</div>
+              <div class="productCode">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
             </div>d
           </div>
         </template>
@@ -111,7 +111,7 @@
       <el-table-column label="库存" width="200px">
         <template slot-scope="scope">
           <div class="price">
-            {{listData.list[scope.$index].totalNumInventory}}
+            {{listData.list[scope.$index].totalWeightInventory}}
             <i
               @click="open(listData.list[scope.$index])"
               class="el-icon-edit"
@@ -151,6 +151,7 @@
 <script>
 import { mapMutations, mapActions } from "vuex";
 import { classMixin } from "@/common/mixin.js";
+import _ from "lodash";
 // import { judgeAuth } from "@/util/util.js";
 import Dict from "@/util/dict.js";
 import heltable from "@/components/hl_table";
@@ -158,16 +159,16 @@ import hlBreadcrumb from "@/components/hl-breadcrumb";
 import pricedialog from "./pricedialog.vue";
 
 const defaultFormData = {
-  mock1: null,
-  mock2: null,
-  mock3: null,
-  mock4: null,
-  mock5: null,
-  mock6: null
+  firstCatalogId: null,
+  secondCatalogId: null,
+  productNumber: null,
+  startPrice: null,
+  endPrice: null
 };
 const defaultListParams = {
   pageSize: 5,
-  page: 1
+  page: 1,
+  sellState:"0"
 };
 const defaultListData = {
   paginator: {
@@ -178,12 +179,12 @@ const defaultListData = {
 };
 const defaulttableHeader = [
   {
-    prop: "totalNumOnSale",
+    prop: "volumeWeightSold",
     label: "总销量",
     align: "right"
   },
   {
-    prop: "releaseTime",
+    prop: "createdTime",
     label: "发布时间"
   }
 ];
@@ -334,14 +335,15 @@ export default {
     this.init();
   },
   watch: {
-    "form.mock1": {
+    "form.firstCatalogId": {
       handler(newV, oldV) {
         if (newV !== oldV) {
-          this.form.mock2 = null;
+          this.form.secondCatalogId = null;
           if (newV) {
-            setTimeout(() => {
-              this.secondClassList = this.firstClassList[newV].children;
-            }, 20);
+           const index = _.findIndex(this.firstClassList, o => {
+              return o.id == newV;
+            });
+            this.secondClassList = this.firstClassList[index].children;
           }
         }
       }
