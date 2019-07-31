@@ -249,7 +249,7 @@ export default {
     async getListData() {
       // let obj = this._filter();
       this.isListDataLoading = true;
-      const res = await this.$api.getCommodityOnSaleList(this.form);
+      const res = await this.$api.getCommodityOnSaleList({...this.form,...this.listParams});
       this.isListDataLoading = false;
       switch (res.code) {
         case Dict.SUCCESS:
