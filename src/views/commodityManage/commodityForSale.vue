@@ -91,7 +91,7 @@
             </div>
             <div class="goods-content">
               <div class="productName">{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandardEnum.text || '-'}}</div>
-              <div class="productCode">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
+              <div class="serialNumber">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
             </div>d
           </div>
         </template>
@@ -219,9 +219,9 @@ export default {
         return item.id;
       });
     },
-    productCodes() {
+    serialNumbers() {
       return this.selectedItems.map(item => {
-        return item.productCode;
+        return item.serialNumber;
       });
     }
   },
@@ -283,9 +283,9 @@ export default {
       }
     },
     open(item) {
-      const { id, price, totalNumInventory, productName, productCode } = item;
-      this.editProductName = `编辑商品${productName},编码为${productCode}`;
-      this.openPriceDialog({ id, price, totalNumInventory });
+      const { id, price, totalWeightInventory, firstCatalogName,secondCatalogName,emissionStandardEnum, serialNumber } = item;
+      this.editProductName = `编辑商品${firstCatalogName+secondCatalogName+emissionStandardEnum.text},编码为${serialNumber}`;
+      this.openPriceDialog({ id, price, totalWeightInventory });
     },
     GoReleaseNewCommodity() {
       this.$router.push({
@@ -302,15 +302,15 @@ export default {
     },
     shelves(item = null) {
       let that = this;
-      let id,productCode,info;
+      let id,serialNumber,info;
       if (item) {
         id = item.id;
-        productCode = item.productCode;
+        serialNumber = item.serialNumber;
       } else {
         id = this.ids;
-        productCode = this.productCodes.join();
+        serialNumber = this.serialNumbers.join();
       }
-      info = `商品编码${productCode}`;
+      info = `商品编码${serialNumber}`;
       this.$confirm(`确定要上架${info}`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -405,7 +405,7 @@ export default {
       font-size: 12px;
       color: #3c8bff;
     }
-    .productCode {
+    .serialNumber {
       font-size: 12px;
       color: #333;
     }

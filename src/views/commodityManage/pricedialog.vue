@@ -10,8 +10,8 @@
       <el-form-item label="售价" prop="price">
         <el-input v-model="formParams.price"></el-input>
       </el-form-item>
-      <el-form-item label="库存" prop="totalNumInventory">
-        <el-input v-model="formParams.totalNumInventory"></el-input>
+      <el-form-item label="库存" prop="totalWeightInventory">
+        <el-input v-model="formParams.totalWeightInventory"></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -44,7 +44,7 @@ export default {
       isLoading:false,
       rules: {
         price: [{ required: true, message: "售价必填", trigger: "blur" }],
-        totalNumInventory: [
+        totalWeightInventory: [
           { required: true, message: "库存必填", trigger: "blur" }
         ]
       }
