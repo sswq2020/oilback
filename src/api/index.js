@@ -391,10 +391,10 @@ export default {
     /**
      * @author sswq
      * @param params
-     * @description 根据id获取商品的详细信息
+     * @description 商品详情页/编辑查询
      * */
     getDetailCommodity(params){
-        return fetch(oilURL + '/web/cm/productInterface/detail',params)          
+        return fetch(oilURL + '/web/hyw/product/product/get',params,'get')          
     },
     // #endregion
 

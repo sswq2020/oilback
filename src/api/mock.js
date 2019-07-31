@@ -9,7 +9,7 @@ export const hostList = {
     // dev: '//test.hletong.com/hletoil', // 佘慧   13888888888   888888       admin 888888
     test: '//10.1.15.106:8445/',
     pro: '//yq.hletong.com',
-    default:""
+    default: ""
 };
 
 export const imgHost = {
@@ -58,10 +58,10 @@ const commodityOnSaleList = {
     "productName": "@CTITLE(2,4)", // 商品名称
     "productCode": "@INTEGER(1,2019690999)", // 商品编码
     "releaseTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
-    "fileId":"@INTEGER(1,2019690999)"
+    "fileId": "@INTEGER(1,2019690999)"
 }
 
-const classData =[
+const classData = [
     {
         "id": 1,
         "name": "汽油",
@@ -254,12 +254,18 @@ const classData =[
 
 ]
 
-const paramsData = 
-    {
-        classifyId:"7",
-        "id": "@INTEGER(2,2019690999)",
-        paraName:"@CTITLE(2,4)"
-    }
+const paramsData =
+{
+    classifyId: "7",
+    "id": "@INTEGER(2,2019690999)",
+    paraName: "@CTITLE(2,4)"
+}
+
+const paraValue =
+{
+    ...paramsData,
+    paraValue: "@CTITLE(6,7)"
+}
 
 
 const cargoMap = { "1": "小红", "2": "熊安明", "c8254b4eb6154d9d91992acdf0df248a": "1", "fba7fb0eabc64ee882233e85d9b62d26": "kkkkkyinkai", "95105a94a7c5487c93616d505958c850": "test1" }
@@ -363,7 +369,7 @@ const mockRouterMap = {
                     },
                 };
             }
-        },        
+        },
         // #endregion     
 
         // #region  下架
@@ -376,7 +382,7 @@ const mockRouterMap = {
                     ...body
                 };
             }
-        },        
+        },
         // #endregion     
 
         // #region  上架
@@ -389,7 +395,7 @@ const mockRouterMap = {
                     ...body
                 };
             }
-        },        
+        },
         // #endregion  
 
         // #region  修改商品
@@ -402,7 +408,34 @@ const mockRouterMap = {
                     ...body
                 };
             }
-        },        
+        },
+        // #endregion 
+
+        // #region  商品详情页/编辑查询
+        {
+            isMock: IS_MOCK,
+            methods: 'get',
+            router: '/web/hyw/product/product/get',
+            result(params) {
+                return {
+                    ...body,
+                    data: {
+                        id:params.id,
+                        fileId:'121212',
+                        firstCatalogId: "1",
+                        secondCatalogId: "10",
+                        emissionStandard: "0",
+                        density: 'mock',
+                        serialNumber: 'mock',
+                        manufacturerId: "0",
+                        price: '23',
+                        totalWeightInventory: "12",
+                        sellState: "1",
+                        'parameterList|3-4': [paraValue]
+                    }
+                };
+            }
+        },
         // #endregion 
 
 
@@ -483,7 +516,7 @@ const mockRouterMap = {
             result() {
                 return {
                     ...body,
-                    data:classData
+                    data: classData
                 };
             }
         },
@@ -494,10 +527,10 @@ const mockRouterMap = {
             result(params) {
                 return {
                     ...body,
-                    'data|3-4':[{...paramsData,...{classifyId:params.id}}]
+                    'data|3-4': [{ ...paramsData, ...{ classifyId: params.id } }]
                 };
             }
-        },        
+        },
 
 
 
