@@ -22,7 +22,7 @@ export const imgHost = {
 };
 
 
-const IS_MOCK = true;
+const IS_MOCK = false;
 const oilURL = ""
 
 const dict = { 'SUCCESS': "000000" }
@@ -525,7 +525,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'get',
-            router: '/web/cm/productInterface/getClassify',
+            router: '/productInterface/getClassify',
             result() {
                 return {
                     ...body,
@@ -536,7 +536,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'get',
-            router: '/web/cm/productInterface/getParameterById',
+            router: '/productInterface/getParameterById',
             result(params) {
                 return {
                     ...body,
