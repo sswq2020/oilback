@@ -178,12 +178,12 @@ const defaultListData = {
 };
 const defaulttableHeader = [
   {
-    prop: "totalNumOnSale",
+    prop: "volumeWeightSold",
     label: "总销量",
     align: "right"
   },
   {
-    prop: "releaseTime",
+    prop: "createdTime",
     label: "发布时间"
   }
 ];

@@ -48,14 +48,15 @@
                 prop="emissionStandard"
                 :rules="[{ required: true, message: '必选' }]"
               >
-                <el-select v-model="form.emissionStandard" placeholder="请选择" size="small">
+              <el-input v-model="form.emissionStandard"></el-input>
+                <!-- <el-select v-model="form.emissionStandard" placeholder="请选择" size="small">
                   <el-option
                     v-for="(item,index) in HywEmissionStandardList"
                     :key="index"
                     :label="item.name"
                     :value="item.id"
                   ></el-option>
-                </el-select>
+                </el-select> -->
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
@@ -151,7 +152,9 @@
                 prop="sellState"
                 :rules="[{ required: true, message: '必填' }]"
               >
-                <el-radio v-for="item in HywSellStateList" :key="item.id"  v-model="form.sellState" :label="item.id">{{item.name}}</el-radio>
+                <!-- <el-radio v-for="item in HywSellStateList" :key="item.id"  v-model="form.sellState" :label="item.id">{{item.name}}</el-radio> -->
+                <el-radio v-model="form.sellState" label="0">待售中</el-radio>
+                <el-radio v-model="form.sellState" label="1">出售中</el-radio>
               </el-form-item>
             </el-col>
           </el-row>
