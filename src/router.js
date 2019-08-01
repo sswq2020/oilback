@@ -4,13 +4,16 @@ import Router from 'vue-router'
 
 // #region 商品管理
 /**发布新商品*/
-const ReleaseNewCommodity = () => import('@/views/commodityManage/releaseNewCommodity.vue')
+const ReleaseNewCommodity = () => import('views/commodityManage/releaseNewCommodity.vue')
 /**编辑商品*/
-const EditOldCommodity = () => import('@/views/commodityManage/editOldCommodity.vue')
+const EditOldCommodity = () => import('views/commodityManage/editOldCommodity.vue')
 /**出售中的商品*/
-const CommodityOnSale = () => import('@/views/commodityManage/commodityOnSale.vue')
+const CommodityOnSale = () => import('views/commodityManage/commodityOnSale.vue')
 /**待售中的商品*/
-const CommodityForSale = () => import('@/views/commodityManage/commodityForSale.vue')
+const CommodityForSale = () => import('views/commodityManage/commodityForSale.vue')
+/**订单管理*/
+const OrderManage = () => import('views/commodityManage/orderManage.vue')
+
 // #endregion
 
 Vue.use(Router)
@@ -59,6 +62,12 @@ let commonRoutes = {
             name: 'commodityForSale',
             component: CommodityForSale
         },
+        {
+            path: '/web/cm/commodity/orderManage/page',
+            name: 'orderManage',
+            component: OrderManage
+        },
+
         // #endregion           
     ]
 }

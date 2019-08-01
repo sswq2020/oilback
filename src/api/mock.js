@@ -22,7 +22,7 @@ export const imgHost = {
 };
 
 
-const IS_MOCK = false;
+const IS_MOCK = true;
 const oilURL = ""
 
 const dict = { 'SUCCESS': "000000" }
@@ -53,11 +53,13 @@ const body_fail = {
 const commodityOnSaleList = {
     "id|+1": "@INTEGER(1,2019690999)",
     "price": "@INTEGER(1,2019690999)", // 售价
-    "totalNumInventory": "@INTEGER(1000,5000)", // 库存数量
-    "totalNumOnSale": "@INTEGER(1000,5000)", // 总销量
-    "productName": "@CTITLE(2,4)", // 商品名称
-    "productCode": "@INTEGER(1,2019690999)", // 商品编码
-    "releaseTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
+    "totalWeightInventory": "@INTEGER(1000,5000)", // 库存数量
+    "volumeWeightSold": "@INTEGER(1000,5000)", // 总销量
+    "firstCatalogName": "@CTITLE(2,4)", // 商品名称
+    "secondCatalogName": "@CTITLE(2,4)", // 商品名称
+    "emissionStandardEnum":{text:"惠龙排放标准1"},
+    "serialNumber": "@INTEGER(1,2019690999)", // 商品编码
+    "createdTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
     "fileId": "@INTEGER(1,2019690999)"
 }
 
@@ -354,7 +356,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: '/web/cm/commodity/commodityOnSale/page',
+            router: '/web/hyw/product/product/page',
             result(params) {
                 return {
                     ...body,
