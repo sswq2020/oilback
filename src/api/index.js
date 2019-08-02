@@ -359,19 +359,11 @@ export default {
     /**
      * @author sswq
      * @param params
-     * @description 下架
-     * */
-    DoTakenOff(params){
-        return fetch(oilURL + '/web/cm/commodity/commodityOnSale/takenoff',params)          
-    },
-    /**
-     * @author sswq
-     * @param params
-     * @description 上架
-     * */
-    DoShelves(params){
-        return fetch(oilURL + '/web/cm/commodity/commodityOnSale/shelves',params)          
-    },
+     * @description 新增商品
+     */
+    addCommodity(params){
+        return fetch(oilURL + '/web/hyw/product/product/add',params)          
+    },    
     /**
      * @author sswq
      * @param params
@@ -399,10 +391,10 @@ export default {
     /**
      * @author sswq
      * @param params
-     * @description 新增商品
-     */
-    addCommodity(params){
-        return fetch(oilURL + '/web/hyw/product/product/add',params)          
+     * @description 订单管理列表
+     * */
+    orderCommodityManage(params){
+        return fetch(oilURL + '/web/hyw/product/orderList/get',params)          
     },
 
     // #endregion

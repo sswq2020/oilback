@@ -63,6 +63,21 @@ const commodityOnSaleList = {
     "fileId": "@INTEGER(1,2019690999)"
 }
 
+const commodityOrderList = {
+    "id|+1": "@INTEGER(1,2019690999)",
+    "price": "@INTEGER(1,2019690999)", // 售价
+    "num": "@INTEGER(3489,20196)", // 数量
+    "payer":"@INTEGER(13702260943,18702260943)", // 买家
+    "totalWeightInventory": "@INTEGER(1000,5000)", // 库存数量
+    "volumeWeightSold": "@INTEGER(1000,5000)", // 总销量
+    "firstCatalogName": "@CTITLE(2,4)", // 商品名称
+    "secondCatalogName": "@CTITLE(2,4)", // 商品名称
+    "emissionStandardEnum":{text:"惠龙排放标准1"},
+    "serialNumber": "@INTEGER(1,2019690999)", // 商品编码
+    "createdTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
+    "fileId": "@INTEGER(1,2019690999)"
+}
+
 const classData = [
     {
         "id": 1,
@@ -374,31 +389,28 @@ const mockRouterMap = {
         },
         // #endregion     
 
-        // #region  下架
+        // #region  订单管理列表
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: '/web/cm/commodity/commodityOnSale/takenoff',
-            result() {
+            router: '/web/hyw/product/orderList/get',
+            result(params) {
                 return {
-                    ...body
+                    ...body,
+                    data: {
+                        'list|4-7': [commodityOrderList],
+                        "paginator": {
+                            "currentPage": params.page,
+                            "pageSize": params.pageSize,
+                            "totalCount": 1000,
+                            "totalPage": 1000 / params.pageSize
+                        }
+                    },
                 };
             }
         },
         // #endregion     
 
-        // #region  上架
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: '/web/cm/commodity/commodityOnSale/shelves',
-            result() {
-                return {
-                    ...body
-                };
-            }
-        },
-        // #endregion  
 
         // #region  修改商品
         {
