@@ -1,0 +1,315 @@
+<template>
+  <div class="container single-page">
+    <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
+    <div class="tabs">
+      <el-tabs v-model="activeName" type="card">
+        <el-tab-pane label="待付款" name="unpay"></el-tab-pane>
+        <el-tab-pane label="已付款" name="payed"></el-tab-pane>
+      </el-tabs>
+    </div>
+    <div class="search-box">
+      <div class="form-item">
+        <label>订单号</label>
+        <div class="form-control">
+          <el-input v-model="form.orderNumber" placeholder="请输入内容" size="small"></el-input>
+        </div>
+      </div>
+      <div class="form-item">
+        <label>商品编码</label>
+        <div class="form-control">
+          <el-input v-model="form.productNumber" placeholder="请输入内容" size="small"></el-input>
+        </div>
+      </div>
+      <div class="form-item">
+        <el-button
+          type="primary"
+          :loading="isListDataLoading"
+          @click="getListDataBylistParams"
+          size="small"
+        >查询</el-button>
+        <el-button size="small" @click="clearListParams">重置</el-button>
+      </div>
+    </div>
+    <heltable
+      ref="tb"
+      @pageChange="changePage"
+      :total="listData.paginator.totalCount"
+      :currentPage="listParams.page"
+      :pageSize="listParams.pageSize"
+      :pageSizes="[5]"
+      :data="listData.list"
+      :serialize="serialize"
+      :stripe="stripe"
+      :border="border"
+      :loading="isListDataLoading"
+    >
+      <el-table-column label="商品信息" width="500px">
+        <template slot-scope="scope">
+          <div class="goods">
+            <div class="header">
+              <span class="header-info">{{listData.list[scope.$index].createdTime}}</span>
+              <span class="header-info">订单号:{{listData.list[scope.$index].orderNumber}}</span>
+            </div>
+            <div class="info">
+              <div class="avatar">
+                <!--测试上线前改为下面的-->
+                <img
+                  v-if="listData.list[scope.$index].fileId"
+                  width="65"
+                  height="64"
+                  src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+                />
+                <!-- <img v-if="listData.list[scope.$index].fileId"
+                  width="65"
+                  height="64"
+                  :src="listData.list[scope.$index].url"
+                />-->
+                <span v-else>未设置图片</span>
+              </div>
+              <div class="product-content">
+                <div class="productName">{{listData.list[scope.$index].productName}}</div>
+                <div class="serialNumber">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="单价">
+        <template slot-scope="scope">
+          <div class="goods">
+            <div class="header">
+              <span class="header-info"></span>
+            </div>
+            <div class="otherinfo">
+              <div class="price">{{listData.list[scope.$index].price}}</div>
+            </div>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="数量">
+        <template slot-scope="scope">
+          <div class="goods">
+            <div class="header">
+              <span class="header-info"></span>
+            </div>
+            <div class="otherinfo">
+              <div class="price">{{listData.list[scope.$index].num}}</div>
+            </div>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="买家">
+        <template slot-scope="scope">
+          <div class="goods">
+            <div class="header">
+              <span class="header-info"></span>
+            </div>
+            <div class="otherinfo">
+              <div class="price">{{listData.list[scope.$index].payer}}</div>
+            </div>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="金额">
+        <template slot-scope="scope">
+          <div class="goods">
+            <div class="header">
+              <span class="header-info"></span>
+            </div>
+            <div class="otherinfo">
+              <div class="price">{{listData.list[scope.$index].sum}}</div>
+            </div>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="交易状态" width="250px" align="center">
+        <template slot-scope="scope">
+          <div class="goods">
+            <div class="header">
+              <span class="header-info">支付倒计时:{{listData.list[scope.$index].createdTime}}</span>
+            </div>
+            <div class="otherinfo" style="justify-content: center;">
+              <div class="center">
+                <div>待付款</div>
+                <div>(线上支付)</div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </el-table-column>
+    </heltable>
+  </div>
+</template>
+
+<script>
+import hlBreadcrumb from "@/components/hl-breadcrumb";
+import heltable from "@/components/hl_table";
+import Dict from "@/util/dict.js";
+const defaultFormData = {
+  orderNumber: null,
+  productNumber: null
+};
+const defaultListParams = {
+  pageSize: 5,
+  page: 1,
+  sellState: "1"
+};
+const defaultListData = {
+  paginator: {
+    totalCount: 0,
+    totalPage: 1
+  },
+  list: []
+};
+
+export default {
+  name: "orderManage",
+  components: {
+    heltable,
+    hlBreadcrumb
+  },
+  data() {
+    return {
+      breadTitle: ["商品管理", "订单管理"],
+      isListDataLoading: false,
+      listParams: { ...defaultListParams }, // 页数
+      activeName: "unpay",
+      form: { ...defaultFormData }, // 查询参数
+      listData: { ...defaultListData }, // 返回list的数据结构
+      serialize: false,
+      border: false,
+      stripe:false
+    };
+  },
+  computed: {},
+  methods: {
+    changePage(page) {
+      this.listParams.page = page;
+      this.getListData();
+    },
+    getListDataBylistParams() {
+      this.listParams = { ...defaultListParams };
+      this.getListData();
+    },
+    clearListParams() {
+      this.form = { ...defaultFormData };
+      this.listParams = { ...defaultListParams };
+      this.listData = { ...defaultListData };
+      this.getListData();
+    },
+    async getListData() {
+      this.isListDataLoading = true;
+      const res = await this.$api.orderCommodityManage({
+        ...this.form,
+        ...this.listParams
+      });
+      this.isListDataLoading = false;
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.listData = res.data;
+          break;
+        default:
+          this.listData = { ...defaultListData };
+          this.$messageError(res.mesg);
+          break;
+      }
+    },
+    init() {
+      setTimeout(() => {
+        this.perm();
+      }, 20);
+      this.perm();
+    },
+    perm() {}
+  },
+  mounted() {
+    this.init();
+  }
+};
+</script>
+
+<style scoped lang="less">
+.tabs {
+  background-color: white;
+  //   height: 30px;
+  //   line-height: 30px;
+  // padding: 0 15px;
+  font-size: 14px;
+}
+
+.search-box {
+  flex-wrap: wrap;
+  margin: 0;
+  .form-item {
+    padding-top: 20px;
+    .el-button {
+      margin-top: 17px;
+    }
+  }
+}
+
+.goods {
+  position: relative;
+  font-size: 0px;
+
+  .header {
+    height: 30px;
+    line-height: 29px;
+    box-sizing: border-box;
+    padding: 0px 10px 0px 15px;
+    border-bottom: 1px solid #eaedf1;
+    .header-info {
+      font-size: 12px;
+      color: #333;
+      margin-right: 10px;
+    }
+  }
+  .info {
+    box-sizing: border-box;
+    margin: 10px 10px 0px 15px;
+    .avatar {
+      display: inline-block;
+      vertical-align: top;
+      img {
+        border-radius: 2px;
+      }
+    }
+    .product-content {
+      display: inline-block;
+      vertical-align: top;
+      margin-left: 15px;
+      height: 76px;
+      .productName {
+        font-size: 12px;
+        color: #3c8bff;
+      }
+      .serialNumber {
+        font-size: 12px;
+        color: #333;
+      }
+    }
+  }
+  .otherinfo {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 86px;
+    font-size: 12px;
+    box-sizing: border-box;
+  }
+}
+
+.price {
+  text-align: center;
+}
+
+.el-icon-edit {
+  padding: 5px;
+  font-size: 16px;
+  color: #3c8bff;
+  &:hover {
+    color: rgb(255, 83, 60);
+    cursor: pointer;
+  }
+}
+</style>

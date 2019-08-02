@@ -68,13 +68,11 @@ const commodityOrderList = {
     "price": "@INTEGER(1,2019690999)", // 售价
     "num": "@INTEGER(3489,20196)", // 数量
     "payer":"@INTEGER(13702260943,18702260943)", // 买家
-    "totalWeightInventory": "@INTEGER(1000,5000)", // 库存数量
-    "volumeWeightSold": "@INTEGER(1000,5000)", // 总销量
-    "firstCatalogName": "@CTITLE(2,4)", // 商品名称
-    "secondCatalogName": "@CTITLE(2,4)", // 商品名称
-    "emissionStandardEnum":{text:"惠龙排放标准1"},
+    "sum":"@INTEGER(912213312,972213312)", // 金额
+    "productName": "@CTITLE(2,4)", // 商品名称
     "serialNumber": "@INTEGER(1,2019690999)", // 商品编码
     "createdTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
+    "orderNumber":"@INTEGER(6237657823644,6997657823644)", // 订单号
     "fileId": "@INTEGER(1,2019690999)"
 }
 
