@@ -73,7 +73,8 @@ const commodityOrderList = {
     "serialNumber": "@INTEGER(1,2019690999)", // 商品编码
     "createdTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
     "orderNumber":"@INTEGER(6237657823644,6997657823644)", // 订单号
-    "fileId": "@INTEGER(1,2019690999)"
+    "fileId": "@INTEGER(1,2019690999)",
+    "endTime":"@INTEGER(1574738483260,1584738483260)"
 }
 
 const classData = [
@@ -396,7 +397,7 @@ const mockRouterMap = {
                 return {
                     ...body,
                     data: {
-                        'list|4-7': [commodityOrderList],
+                        'list|4-5': [commodityOrderList],
                         "paginator": {
                             "currentPage": params.page,
                             "pageSize": params.pageSize,

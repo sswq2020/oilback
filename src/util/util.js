@@ -138,3 +138,12 @@ export const normalTime = (time,num=-2) => {
     }
     return time.slice(0,num);
 }
+
+
+/** 
+ * @description 百位内补零,主要用于倒计时显示
+ * @param {Number} n 
+*/
+export const tow = (n) => {
+    return n >= 0 && n < 10 ? '0' + n : '' + n;
+  }

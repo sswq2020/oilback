@@ -126,7 +126,9 @@
         <template slot-scope="scope">
           <div class="goods">
             <div class="header">
-              <span class="header-info">支付倒计时:{{listData.list[scope.$index].createdTime}}</span>
+              <span class="header-info">
+                <countdown :endTime="listData.list[scope.$index].endTime"></countdown>
+              </span>
             </div>
             <div class="otherinfo" style="justify-content: center;">
               <div class="center">
@@ -142,8 +144,9 @@
 </template>
 
 <script>
-import hlBreadcrumb from "@/components/hl-breadcrumb";
-import heltable from "@/components/hl_table";
+import hlBreadcrumb from "components/hl-breadcrumb";
+import heltable from "components/hl_table";
+import countdown from "components/countdown";
 import Dict from "@/util/dict.js";
 const defaultFormData = {
   orderNumber: null,
@@ -166,7 +169,8 @@ export default {
   name: "orderManage",
   components: {
     heltable,
-    hlBreadcrumb
+    hlBreadcrumb,
+    countdown
   },
   data() {
     return {
