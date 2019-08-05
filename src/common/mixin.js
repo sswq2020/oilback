@@ -6,6 +6,7 @@ import { _toArray_ } from './util'
 const _DICT_SERVE_ = [
     "HywEmissionStandard",
     "HywSellState",
+    "HywManufacturer"
 ]
 
 
@@ -76,7 +77,8 @@ export const dictMixin = {
     data() {
         return {
             HywEmissionStandardList: [],
-            HywSellStateList: []
+            HywSellStateList: [],
+            HywManufacturerList:[]
         }
     },
     methods: {

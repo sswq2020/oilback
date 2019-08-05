@@ -48,15 +48,14 @@
                 prop="emissionStandard"
                 :rules="[{ required: true, message: '必选' }]"
               >
-              <el-input v-model="form.emissionStandard"></el-input>
-                <!-- <el-select v-model="form.emissionStandard" placeholder="请选择" size="small">
+                <el-select v-model="form.emissionStandard" placeholder="请选择" size="small">
                   <el-option
                     v-for="(item,index) in HywEmissionStandardList"
                     :key="index"
                     :label="item.name"
                     :value="item.id"
                   ></el-option>
-                </el-select> -->
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
@@ -83,7 +82,14 @@
                 prop="manufacturerId"
                 :rules="[{ required: true, message: '必填' }]"
               >
-                <el-input v-model="form.manufacturerId"></el-input>
+                <el-select v-model="form.manufacturerId" placeholder="请选择" size="small">
+                  <el-option
+                    v-for="(item,index) in HywManufacturerList"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
@@ -152,9 +158,12 @@
                 prop="sellState"
                 :rules="[{ required: true, message: '必填' }]"
               >
-                <!-- <el-radio v-for="item in HywSellStateList" :key="item.id"  v-model="form.sellState" :label="item.id">{{item.name}}</el-radio> -->
-                <el-radio v-model="form.sellState" label="0">待售中</el-radio>
-                <el-radio v-model="form.sellState" label="1">出售中</el-radio>
+                <el-radio
+                  v-for="item in HywSellStateList"
+                  :key="item.id"
+                  v-model="form.sellState"
+                  :label="item.id"
+                >放入{{item.name}}</el-radio>
               </el-form-item>
             </el-col>
           </el-row>
@@ -178,7 +187,7 @@ import ImageUpload from "components/ImageUpload";
 import Dict from "util/dict.js";
 import _ from "lodash";
 const defualtFormParams = {
-  fileId: "1111111", // 图片上传成功后返回的id
+  fileId: null, // 图片上传成功后返回的id
   firstCatalogId: null,
   secondCatalogId: null,
   emissionStandard: null,
@@ -193,8 +202,7 @@ const defualtFormParams = {
 
 export default {
   name: "commodityForm",
-  mixins: [classMixin],
-  // mixins: [classMixin, dictMixin],
+  mixins: [classMixin, dictMixin],
   components: {
     hlBreadcrumb,
     ImageBox,
@@ -227,15 +235,15 @@ export default {
         path: "/web/hyw/product/product/deploy"
       });
     },
-    GoOnSale(){
+    GoOnSale() {
       this.$router.push({
         path: "/web/hyw/product/product/pageOnSale"
-      });      
+      });
     },
-    GoForSale(){
+    GoForSale() {
       this.$router.push({
         path: "/web/hyw/product/product/pageForSale"
-      });      
+      });
     },
     async _addCommodity_(params) {
       this.loading = true;
@@ -258,9 +266,9 @@ export default {
       switch (res.code) {
         case Dict.SUCCESS:
           this.$messageSuccess("编辑商品成功");
-          if(this.form.sellState==="0"){
+          if (this.form.sellState === "0") {
             this.GoOnSale();
-          }else {
+          } else {
             this.GoForSale();
           }
           break;
@@ -268,7 +276,7 @@ export default {
           this.$messageError(res.mesg);
           break;
       }
-    },    
+    },
     _findName(arr = [], id) {
       let copy = _.clone(arr);
       const index = _.findIndex(copy, o => {
@@ -297,10 +305,10 @@ export default {
               this.form.secondCatalogId
             )
           },
-          {url:this.url},
+          { url: this.url },
           {
-            sellStateEnum:null,
-            emissionStandardEnum:null
+            sellStateEnum: null,
+            emissionStandardEnum: null
           }
         )
       );
@@ -318,12 +326,11 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           const params = this._filter();
-          if(this.isEdit){
+          if (this.isEdit) {
             this._updateCommodity_(params);
-          }else {
-          this._addCommodity_(params);
+          } else {
+            this._addCommodity_(params);
           }
-
         } else {
           return false;
         }
@@ -366,7 +373,7 @@ export default {
         default:
           this.$messageError(res.mesg);
           break;
-      }      
+      }
     }
   },
   mounted() {
@@ -423,11 +430,11 @@ export default {
     },
     "form.fileId": {
       handler(newV, oldV) {
-       if(newV) {
-         if(newV !== oldV && this.url === "#") {
-           this._getFilesInfo(newV)
-         }
-       }
+        if (newV) {
+          if (newV !== oldV && this.url === "#") {
+            this._getFilesInfo(newV);
+          }
+        }
       }
     }
   }

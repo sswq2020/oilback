@@ -572,6 +572,26 @@ const mockRouterMap = {
                     ...body,
                     "data": [
                         {
+                            "entryCode": "HywManufacturer",
+                            "entryName": "生产商",
+                            "items": [
+                                {
+                                    "disabled": false,
+                                    "id": "0",
+                                    "orderBy": 0,
+                                    "selected": 0,
+                                    "text": "生产商1"
+                                },
+                                {
+                                    "disabled": false,
+                                    "id": "1",
+                                    "orderBy": 1,
+                                    "selected": 0,
+                                    "text": "生产商2"
+                                }
+                            ]
+                        },                    
+                        {
                             "entryCode": "HywEmissionStandard",
                             "entryName": "排放标准",
                             "items": [
