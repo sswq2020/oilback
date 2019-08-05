@@ -37,7 +37,7 @@ switch (env) {
         break;
     case 'test':
         baseURL = 'http://10.1.15.106:8445';
-        redirectUrl = 'http://yc.hlet.com';
+        redirectUrl = 'http://oilhui.hlet.com';
         loginUrl = 'http://login.hlet.com';
         oilURL = 'hletoil'
         break;
