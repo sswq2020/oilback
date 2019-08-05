@@ -224,7 +224,7 @@ export default {
     ...mapMutations("releaseNewCommodity", ["setIsEdit", "setCommodityId"]),
     back() {
       this.$router.push({
-        path: "/web/cm/commodity/releaseNewCommodity/page"
+        path: "/web/hyw/product/product/deploy"
       });
     },
     GoOnSale(){

@@ -338,10 +338,10 @@ const mockRouterMap = {
                     ...body,
                     "data": [
                         {
-                            "path": "https://pay.hletong.com",
-                            "systemCode": "cwzx",
+                            "path": "http://oilhui.hlet.com",
+                            "systemCode": "oilhui",
                             "systemId": "166948708439556096",
-                            "systemName": "惠龙云仓"
+                            "systemName": "惠油网"
                         }],
                 }
             }

@@ -43,7 +43,7 @@ let commonRoutes = {
         },
         // #region  商品管理      
         {
-            path: '/web/cm/commodity/releaseNewCommodity/page',
+            path: '/web/hyw/product/product/deploy',
             name: 'releaseNewCommodity',
             component: ReleaseNewCommodity
         },

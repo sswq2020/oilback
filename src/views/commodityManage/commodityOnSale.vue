@@ -306,7 +306,7 @@ export default {
     },
     GoReleaseNewCommodity() {
       this.$router.push({
-        path: "/web/cm/commodity/releaseNewCommodity/page"
+        path: "/web/hyw/product/product/deploy"
       });
     },
     GoEditOldCommodity(item) {
