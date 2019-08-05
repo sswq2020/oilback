@@ -30,116 +30,227 @@
         <el-button size="small" @click="clearListParams">重置</el-button>
       </div>
     </div>
-    <heltable
-      ref="tb"
-      @pageChange="changePage"
-      :total="listData.paginator.totalCount"
-      :currentPage="listParams.page"
-      :pageSize="listParams.pageSize"
-      :pageSizes="[5]"
-      :data="listData.list"
-      :serialize="serialize"
-      :stripe="stripe"
-      :border="border"
-      :loading="isListDataLoading"
-    >
-      <el-table-column label="商品信息" width="500px">
-        <template slot-scope="scope">
-          <div class="goods">
-            <div class="header">
-              <span class="header-info">{{listData.list[scope.$index].createdTime}}</span>
-              <span class="header-info">订单号:{{listData.list[scope.$index].orderNumber}}</span>
-            </div>
-            <div class="info">
-              <div class="avatar">
-                <!--测试上线前改为下面的-->
-                <img
-                  v-if="listData.list[scope.$index].fileId"
-                  width="65"
-                  height="64"
-                  src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-                />
-                <!-- <img v-if="listData.list[scope.$index].fileId"
+    <div v-if="activeName=='unpay'">
+      <heltable
+        ref="tb"
+        @pageChange="changePage"
+        :total="listData.paginator.totalCount"
+        :currentPage="listParams.page"
+        :pageSize="listParams.pageSize"
+        :pageSizes="[5]"
+        :data="listData.list"
+        :serialize="serialize"
+        :stripe="stripe"
+        :border="border"
+        :loading="isListDataLoading"
+      >
+        <el-table-column label="商品信息" width="500px">
+          <template slot-scope="scope">
+            <div class="goods">
+              <div class="header">
+                <span class="header-info">{{listData.list[scope.$index].createdTime}}</span>
+                <span class="header-info">订单号:{{listData.list[scope.$index].orderNumber}}</span>
+              </div>
+              <div class="info">
+                <div class="avatar">
+                  <!--测试上线前改为下面的-->
+                  <img
+                    v-if="listData.list[scope.$index].fileId"
+                    width="65"
+                    height="64"
+                    src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+                  />
+                  <!-- <img v-if="listData.list[scope.$index].fileId"
                   width="65"
                   height="64"
                   :src="listData.list[scope.$index].url"
-                />-->
-                <span v-else>未设置图片</span>
-              </div>
-              <div class="product-content">
-                <div class="productName">{{listData.list[scope.$index].productName}}</div>
-                <div class="serialNumber">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="单价">
-        <template slot-scope="scope">
-          <div class="goods">
-            <div class="header">
-              <span class="header-info"></span>
-            </div>
-            <div class="otherinfo">
-              <div class="price">{{listData.list[scope.$index].price}}</div>
-            </div>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="数量">
-        <template slot-scope="scope">
-          <div class="goods">
-            <div class="header">
-              <span class="header-info"></span>
-            </div>
-            <div class="otherinfo">
-              <div class="price">{{listData.list[scope.$index].num}}</div>
-            </div>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="买家">
-        <template slot-scope="scope">
-          <div class="goods">
-            <div class="header">
-              <span class="header-info"></span>
-            </div>
-            <div class="otherinfo">
-              <div class="price">{{listData.list[scope.$index].payer}}</div>
-            </div>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="金额">
-        <template slot-scope="scope">
-          <div class="goods">
-            <div class="header">
-              <span class="header-info"></span>
-            </div>
-            <div class="otherinfo">
-              <div class="price">{{listData.list[scope.$index].sum}}</div>
-            </div>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="交易状态" width="250px" align="center">
-        <template slot-scope="scope">
-          <div class="goods">
-            <div class="header">
-              <span class="header-info">
-                <countdown :endTime="listData.list[scope.$index].endTime"></countdown>
-              </span>
-            </div>
-            <div class="otherinfo" style="justify-content: center;">
-              <div class="center">
-                <div>待付款</div>
-                <div>(线上支付)</div>
+                  />-->
+                  <span v-else>未设置图片</span>
+                </div>
+                <div class="product-content">
+                  <div class="productName">{{listData.list[scope.$index].productName}}</div>
+                  <div class="serialNumber">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
+                </div>
               </div>
             </div>
-          </div>
-        </template>
-      </el-table-column>
-    </heltable>
+          </template>
+        </el-table-column>
+        <el-table-column label="单价">
+          <template slot-scope="scope">
+            <div class="goods">
+              <div class="header">
+                <span class="header-info"></span>
+              </div>
+              <div class="otherinfo">
+                <div class="price">{{listData.list[scope.$index].price}}</div>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="数量">
+          <template slot-scope="scope">
+            <div class="goods">
+              <div class="header">
+                <span class="header-info"></span>
+              </div>
+              <div class="otherinfo">
+                <div class="price">{{listData.list[scope.$index].num}}</div>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="买家">
+          <template slot-scope="scope">
+            <div class="goods">
+              <div class="header">
+                <span class="header-info"></span>
+              </div>
+              <div class="otherinfo">
+                <div class="price">{{listData.list[scope.$index].payer}}</div>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="金额">
+          <template slot-scope="scope">
+            <div class="goods">
+              <div class="header">
+                <span class="header-info"></span>
+              </div>
+              <div class="otherinfo">
+                <div class="price">{{listData.list[scope.$index].sum}}</div>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="交易状态" width="250px" align="center">
+          <template slot-scope="scope">
+            <div class="goods">
+              <div class="header">
+                <span class="header-info">
+                  <countdown :endTime="listData.list[scope.$index].endTime"></countdown>
+                </span>
+              </div>
+              <div class="otherinfo" style="justify-content: center;">
+                <div class="center">
+                  <div>待付款</div>
+                  <div>(线上支付)</div>
+                </div>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+      </heltable>
+    </div>
+    <div v-if="activeName=='payed'">
+      <heltable
+        ref="tb"
+        @pageChange="changePage"
+        :total="listData.paginator.totalCount"
+        :currentPage="listParams.page"
+        :pageSize="listParams.pageSize"
+        :pageSizes="[5]"
+        :data="listData.list"
+        :serialize="serialize"
+        :stripe="stripe"
+        :border="border"
+        :loading="isListDataLoading"
+      >
+        <el-table-column label="商品信息" width="500px">
+          <template slot-scope="scope">
+            <div class="goods">
+              <div class="header">
+                <span class="header-info">{{listData.list[scope.$index].createdTime}}</span>
+                <span class="header-info">订单号:{{listData.list[scope.$index].orderNumber}}</span>
+              </div>
+              <div class="info">
+                <div class="avatar">
+                  <!--测试上线前改为下面的-->
+                  <img
+                    v-if="listData.list[scope.$index].fileId"
+                    width="65"
+                    height="64"
+                    src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+                  />
+                  <!-- <img v-if="listData.list[scope.$index].fileId"
+                  width="65"
+                  height="64"
+                  :src="listData.list[scope.$index].url"
+                  />-->
+                  <span v-else>未设置图片</span>
+                </div>
+                <div class="product-content">
+                  <div class="productName">{{listData.list[scope.$index].productName}}</div>
+                  <div class="serialNumber">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
+                </div>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="单价">
+          <template slot-scope="scope">
+            <div class="goods">
+              <div class="header">
+                <span class="header-info"></span>
+              </div>
+              <div class="otherinfo">
+                <div class="price">{{listData.list[scope.$index].price}}</div>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="数量">
+          <template slot-scope="scope">
+            <div class="goods">
+              <div class="header">
+                <span class="header-info"></span>
+              </div>
+              <div class="otherinfo">
+                <div class="price">{{listData.list[scope.$index].num}}</div>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="买家">
+          <template slot-scope="scope">
+            <div class="goods">
+              <div class="header">
+                <span class="header-info"></span>
+              </div>
+              <div class="otherinfo">
+                <div class="price">{{listData.list[scope.$index].payer}}</div>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="金额">
+          <template slot-scope="scope">
+            <div class="goods">
+              <div class="header">
+                <span class="header-info"></span>
+              </div>
+              <div class="otherinfo">
+                <div class="price">{{listData.list[scope.$index].sum}}</div>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="交易状态" width="250px" align="center">
+          <template>
+            <div class="goods">
+              <div class="header">
+                <span class="header-info"></span>
+              </div>
+              <div class="otherinfo" style="justify-content: center;">
+                <div class="center">
+                  <div>已付款</div>
+                </div>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+      </heltable>
+    </div>
   </div>
 </template>
 
@@ -155,7 +266,6 @@ const defaultFormData = {
 const defaultListParams = {
   pageSize: 5,
   page: 1,
-  sellState: "1"
 };
 const defaultListData = {
   paginator: {
@@ -182,7 +292,7 @@ export default {
       listData: { ...defaultListData }, // 返回list的数据结构
       serialize: false,
       border: false,
-      stripe:false
+      stripe: false
     };
   },
   computed: {},
@@ -205,7 +315,8 @@ export default {
       this.isListDataLoading = true;
       const res = await this.$api.orderCommodityManage({
         ...this.form,
-        ...this.listParams
+        ...this.listParams,
+        sellState: this.activeName === 'unpay' ? '1' : '0'
       });
       this.isListDataLoading = false;
       switch (res.code) {
@@ -220,6 +331,7 @@ export default {
     },
     init() {
       setTimeout(() => {
+        this.clearListParams();
         this.perm();
       }, 20);
       this.perm();
@@ -228,6 +340,15 @@ export default {
   },
   mounted() {
     this.init();
+  },
+  watch: {
+    activeName: {
+      handler(newV, oldV) {
+        if (newV !== oldV) {
+          this.clearListParams()
+        }
+      }
+    }
   }
 };
 </script>

@@ -74,7 +74,7 @@ const commodityOrderList = {
     "createdTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
     "orderNumber":"@INTEGER(6237657823644,6997657823644)", // 订单号
     "fileId": "@INTEGER(1,2019690999)",
-    "endTime":"@INTEGER(1574738483260,1584738483260)"
+    "endTime":"@INTEGER(1565748967680,1568798967690)"
 }
 
 const classData = [
