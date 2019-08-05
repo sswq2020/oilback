@@ -234,7 +234,7 @@ export default {
     },
     GoForSale(){
       this.$router.push({
-        path: "/web/cm/commodity/commodityForSale/page"
+        path: "/web/hyw/product/product/pageForSale"
       });      
     },
     async _addCommodity_(params) {

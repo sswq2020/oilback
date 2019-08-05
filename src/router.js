@@ -58,7 +58,7 @@ let commonRoutes = {
             component: CommodityOnSale
         },
         {
-            path: '/web/cm/commodity/commodityForSale/page',
+            path: '/web/hyw/product/product/pageForSale',
             name: 'commodityForSale',
             component: CommodityForSale
         },
