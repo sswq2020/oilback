@@ -53,7 +53,7 @@ let commonRoutes = {
             component: EditOldCommodity
         },           
         {
-            path: '/web/cm/commodity/commodityOnSale/page',
+            path: '/web/hyw/product/product/pageOnSale',
             name: 'commodityOnSale',
             component: CommodityOnSale
         },
