@@ -34,6 +34,11 @@ export default {
       let minute = Math.floor(second / 60);
       second %= 60;
       this.countdown =`支付倒计时: ${tow(day)}天${tow(hour)}小时${tow(minute)}分钟${tow(second)}秒`
+      if(day < 0 || hour < 0 || minute < 0 && second < 0) {
+        this.countdown = '超时'
+        return;
+      }
+
       if (day === 0 && hour === 0 && minute === 0 && second === 0) {
       this.countdown = '超时' 
         return;
