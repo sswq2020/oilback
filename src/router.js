@@ -48,7 +48,7 @@ let commonRoutes = {
             component: ReleaseNewCommodity
         },
         {
-            path: '/web/cm/commodity/editOldCommodity/page',
+            path: '/web/hyw/product/product/update',
             name: 'editOldCommodity',
             component: EditOldCommodity
         },           

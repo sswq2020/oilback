@@ -324,7 +324,7 @@ export default {
       this.setIsEdit(true);
       this.setCommodityId(id);
       this.$router.push({
-        path: "/web/cm/commodity/editOldCommodity/page"
+        path: "/web/hyw/product/product/update"
       });
     },
     shelves(item = null) {
