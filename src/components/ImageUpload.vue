@@ -70,6 +70,7 @@ export default {
 
 <style scoped lang="less">
 .avatar-uploader {
+  display: inline-block;
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;

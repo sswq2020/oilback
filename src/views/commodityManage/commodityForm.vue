@@ -123,6 +123,9 @@
                 </div>
                 <div class="imgBox" v-show="!(form.fileId)">
                   <ImageUpload :onSuccess="(file)=>{this.uploadSuceess(file)}"></ImageUpload>
+                  <div
+                    style="display:inline-block;vertical-align:text-bottom;font-size:12px;color:#333;margin-left:10px;"
+                  >尺寸最大800*800。图片大小小于3M</div>
                 </div>
                 <el-input type="hidden" :value="form.fileId"></el-input>
               </el-form-item>
@@ -211,7 +214,7 @@ export default {
   data() {
     return {
       loading: false,
-      url:"#", // 后台改成上传成功后返回的url
+      url: "#", // 后台改成上传成功后返回的url
       form: { ...defualtFormParams },
       paramsList: [],
       /**参数列表一般是由一二级目录决定，但是编辑页面一开始进入的时候是唯一的外部触发*/
@@ -251,7 +254,11 @@ export default {
       switch (res.code) {
         case Dict.SUCCESS:
           this.$messageSuccess("新增商品成功");
-          this.back();
+          if (this.form.sellState === "0") {
+            this.GoOnSale();
+          } else {
+            this.GoForSale();
+          }
           break;
         default:
           this.$messageError(res.mesg);
