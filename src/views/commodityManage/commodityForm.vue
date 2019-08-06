@@ -2,7 +2,7 @@
   <div class="container single-page">
     <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
     <div class="form">
-      <el-form ref="form" :model="form" label-width="165px" size="small">
+      <el-form ref="form" :model="form" label-width="200px" size="small">
         <div class="form-block">
           <el-row>
             <el-col :md="12" :sm="12" :xs="24">
@@ -131,7 +131,7 @@
         </div>
         <div class="form-block" v-show="form.parameterList.length">
           <div class="head">参数信息</div>
-          <el-row :gutter="50">
+          <el-row :gutter="30">
             <el-col
               :md="12"
               :sm="12"
@@ -151,7 +151,7 @@
         </div>
         <div class="form-block">
           <div class="head">销售状态</div>
-          <el-row :gutter="50">
+          <el-row :gutter="30">
             <el-col :md="12" :sm="12" :xs="24">
               <el-form-item
                 label="销售状态"
@@ -211,8 +211,7 @@ export default {
   data() {
     return {
       loading: false,
-      url:
-        "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg", // 后台改成上传成功后返回的url
+      url:"#", // 后台改成上传成功后返回的url
       form: { ...defualtFormParams },
       paramsList: [],
       /**参数列表一般是由一二级目录决定，但是编辑页面一开始进入的时候是唯一的外部触发*/
