@@ -354,8 +354,16 @@ export default {
      * @description 出售中的商品列表
      * */
     getCommodityOnSaleList(params){
-        return fetch(oilURL + '/web/hyw/product/product/page',params)          
+        return fetch(oilURL + '/web/hyw/product/product/pageOnSale',params)          
     },
+    /**
+     * @author sswq
+     * @param params
+     * @description 待售中的商品列表
+     * */
+    getCommodityForSaleList(params){
+        return fetch(oilURL + '/web/hyw/product/product/pageForSale',params)          
+    },    
     /**
      * @author sswq
      * @param params

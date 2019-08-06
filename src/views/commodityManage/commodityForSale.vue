@@ -284,7 +284,7 @@ export default {
       const flag = this._filter();
       if (!flag) return;
       this.isListDataLoading = true;
-      const res = await this.$api.getCommodityOnSaleList({
+      const res = await this.$api.getCommodityForSaleList({
         ...this.form,
         ...this.listParams
       });
