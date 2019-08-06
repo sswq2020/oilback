@@ -64,15 +64,16 @@ const commodityOnSaleList = {
 }
 
 const commodityOrderList = {
-    "id|+1": "@INTEGER(1,2019690999)",
+    "orderId|+1": "@INTEGER(1,2019690999)",
+    "picUrl":"https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
     "price": "@INTEGER(1,2019690999)", // 售价
     "num": "@INTEGER(3489,20196)", // 数量
     "payer":"@INTEGER(13702260943,18702260943)", // 买家
     "sum":"@INTEGER(912213312,972213312)", // 金额
     "productName": "@CTITLE(2,4)", // 商品名称
     "serialNumber": "@INTEGER(1,2019690999)", // 商品编码
-    "createdTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
-    "orderNumber":"@INTEGER(6237657823644,6997657823644)", // 订单号
+    "orderTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
+    "orderCode":"@INTEGER(6237657823644,6997657823644)", // 订单号
     "fileId": "@INTEGER(1,2019690999)",
     "endTime":"@INTEGER(1565748967680,1568798967690)"
 }
@@ -392,7 +393,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: '/web/hyw/product/orderList/get',
+            router: '/web/hyw/shopping/order/seller',
             result(params) {
                 return {
                     ...body,

@@ -402,7 +402,7 @@ export default {
      * @description 订单管理列表
      * */
     orderCommodityManage(params){
-        return fetch(oilURL + '/web/hyw/product/orderList/get',params)          
+        return fetch(oilURL + '/web/hyw/shopping/order/seller',params)          
     },
 
     // #endregion

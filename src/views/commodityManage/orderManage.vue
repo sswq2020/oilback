@@ -11,13 +11,13 @@
       <div class="form-item">
         <label>订单号</label>
         <div class="form-control">
-          <el-input v-model="form.orderNumber" placeholder="请输入内容" size="small"></el-input>
+          <el-input v-model="form.orderCode" placeholder="请输入内容" size="small"></el-input>
         </div>
       </div>
       <div class="form-item">
         <label>商品编码</label>
         <div class="form-control">
-          <el-input v-model="form.productNumber" placeholder="请输入内容" size="small"></el-input>
+          <el-input v-model="form.orderStatus" placeholder="请输入内容" size="small"></el-input>
         </div>
       </div>
       <div class="form-item">
@@ -53,18 +53,11 @@
               </div>
               <div class="info">
                 <div class="avatar">
-                  <!--测试上线前改为下面的-->
-                  <img
-                    v-if="listData.list[scope.$index].fileId"
-                    width="65"
-                    height="64"
-                    src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-                  />
-                  <!-- <img v-if="listData.list[scope.$index].fileId"
+                  <img v-if="listData.list[scope.$index].fileId"
                   width="65"
                   height="64"
-                  :src="listData.list[scope.$index].url"
-                  />-->
+                  :src="listData.list[scope.$index].picUrl"
+                  />
                   <span v-else>未设置图片</span>
                 </div>
                 <div class="product-content">
@@ -160,23 +153,16 @@
           <template slot-scope="scope">
             <div class="goods">
               <div class="header">
-                <span class="header-info">{{listData.list[scope.$index].createdTime}}</span>
-                <span class="header-info">订单号:{{listData.list[scope.$index].orderNumber}}</span>
+                <span class="header-info">{{listData.list[scope.$index].orderTime}}</span>
+                <span class="header-info">订单号:{{listData.list[scope.$index].orderCode}}</span>
               </div>
               <div class="info">
                 <div class="avatar">
-                  <!--测试上线前改为下面的-->
-                  <img
-                    v-if="listData.list[scope.$index].fileId"
-                    width="65"
-                    height="64"
-                    src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-                  />
-                  <!-- <img v-if="listData.list[scope.$index].fileId"
+                  <img v-if="listData.list[scope.$index].picUrl"
                   width="65"
                   height="64"
-                  :src="listData.list[scope.$index].url"
-                  />-->
+                  :src="listData.list[scope.$index].picUrl"
+                  />
                   <span v-else>未设置图片</span>
                 </div>
                 <div class="product-content">
@@ -260,8 +246,8 @@ import heltable from "components/hl_table";
 import countdown from "components/countdown";
 import Dict from "@/util/dict.js";
 const defaultFormData = {
-  orderNumber: null,
-  productNumber: null
+  orderCode: null,
+  serialNumber: null
 };
 const defaultListParams = {
   pageSize: 5,
@@ -316,7 +302,7 @@ export default {
       const res = await this.$api.orderCommodityManage({
         ...this.form,
         ...this.listParams,
-        sellState: this.activeName === 'unpay' ? '1' : '0'
+        orderStatus: this.activeName === 'unpay' ? '11' : '50'
       });
       this.isListDataLoading = false;
       switch (res.code) {
