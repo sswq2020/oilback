@@ -346,12 +346,10 @@ export default {
       const res = await this.$api.getParameterById(id);
       switch (res.code) {
         case Dict.SUCCESS:
-          if (res.data && res.data.length) {
-            this.paramsList = _.cloneDeep(res.data); // 万一以后有用
-            this.form.parameterList = res.data.map(item => {
-              return { ...item, paraValue: "" };
-            });
-          }
+          this.paramsList = _.cloneDeep(res.data); // 万一以后有用
+          this.form.parameterList = res.data.map(item => {
+            return { ...item, paraValue: "" };
+          });
           break;
         default:
           this.$messageError(res.mesg);
