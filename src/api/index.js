@@ -39,7 +39,7 @@ switch (env) {
         baseURL = 'http://10.1.15.106:8445';
         redirectUrl = 'http://oilhui.hlet.com';
         loginUrl = 'http://login.hlet.com';
-        oilURL = 'hletoil'
+        oilURL = 'oilhui'
         break;
     default:
         break;
