@@ -74,7 +74,6 @@ const commodityOrderList = {
     "serialNumber": "@INTEGER(1,2019690999)", // 商品编码
     "orderTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
     "orderCode":"@INTEGER(6237657823644,6997657823644)", // 订单号
-    "fileId": "@INTEGER(1,2019690999)",
     "endTime":"@INTEGER(1565748967680,1568798967690)"
 }
 

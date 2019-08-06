@@ -48,12 +48,12 @@
           <template slot-scope="scope">
             <div class="goods">
               <div class="header">
-                <span class="header-info">{{listData.list[scope.$index].createdTime}}</span>
-                <span class="header-info">订单号:{{listData.list[scope.$index].orderNumber}}</span>
+                <span class="header-info">{{listData.list[scope.$index].orderTime}}</span>
+                <span class="header-info">订单号:{{listData.list[scope.$index].orderCode}}</span>
               </div>
               <div class="info">
                 <div class="avatar">
-                  <img v-if="listData.list[scope.$index].fileId"
+                  <img v-if="listData.list[scope.$index].picUrl"
                   width="65"
                   height="64"
                   :src="listData.list[scope.$index].picUrl"
