@@ -407,6 +407,21 @@ export default {
 
     // #endregion
 
+    // #region 会员管理
+    // #endregion 
+
+    // #region 预警管理
+    /**
+     * @author sswq
+     * @param params
+     * @description 协议到期预警列表
+     * */
+    getDealDueForeWarnList(params){
+        return fetch(oilURL + '/web/hyw/vip/vip/page',params)          
+    },      
+    // #endregion 
+
+
     // #region  字典项
     /**
      * @author sswq

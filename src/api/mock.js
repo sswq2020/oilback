@@ -78,6 +78,16 @@ const commodityOrderList = {
     "isInvalid":"@PICK('0','1')" // '0'是正常 '1'是失效
 }
 
+const dealDueForeWarnList = {
+    "id|+1": "@INTEGER(1,2019690999)",
+    "mock1": "@INTEGER(13012819898,18912819898)",
+    "mock2": "@CTITLE(7,9)公司",
+    "mock3": "@PICK('买家','采购','卖家')入会协议",
+    "mock4": '@DATE("yyyy-MM-dd")'
+
+}
+
+
 const classData = [
     {
         "id": 1,
@@ -411,7 +421,6 @@ const mockRouterMap = {
         },
         // #endregion     
 
-
         // #region  修改商品
         {
             isMock: IS_MOCK,
@@ -465,6 +474,27 @@ const mockRouterMap = {
         },
         // #endregion 
 
+        // #region  协议到期预警列表
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/vip/vip/page',
+            result(params) {
+                return {
+                    ...body,
+                    data: {
+                        'list|10-20': [dealDueForeWarnList],
+                        "paginator": {
+                            "currentPage": params.page,
+                            "pageSize": params.pageSize,
+                            "totalCount": 1000,
+                            "totalPage": 1000 / params.pageSize
+                        }
+                    },
+                };
+            }
+        },
+        // #endregion
 
 
         // #region  字典项

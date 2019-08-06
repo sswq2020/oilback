@@ -13,8 +13,13 @@ const CommodityOnSale = () => import('views/commodityManage/commodityOnSale.vue'
 const CommodityForSale = () => import('views/commodityManage/commodityForSale.vue')
 /**订单管理*/
 const OrderManage = () => import('views/commodityManage/orderManage.vue')
-
 // #endregion
+
+// #region 预警管理
+/**协议到期预警*/
+const DealDueforeWarn = () => import('views/foreWarnManage/dealDueforeWarn.vue')
+// #endregion
+
 
 Vue.use(Router)
 
@@ -67,8 +72,17 @@ let commonRoutes = {
             name: 'orderManage',
             component: OrderManage
         },
-
         // #endregion           
+
+        // #region  预警管理      
+        {
+            path: '/web/hyw/vip/vip/page',
+            name: 'dealDueforeWarn',
+            component: DealDueforeWarn
+        },
+        // #endregion      
+
+
     ]
 }
 
