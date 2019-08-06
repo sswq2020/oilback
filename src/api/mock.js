@@ -66,15 +66,16 @@ const commodityOnSaleList = {
 const commodityOrderList = {
     "orderId|+1": "@INTEGER(1,2019690999)",
     "picUrl":"https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-    "price": "@INTEGER(1,2019690999)", // 售价
-    "num": "@INTEGER(3489,20196)", // 数量
+    "productPrice": "@INTEGER(1,200)", // 单价
+    "productTotal":"@INTEGER(2019690999,2219690999)", // 金额
+    "productWeight": "@INTEGER(3489,20196)", // 数量
     "payer":"@INTEGER(13702260943,18702260943)", // 买家
-    "sum":"@INTEGER(912213312,972213312)", // 金额
     "productName": "@CTITLE(2,4)", // 商品名称
     "serialNumber": "@INTEGER(1,2019690999)", // 商品编码
     "orderTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
     "orderCode":"@INTEGER(6237657823644,6997657823644)", // 订单号
-    "endTime":"@INTEGER(1565748967680,1568798967690)"
+    "exTime":"@INTEGER(1565748967680,1568798967690)",
+    "isInvalid":"@PICK('0','1')" // '0'是正常 '1'是失效
 }
 
 const classData = [

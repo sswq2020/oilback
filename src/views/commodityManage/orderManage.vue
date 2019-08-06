@@ -75,7 +75,7 @@
                 <span class="header-info"></span>
               </div>
               <div class="otherinfo">
-                <div class="price">{{listData.list[scope.$index].price}}</div>
+                <div class="price">{{listData.list[scope.$index].productPrice}}</div>
               </div>
             </div>
           </template>
@@ -87,7 +87,7 @@
                 <span class="header-info"></span>
               </div>
               <div class="otherinfo">
-                <div class="price">{{listData.list[scope.$index].num}}</div>
+                <div class="price">{{listData.list[scope.$index].productWeight}}</div>
               </div>
             </div>
           </template>
@@ -111,7 +111,7 @@
                 <span class="header-info"></span>
               </div>
               <div class="otherinfo">
-                <div class="price">{{listData.list[scope.$index].sum}}</div>
+                <div class="price">{{listData.list[scope.$index].productTotal}}</div>
               </div>
             </div>
           </template>
@@ -120,9 +120,10 @@
           <template slot-scope="scope">
             <div class="goods">
               <div class="header">
-                <span class="header-info">
-                  <countdown :endTime="listData.list[scope.$index].endTime"></countdown>
+                <span class="header-info" v-if="listData.list[scope.$index].isInvalid === '0' ">
+                  <countdown :endTime="listData.list[scope.$index].exTime"></countdown>
                 </span>
+                <span class="header-info" v-else style="color:red">超时</span>
               </div>
               <div class="otherinfo" style="justify-content: center;">
                 <div class="center">
@@ -180,7 +181,7 @@
                 <span class="header-info"></span>
               </div>
               <div class="otherinfo">
-                <div class="price">{{listData.list[scope.$index].price}}</div>
+                <div class="price">{{listData.list[scope.$index].productPrice}}</div>
               </div>
             </div>
           </template>
@@ -192,7 +193,7 @@
                 <span class="header-info"></span>
               </div>
               <div class="otherinfo">
-                <div class="price">{{listData.list[scope.$index].num}}</div>
+                <div class="price">{{listData.list[scope.$index].productWeight}}</div>
               </div>
             </div>
           </template>
@@ -216,7 +217,7 @@
                 <span class="header-info"></span>
               </div>
               <div class="otherinfo">
-                <div class="price">{{listData.list[scope.$index].sum}}</div>
+                <div class="price">{{listData.list[scope.$index].productTotal}}</div>
               </div>
             </div>
           </template>
