@@ -1,0 +1,208 @@
+<template>
+  <div class="container single-page">
+    <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
+    <div class="search-box">
+      <div class="form-item">
+        <label>会员账户</label>
+        <div class="form-control">
+          <el-input v-model="form.phone" placeholder="请输入" size="small"></el-input>
+        </div>
+      </div>
+      <div class="form-item">
+        <label>公司名称</label>
+        <div class="form-control">
+          <el-input v-model="form.name" placeholder="请输入" size="small"></el-input>
+        </div>
+      </div>
+      <div class="form-item">
+        <el-button
+          type="primary"
+          :loading="isListDataLoading"
+          @click="getListDataBylistParams"
+          size="small"
+        >查询</el-button>
+        <el-button size="small" @click="clearListParams">重置</el-button>
+      </div>
+    </div>
+    <heltable
+      ref="tb"
+      @sizeChange="changePageSize"
+      @pageChange="changePage"
+      :total="listData.paginator.totalCount"
+      :currentPage="listParams.page"
+      :pageSize="listParams.pageSize"
+      :data="listData.list"
+      :loading="isListDataLoading"
+    >
+      <el-table-column
+        align="center"
+        :prop="item.prop"
+        :label="item.label"
+        :key="item.id"
+        v-for="(item) in tableHeader"
+        :show-overflow-tooltip="showOverflowTooltip"
+      >
+        <template slot-scope="scope">
+          <span>{{listData.list[scope.$index][item.prop]}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="操作" fixed="right" width="120px" align="left">
+        <template slot-scope="scope">
+          <el-button type="text" @click="edit(listData.list[scope.$index])">编辑</el-button>
+          <el-button type="text" @click="toggle(listData.list[scope.$index])">{{listData.list[scope.$index].state === "1" ? "禁用" : "激活"}}</el-button>
+        </template>
+      </el-table-column>
+
+
+
+    </heltable>
+  </div>
+</template>
+
+<script>
+import Dict from "util/dict.js";
+import heltable from "components/hl_table";
+import hlBreadcrumb from "components/hl-breadcrumb";
+
+const defaultFormData = {
+  name: null,
+  phone: null
+};
+const defaultListParams = {
+  pageSize: 20,
+  page: 1,
+  memberType:"1" // 卖家
+};
+const defaultListData = {
+  paginator: {
+    totalCount: 0,
+    totalPage: 1
+  },
+  list: []
+};
+const defaulttableHeader = [
+  {
+    prop: "phone",
+    label: "会员账户"
+  },
+  {
+    prop: "name",
+    label: "公司名称"
+  },
+  {
+    prop: "address",
+    label: "公司电话"
+  },  
+  {
+    prop: "mock4",
+    label: "公司地址"
+  },  
+  {
+    prop: "settledTime",
+    label: "入驻日期"
+  },  
+  {
+    prop: "stateText",
+    label: "卖家会员状态"
+  }, 
+
+];
+
+const rowAdapter = (list) => {
+    if (!list) {
+        return []
+    }
+    if (list.length > 0) {
+        list = list.map((row) => {
+            return row = { 
+              ...row,
+              stateText:`${row.state === "1" ? "正常": "禁用" }`,
+            }
+        })
+    }
+    return list
+}
+
+
+export default {
+  name: "sellerVipManage",
+  components: {
+    heltable,
+    hlBreadcrumb
+  },
+  data() {
+    return {
+      breadTitle: ["会员管理", "卖家管理"],
+      isListDataLoading: false,
+      listParams: { ...defaultListParams }, // 页数
+      form: { ...defaultFormData }, // 查询参数
+      listData: { ...defaultListData }, // 返回list的数据结构
+      tableHeader: defaulttableHeader,
+      showOverflowTooltip: true,
+      visible: false,
+      contentId:"customers",
+      bill:[],
+    };
+  },
+  methods: {
+    clearListParams() {
+      this.form = { ...defaultFormData };
+      this.listParams = { ...defaultListParams };
+      this.listData = { ...defaultListData };
+      this.getListData();
+    },
+    changePage(page) {
+      this.listParams.page = page;
+      this.getListData();
+    },
+    changePageSize(pageSize) {
+      this.listParams = { ...defaultListParams, pageSize:pageSize };
+      this.getListData();      
+    },
+    getListDataBylistParams() {
+      this.listParams = { ...defaultListParams };
+      this.getListData();
+    },
+    edit(){},
+    toggle(){},
+    async getListData() {
+      this.isListDataLoading = true;
+      const res = await this.$api.getSellerVIPList({...this.listParams,...this.form});
+      this.isListDataLoading = false;
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.listData ={...res.data,list:rowAdapter(res.data.list)};
+          break;
+        default:
+          this.$messageError(res.mesg);
+          break;
+      }
+    },
+    init() {
+      setTimeout(() => {
+        this.clearListParams();
+        this.perm();
+      }, 20);
+      this.perm();
+    },
+    perm() {}
+  },
+  mounted() {
+    this.init();
+  }
+};
+</script>
+
+<style scoped lang="less">
+.search-box {
+  flex-wrap: wrap;
+  margin: 0;
+  .form-item {
+    padding-top: 20px;
+    .el-button {
+      margin-top: 17px;
+    }
+  }
+}
+</style>

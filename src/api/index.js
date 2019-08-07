@@ -408,6 +408,14 @@ export default {
     // #endregion
 
     // #region 会员管理
+    /**
+     * @author sswq
+     * @param params
+     * @description 卖家会员管理列表
+     * */
+    getSellerVIPList(params){
+        return fetch(oilURL + '/web/hyw/member/member/pageSeller',params)          
+    }, 
     // #endregion 
 
     // #region 预警管理

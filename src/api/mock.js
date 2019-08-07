@@ -87,6 +87,16 @@ const dealDueForeWarnList = {
 
 }
 
+const pageSellerList = {
+    "id|+1": "@INTEGER(1,2019690999)",
+    "phone": "@INTEGER(13012819898,18912819898)",
+    "name": "@CTITLE(7,9)公司",
+    "mock4": "@INTEGER(13012819898,18912819898)",
+    "address": '@PROVINCE()@CITY()@CTITLE(2,10)@INTEGER(1,100)号',
+    "settledTime": '@DATE("yyyy-MM-dd HH:mm:ss")' ,
+    "state":"@PICK('0','1')",  // 1正常 0禁止
+    "userId":"@INTEGER(1,2019690999)",  // 会员id
+}
 
 const classData = [
     {
@@ -474,6 +484,30 @@ const mockRouterMap = {
         },
         // #endregion 
 
+        // #region  卖家会员管理列表
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/member/member/pageSeller',
+            result(params) {
+                return {
+                    ...body,
+                    data: {
+                        'list|10-20': [pageSellerList],
+                        "paginator": {
+                            "currentPage": params.page,
+                            "pageSize": params.pageSize,
+                            "totalCount": 1000,
+                            "totalPage": 1000 / params.pageSize
+                        }
+                    },
+                };
+            }
+        },
+        // #endregion
+
+
+
         // #region  协议到期预警列表
         {
             isMock: IS_MOCK,
@@ -495,7 +529,6 @@ const mockRouterMap = {
             }
         },
         // #endregion
-
 
         // #region  字典项
         {
