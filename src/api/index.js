@@ -327,8 +327,8 @@ export default {
         return formDataRequest(`/sms/mc-client/sms/template/smsService/verifiCode`, params)
     },
     // #region 根据userId判断角色是货主还是仓库管理人员
-    getUserRole(userId){
-        return fetch('/system/manage/user/getUserRole', { userId }, 'get')            
+    getUserRole(userId) {
+        return fetch('/system/manage/user/getUserRole', { userId }, 'get')
     },
 
     // #region 商品管理
@@ -337,72 +337,72 @@ export default {
      * @param params
      * @description 一级二级目录
      * */
-    getClass(){
-        return fetch(oilURL + '/productInterface/getClassify', '','get')          
+    getClass() {
+        return fetch(oilURL + '/productInterface/getClassify', '', 'get')
     },
     /**
      * @author sswq
      * @param params
      * @description 二级目录下动态加载的
      * */
-    getParameterById(id){
-        return fetch(oilURL + '/productInterface/getParameterById',{id},'get')          
+    getParameterById(id) {
+        return fetch(oilURL + '/productInterface/getParameterById', { id }, 'get')
     },
     /**
      * @author sswq
      * @param params
      * @description 出售中的商品列表
      * */
-    getCommodityOnSaleList(params){
-        return fetch(oilURL + '/web/hyw/product/product/pageOnSale',params)          
+    getCommodityOnSaleList(params) {
+        return fetch(oilURL + '/web/hyw/product/product/pageOnSale', params)
     },
     /**
      * @author sswq
      * @param params
      * @description 待售中的商品列表
      * */
-    getCommodityForSaleList(params){
-        return fetch(oilURL + '/web/hyw/product/product/pageForSale',params)          
-    },    
+    getCommodityForSaleList(params) {
+        return fetch(oilURL + '/web/hyw/product/product/pageForSale', params)
+    },
     /**
      * @author sswq
      * @param params
      * @description 新增商品
      */
-    addCommodity(params){
-        return fetch(oilURL + '/web/hyw/product/product/add',params)          
-    },    
+    addCommodity(params) {
+        return fetch(oilURL + '/web/hyw/product/product/add', params)
+    },
     /**
      * @author sswq
      * @param params
      * @description 修改商品
      * */
-    updateCommodity(params){
-        return fetch(oilURL + '/web/hyw/product/product/update',params)          
+    updateCommodity(params) {
+        return fetch(oilURL + '/web/hyw/product/product/update', params)
     },
     /**
      * @author sswq
      * @param params
      * @description 批量更新商品
      * */
-    batchUpdateCommodity(params){
-        return fetch(oilURL + '/web/hyw/product/product/switchState',params)          
+    batchUpdateCommodity(params) {
+        return fetch(oilURL + '/web/hyw/product/product/switchState', params)
     },
     /**
      * @author sswq
      * @param params
      * @description 商品详情页/编辑查询
      * */
-    getDetailCommodity(params){
-        return fetch(oilURL + '/web/hyw/product/product/get',params,'get')          
+    getDetailCommodity(params) {
+        return fetch(oilURL + '/web/hyw/product/product/get', params, 'get')
     },
     /**
      * @author sswq
      * @param params
      * @description 订单管理列表
      * */
-    orderCommodityManage(params){
-        return fetch(oilURL + '/web/hyw/shopping/order/seller',params)          
+    orderCommodityManage(params) {
+        return fetch(oilURL + '/web/hyw/shopping/order/seller', params)
     },
 
     // #endregion
@@ -413,17 +413,25 @@ export default {
      * @param params
      * @description 卖家会员管理列表
      * */
-    getSellerVIPList(params){
-        return fetch(oilURL + '/web/hyw/member/member/pageSeller',params)          
-    }, 
-   /**
+    getSellerVIPList(params) {
+        return fetch(oilURL + '/web/hyw/member/member/pageSeller', params)
+    },
+    /**
      * @author sswq
      * @param params
-     * @description 会员启用禁用
+     * @description 买家会员管理列表
      * */
-    vipEnable(params){
-        return fetch(oilURL + '/web/hyw/member/member/updateState',params)          
-    }, 
+    getBuyerVIPList(params) {
+        return fetch(oilURL + '/web/hyw/member/member/pageBuyer', params)
+    },
+    /**
+      * @author sswq
+      * @param params
+      * @description 会员启用禁用
+      * */
+    vipEnable(params) {
+        return fetch(oilURL + '/web/hyw/member/member/updateState', params)
+    },
     // #endregion 
 
     // #region 预警管理
@@ -432,9 +440,9 @@ export default {
      * @param params
      * @description 协议到期预警列表
      * */
-    getDealDueForeWarnList(params){
-        return fetch(oilURL + '/web/hyw/vip/vip/page',params)          
-    },      
+    getDealDueForeWarnList(params) {
+        return fetch(oilURL + '/web/hyw/vip/vip/page', params)
+    },
     // #endregion 
 
 
@@ -468,6 +476,6 @@ export default {
         return fetch('/dfs/open/files/info/get', params, 'get')
     },
     // #endregion
-    
-    
+
+
 }

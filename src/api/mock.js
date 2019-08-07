@@ -506,6 +506,29 @@ const mockRouterMap = {
         },
         // #endregion
 
+        // #region  买家会员管理列表
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/member/member/pageBuyer',
+            result(params) {
+                return {
+                    ...body,
+                    data: {
+                        'list|10-20': [pageSellerList],
+                        "paginator": {
+                            "currentPage": params.page,
+                            "pageSize": params.pageSize,
+                            "totalCount": 1000,
+                            "totalPage": 1000 / params.pageSize
+                        }
+                    },
+                };
+            }
+        },
+        // #endregion
+
+
         // #region  会员启用禁用
         {
             isMock: IS_MOCK,

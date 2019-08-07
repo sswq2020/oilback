@@ -53,9 +53,6 @@
           <el-button type="text" @click="toggle(listData.list[scope.$index])">{{listData.list[scope.$index].state === "1" ? "禁用" : "激活"}}</el-button>
         </template>
       </el-table-column>
-
-
-
     </heltable>
   </div>
 </template>
@@ -72,7 +69,7 @@ const defaultFormData = {
 const defaultListParams = {
   pageSize: 20,
   page: 1,
-  memberType:"1" // 卖家
+  memberType:"2" // 买家
 };
 const defaultListData = {
   paginator: {
@@ -104,7 +101,7 @@ const defaulttableHeader = [
   },  
   {
     prop: "stateText",
-    label: "卖家会员状态"
+    label: "买家会员状态"
   }, 
 
 ];
@@ -133,7 +130,7 @@ export default {
   },
   data() {
     return {
-      breadTitle: ["会员管理", "卖家管理"],
+      breadTitle: ["会员管理", "买家管理"],
       isListDataLoading: false,
       listParams: { ...defaultListParams }, // 页数
       form: { ...defaultFormData }, // 查询参数
@@ -165,7 +162,7 @@ export default {
     toggle(item) {
       let that = this;
       const {state,userId} = item;
-      const text = state === "1" ? "禁用卖家" : "激活卖家"
+      const text = state === "1" ? "禁用买家" : "激活买家"
       that.$confirm(`确定${text}`, "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -190,11 +187,11 @@ export default {
             type: 'info',
             message: '已取消删除'
           });          
-        });      
+        });
     },
     async getListData() {
       this.isListDataLoading = true;
-      const res = await this.$api.getSellerVIPList({...this.listParams,...this.form});
+      const res = await this.$api.getBuyerVIPList({...this.listParams,...this.form});
       this.isListDataLoading = false;
       switch (res.code) {
         case Dict.SUCCESS:
