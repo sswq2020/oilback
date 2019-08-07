@@ -416,6 +416,14 @@ export default {
     getSellerVIPList(params){
         return fetch(oilURL + '/web/hyw/member/member/pageSeller',params)          
     }, 
+   /**
+     * @author sswq
+     * @param params
+     * @description 会员启用禁用
+     * */
+    vipEnable(params){
+        return fetch(oilURL + '/web/hyw/member/member/updateState',params)          
+    }, 
     // #endregion 
 
     // #region 预警管理

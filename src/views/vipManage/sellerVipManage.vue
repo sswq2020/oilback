@@ -91,11 +91,11 @@ const defaulttableHeader = [
     label: "公司名称"
   },
   {
-    prop: "address",
+    prop: "mock4",
     label: "公司电话"
   },  
   {
-    prop: "mock4",
+    prop: "address",
     label: "公司地址"
   },  
   {
@@ -140,9 +140,6 @@ export default {
       listData: { ...defaultListData }, // 返回list的数据结构
       tableHeader: defaulttableHeader,
       showOverflowTooltip: true,
-      visible: false,
-      contentId:"customers",
-      bill:[],
     };
   },
   methods: {
@@ -165,7 +162,31 @@ export default {
       this.getListData();
     },
     edit(){},
-    toggle(){},
+    toggle(item) {
+      let that = this;
+      const {state,userId} = item;
+      const text = state === "1" ? "禁用卖家" : "激活卖家"
+      that.$confirm(`确定${text}`, "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+        .then(async () => {
+          const res = await that.$api.vipEnable({
+            state: state === "1" ? "0" : "1",
+            userId:userId
+          });
+          switch (res.code) {
+            case Dict.SUCCESS:
+              this.$messageSuccess(`${text}成功`)
+              this.getListData();
+              break;
+            default:
+              this.$messageError(`${text}失败,${res.mesg}`);
+              break;
+          }
+        });
+    },
     async getListData() {
       this.isListDataLoading = true;
       const res = await this.$api.getSellerVIPList({...this.listParams,...this.form});
