@@ -6,6 +6,15 @@ const store = {
         memberId:null, // 会员ID
     },
     mutations: {
+        setIsEdit(state,payload) {
+            state.isEdit = payload;
+        },
+        setMemberType(state,payload){
+            state.memberType = payload
+        },
+        setMemberId(state,payload){
+            state.memberId = payload
+        },        
 
     },
     actions: {
