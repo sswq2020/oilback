@@ -1,6 +1,8 @@
 <template>
   <div class="container single-page">
-    <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
+    <hlBreadcrumb :data="breadTitle">
+      <el-button class="hlB_buts" size="small" icon="el-icon-plus" @click="add">新增</el-button>
+    </hlBreadcrumb>
     <div class="search-box">
       <div class="form-item">
         <label>会员账户</label>
@@ -50,7 +52,10 @@
       <el-table-column label="操作" fixed="right" width="120px" align="left">
         <template slot-scope="scope">
           <el-button type="text" @click="edit(listData.list[scope.$index])">编辑</el-button>
-          <el-button type="text" @click="toggle(listData.list[scope.$index])">{{listData.list[scope.$index].state === "1" ? "禁用" : "激活"}}</el-button>
+          <el-button
+            type="text"
+            @click="toggle(listData.list[scope.$index])"
+          >{{listData.list[scope.$index].state === VIP_STATUS_NORMAL ? "禁用" : "激活"}}</el-button>
         </template>
       </el-table-column>
     </heltable>
@@ -58,6 +63,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 import Dict from "util/dict.js";
 import heltable from "components/hl_table";
 import hlBreadcrumb from "components/hl-breadcrumb";
@@ -69,7 +75,7 @@ const defaultFormData = {
 const defaultListParams = {
   pageSize: 20,
   page: 1,
-  memberType:"2" // 买家
+  memberType: Dict.BUYER_VIP // 买家
 };
 const defaultListData = {
   paginator: {
@@ -90,40 +96,38 @@ const defaulttableHeader = [
   {
     prop: "mock4",
     label: "公司电话"
-  },  
+  },
   {
     prop: "address",
     label: "公司地址"
-  },  
+  },
   {
     prop: "settledTime",
     label: "入驻日期"
-  },  
+  },
   {
     prop: "stateText",
     label: "买家会员状态"
-  }, 
-
+  }
 ];
 
-const rowAdapter = (list) => {
-    if (!list) {
-        return []
-    }
-    if (list.length > 0) {
-        list = list.map((row) => {
-            return row = { 
-              ...row,
-              stateText:`${row.state === "1" ? "正常": "禁用" }`,
-            }
-        })
-    }
-    return list
-}
-
+const rowAdapter = list => {
+  if (!list) {
+    return [];
+  }
+  if (list.length > 0) {
+    list = list.map(row => {
+      return (row = {
+        ...row,
+        stateText: `${Dict.VIP_STATUS[row.state]}`
+      });
+    });
+  }
+  return list;
+};
 
 export default {
-  name: "sellerVipManage",
+  name: "buyerVipManage",
   components: {
     heltable,
     hlBreadcrumb
@@ -137,9 +141,15 @@ export default {
       listData: { ...defaultListData }, // 返回list的数据结构
       tableHeader: defaulttableHeader,
       showOverflowTooltip: true,
+      VIP_STATUS_NORMAL: Dict.VIP_STATUS_NORMAL
     };
   },
   methods: {
+    ...mapMutations("memberForm", [
+      "setIsEdit",
+      "setMemberType",
+      "setMemberId"
+    ]),
     clearListParams() {
       this.form = { ...defaultFormData };
       this.listParams = { ...defaultListParams };
@@ -151,57 +161,81 @@ export default {
       this.getListData();
     },
     changePageSize(pageSize) {
-      this.listParams = { ...defaultListParams, pageSize:pageSize };
-      this.getListData();      
+      this.listParams = { ...defaultListParams, pageSize: pageSize };
+      this.getListData();
     },
     getListDataBylistParams() {
       this.listParams = { ...defaultListParams };
       this.getListData();
     },
-    edit(){},
     toggle(item) {
       let that = this;
-      const {state,userId} = item;
-      const text = state === "1" ? "禁用买家" : "激活买家"
-      that.$confirm(`确定${text}`, "提示", {
+      const { state, userId } = item;
+      const text = state === Dict.VIP_STATUS_NORMAL ? "禁用买家" : "激活买家";
+      that
+        .$confirm(`确定${text}`, "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         })
         .then(async () => {
           const res = await that.$api.vipEnable({
-            state: state === "1" ? "0" : "1",
-            userId:userId
+            state:
+              state === Dict.VIP_STATUS_NORMAL
+                ? Dict.VIP_STATUS_FROZEN
+                : Dict.VIP_STATUS_NORMAL,
+            userId: userId
           });
           switch (res.code) {
             case Dict.SUCCESS:
-              this.$messageSuccess(`${text}成功`)
+              this.$messageSuccess(`${text}成功`);
               this.getListData();
               break;
             default:
               this.$messageError(`${text}失败,${res.mesg}`);
               break;
           }
-        }).catch(() => {
+        })
+        .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
+            type: "info",
+            message: "已取消删除"
+          });
         });
     },
     async getListData() {
       this.isListDataLoading = true;
-      const res = await this.$api.getBuyerVIPList({...this.listParams,...this.form});
+      const res = await this.$api.getBuyerVIPList({
+        ...this.listParams,
+        ...this.form
+      });
       this.isListDataLoading = false;
       switch (res.code) {
         case Dict.SUCCESS:
-          this.listData ={...res.data,list:rowAdapter(res.data.list)};
+          this.listData = { ...res.data, list: rowAdapter(res.data.list) };
           break;
         default:
           this.$messageError(res.mesg);
           break;
       }
     },
+    add() {
+      this.setIsEdit(false);
+      this.setMemberType(Dict.BUYER_VIP);
+      this.setMemberId(null);
+      this.$router.push({
+        path: "/web/hyw/member/member/memberForm"
+      });
+    },
+    edit(item) {
+      const { userId } = item;
+      this.setIsEdit(true);
+      this.setMemberType(Dict.BUYER_VIP);
+      this.setMemberId(userId);
+      this.$router.push({
+        path: "/web/hyw/member/member/memberForm"
+      });
+    },    
     init() {
       setTimeout(() => {
         this.clearListParams();
