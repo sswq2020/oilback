@@ -475,6 +475,16 @@ export default {
     getFilesInfo(params) {
         return fetch('/dfs/open/files/info/get', params, 'get')
     },
+    /**
+     * @author sswq
+     * @description 企业用户分页查询
+     * */
+    getEnterpriseList(params) {
+        return fetch('/userinfo/enterprise/list/search', params)
+    },
+
+
+
     // #endregion
 
 

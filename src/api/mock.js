@@ -98,6 +98,26 @@ const pageSellerList = {
     "userId": "@INTEGER(1,2019690999)",  // 会员id
 }
 
+const EnterpriseList = {
+    "id|+1":"@INTEGER(1,2019690999)",
+    "extInfo": {
+        "address": '@PROVINCE()@CITY()@CTITLE(2,10)@INTEGER(1,100)号', // 地址
+        "bizIdNo": "@INTEGER(321102199108120001,321102200208120034)",  //业务联系人身份证号
+        "bizName": "@CNAME()", //业务联系人名称
+        "city": "@CITY()", // 所属市
+        "county": "@COUNTY()", // 所属区/县
+        "creditCode": "@INTEGER(321102199108120001,321102200208120034)", // 统一社会信用代码
+        "effectiveDt": '@DATE("yyyy-MM-dd")', //营业生效日期
+        "entType_": "@PICK('股份有限公司','有限责任公司')", // 企业类型Text
+        "expireDt": 0, // //营业到期日期
+        "legalPersonName": "@CNAME()", // 法人姓名
+        "name": "@CNAME()", // 企业名称
+        "province": "@PROVINCE()", //所属省
+        "userId": "@INTEGER(1,2019690999)", //用户id
+    }
+}
+
+
 const classData = [
     {
         "id": 1,
@@ -656,7 +676,27 @@ const mockRouterMap = {
             }
         },
 
-
+        // #region  企业用户分页查询
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/userinfo/enterprise/list/search',
+            result(params) {
+                return {
+                    ...body,
+                    data: {
+                        'list|10': [EnterpriseList],
+                        "paginator": {
+                            "currentPage": params.page,
+                            "pageSize": params.pageSize,
+                            "totalCount": 1000,
+                            "totalPage": 1000 / params.pageSize
+                        }
+                    },
+                };
+            }
+        },
+        // #endregion
 
         // #endregion     
 
