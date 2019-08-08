@@ -133,7 +133,8 @@ const rowAdapter = list => {
         address: row.extInfo.address, // 地址
         effectiveDt: row.extInfo.effectiveDt, // 营业生效日期
         expireDt: row.extInfo.expireDt, // 营业到期日期
-        userId: row.extInfo.userId // 公司id
+        userId: row.extInfo.userId, // 公司id
+        entType_:row.extInfo.entType_ // 企业类型
       });
     });
   }

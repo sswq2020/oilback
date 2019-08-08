@@ -109,7 +109,7 @@ const EnterpriseList = {
         "creditCode": "@INTEGER(321102199108120001,321102200208120034)", // 统一社会信用代码
         "effectiveDt": '@DATE("yyyy-MM-dd")', //营业生效日期
         "entType_": "@PICK('股份有限公司','有限责任公司')", // 企业类型Text
-        "expireDt": 0, // //营业到期日期
+        "expireDt": '@DATE("yyyy-MM-dd")', // //营业到期日期
         "legalPersonName": "@CNAME()", // 法人姓名
         "name": "@CNAME()", // 企业名称
         "province": "@PROVINCE()", //所属省
