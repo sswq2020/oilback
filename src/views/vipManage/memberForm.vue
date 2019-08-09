@@ -16,27 +16,27 @@
                 prop="userId"
                 :rules="[{ required: true, message: '必须选择一个公司'  }]"
               >
-                <companyglass @companySelect="getCompanyInfo"></companyglass>
+                <companyglass @companySelect="_getCompanyInfo"></companyglass>
                 <el-input type="hidden" :value="form.userId"></el-input>
               </el-form-item>
             </el-col>
             <el-col :md="24" :sm="24" :xs="24">
-              <el-form-item label="公司名称:" prop="name">{{form.name}}</el-form-item>
+              <el-form-item label="公司名称:">{{form.name}}</el-form-item>
             </el-col>
             <el-col :md="24" :sm="24" :xs="24">
-              <el-form-item label="统一社会信用代码:" prop="mock2">{{form.creditCode}}</el-form-item>
+              <el-form-item label="统一社会信用代码:">{{form.creditCode}}</el-form-item>
             </el-col>
             <el-col :md="24" :sm="24" :xs="24">
-              <el-form-item label="公司地址:" prop="mock3">{{form.address}}</el-form-item>
+              <el-form-item label="公司地址:">{{form.address}}</el-form-item>
             </el-col>
             <el-col :md="24" :sm="24" :xs="24">
-              <el-form-item label="公司类型:" prop="mock4">{{form.entType_}}</el-form-item>
+              <el-form-item label="公司类型:">{{form.entType_}}</el-form-item>
             </el-col>
             <el-col :md="24" :sm="24" :xs="24">
-              <el-form-item label="法人:" prop="mock5">{{form.legalPersonName}}</el-form-item>
+              <el-form-item label="法人:">{{form.legalPersonName}}</el-form-item>
             </el-col>
             <el-col :md="24" :sm="24" :xs="24">
-              <el-form-item label="营业有效期:" prop="mock6">{{form.effectiveDt}}  -  {{form.expireDt}}</el-form-item>
+              <el-form-item label="营业有效期:">{{form.effectiveDt}} - {{form.expireDt}}</el-form-item>
             </el-col>
           </el-row>
         </div>
@@ -46,7 +46,50 @@
               <div class="head">入会协议</div>
             </el-col>
           </el-row>
-        </div>        
+          <el-table :data="form.agreementList" stripe border>
+            <el-table-column
+              :prop="item.prop"
+              :label="item.label"
+              :width="item.width || 'auto'"
+              :align="item.align || 'center'"
+              header-align="center"
+              :key="index"
+              v-for="(item,index) in tableHeader"
+            >
+              <template slot-scope="scope">
+                <span>{{form.agreementList[scope.$index][item.prop]}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="协议有效期" align="center" width="200">
+              <template slot-scope="scope">
+                <span>{{form.agreementList[scope.$index].effectTime}}-{{form.agreementList[scope.$index].dueTime || "长期"}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="协议图片" >
+              <template slot-scope="scope">
+                <div class="goods">
+                  <div class="avatar">
+                     <img :key="index" v-for="(pic,index) in form.agreementList[scope.$index].picUrlList" width="65" height="64" :src="pic"/>
+                  </div>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="250px" align="center">
+              <template slot-scope="scope">
+                <el-button type="text" @click="editDeal(form.agreementList[scope.$index])">编辑</el-button>
+                <el-button type="text" @click="deleteDeal(scope.$index)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div class="uploadDeal" @click="addDeal">
+            <i class="el-icon-plus"></i>上传协议
+          </div>
+        </div>
+        <div class="bottom">
+          <el-form-item>
+            <el-button type="primary" :loading="loading" >确定</el-button>
+          </el-form-item>
+        </div>
       </el-form>
     </div>
   </div>
@@ -57,6 +100,19 @@ import { mapState } from "vuex";
 import Dict from "util/dict.js";
 import hlBreadcrumb from "components/hl-breadcrumb";
 import companyglass from "components/companyglass";
+const defaulttableHeader = [
+  {
+    prop: "agreementName",
+    label: "协议名称",
+    width: "250"
+  },
+  {
+    prop: "agreementTypeCode",
+    label: "协议类型",
+    width: "150"
+  }
+];
+
 const defualtFormParams = {
   userId: null,
   name: "惠龙易通国际物流股份有限公司",
@@ -65,18 +121,22 @@ const defualtFormParams = {
   entType_: "股份有限公司",
   legalPersonName: "程清",
   effectiveDt: "2020-06-06",
-  expireDt: "2020-12-06"
+  expireDt: "2020-12-06",
+  agreementList: []
 };
 export default {
   name: "memberForm",
   data() {
     return {
-      form: { ...defualtFormParams }
+      fit:"fill",
+      loading:false,
+      form: { ...defualtFormParams },
+      tableHeader: defaulttableHeader
     };
   },
   components: {
     hlBreadcrumb,
-    companyglass
+    companyglass,
   },
   methods: {
     GoSeller() {
@@ -84,9 +144,32 @@ export default {
         path: "/web/hyw/member/member/pageSeller"
       });
     },
-    getCompanyInfo(obj) {
-      const {userId,name,creditCode,legalPersonName,address,effectiveDt,expireDt,entType_} = obj
-      this.form = Object.assign({},this.form,{userId,name,creditCode,legalPersonName,address,effectiveDt,expireDt,entType_})
+    _getCompanyInfo(obj) {
+      const {userId,name,creditCode,legalPersonName,address,effectiveDt,expireDt,entType_
+      } = obj;
+      this.form = Object.assign({}, this.form, {userId,name,creditCode,legalPersonName,address,effectiveDt,expireDt,entType_
+      });
+    },
+    async _getVIPInfo(userId) {
+      const res = await this.$api.getVIPInfo({ userId });
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.form = res.data;
+          break;
+        default:
+          this.$messageError(res.mesg);
+          break;
+      }
+    },
+    editDeal(item){
+      console.log(item);
+    },
+    deleteDeal(index){
+      console.log(index);
+      this.form.agreementList.splice(index,1)
+    },
+    addDeal(){
+      
     }
   },
   computed: {
@@ -104,6 +187,7 @@ export default {
       return;
     }
     if (this.isEdit && this.memberId) {
+      this._getVIPInfo(this.memberId);
       console.info("这是编辑页面");
     } else {
       console.info("这是新增页面");
@@ -115,6 +199,11 @@ export default {
 <style lang="less" scoped>
 .memberForm {
   padding: 30px 15px 50px 15px;
+  .el-table thead {
+    color: #909399;
+    font-weight: 500;
+    background: #eee
+  }
   .form-block {
     padding-bottom: 20px;
     .head {
@@ -122,7 +211,28 @@ export default {
       font-size: 18px;
       font-weight: 700;
     }
+    .uploadDeal {
+      font-size: 12px;
+      color: #909399;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      border: 1px dashed #eee;
+    }
   }
+  .goods {
+    position: relative;
+    padding: 9px 10px 11px 15px;
+    font-size: 0px;
+    .avatar {
+      display: inline-block;
+      vertical-align: top;
+      img {
+        border-radius: 2px;
+        margin-left:5px;
+      }
+    }
+}
 }
 </style>
 

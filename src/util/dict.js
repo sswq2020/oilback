@@ -38,4 +38,16 @@ DICT.VIP_STATUS = {
     [DICT.VIP_STATUS_FROZEN]: "禁用",
 }
 
+/**线上协议 */
+DICT.AGREE_ONLINE = "0"
+/**线下协议 */
+DICT.AGREE_OFFLINE = "1"
+/**协议类型 */
+DICT.AGREE_TYPE = {
+    [DICT.DICT.AGREE_ONLINE]: "线上",
+    [DICT.DICT.AGREE_OFFLINE]: "线下",
+}
+
+
+
 export default DICT;

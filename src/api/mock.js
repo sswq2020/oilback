@@ -122,14 +122,14 @@ const agreementList = {
     "agreementTypeCode": "@PICK('0','1')", // 协议类型   0线上  1线下
     "dueTime": '@DATE("yyyy-MM-dd")', // 到期时间
     "effectTime": '@DATE("yyyy-MM-dd")', // 生效时间
-    "fileIdList": ['12123123123123'], // 图片的fileId数组
-    "picUrlList":['https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'], // 图片的fileId数组对应的URL
+    "fileIdList":new Array(1).fill('984ffb1bcd4145e4951d47573f037415'), // 图片的fileId数组
+    "picUrlList":new Array(1).fill('https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'), // 图片的fileId数组对应的URL
     "id":null, // 每一行的主键，但是新增的没有
 }
 
 const VIPInfoData = {
     ...EnterpriseList.extInfo,
-    "agreementList|1":[agreementList]
+    "agreementList|2-3":[agreementList]
 }
 
 
