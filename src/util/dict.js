@@ -44,8 +44,8 @@ DICT.AGREE_ONLINE = "0"
 DICT.AGREE_OFFLINE = "1"
 /**协议类型 */
 DICT.AGREE_TYPE = {
-    [DICT.DICT.AGREE_ONLINE]: "线上",
-    [DICT.DICT.AGREE_OFFLINE]: "线下",
+    [DICT.AGREE_ONLINE]: "线上",
+    [DICT.AGREE_OFFLINE]: "线下",
 }
 
 

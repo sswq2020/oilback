@@ -107,7 +107,7 @@ const defaulttableHeader = [
     width: "250"
   },
   {
-    prop: "agreementTypeCode",
+    prop: "agreementTypeCodeText",
     label: "协议类型",
     width: "150"
   }
@@ -124,6 +124,23 @@ const defualtFormParams = {
   expireDt: "2020-12-06",
   agreementList: []
 };
+
+const rowAdapter = list => {
+  if (!list) {
+    return [];
+  }
+  if (list.length > 0) {
+    list = list.map(row => {
+      return (row = {
+        ...row,
+        agreementTypeCodeText: `${Dict.AGREE_TYPE[row.agreementTypeCode]}`
+      });
+    });
+  }
+  return list;
+};
+
+
 export default {
   name: "memberForm",
   data() {
@@ -154,7 +171,7 @@ export default {
       const res = await this.$api.getVIPInfo({ userId });
       switch (res.code) {
         case Dict.SUCCESS:
-          this.form = res.data;
+          this.form = { ...res.data, agreementList: rowAdapter(res.data.agreementList) };            
           break;
         default:
           this.$messageError(res.mesg);
