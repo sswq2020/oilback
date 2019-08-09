@@ -40,6 +40,13 @@
             </el-col>
           </el-row>
         </div>
+        <div class="form-block">
+          <el-row>
+            <el-col :md="24" :sm="24" :xs="24">
+              <div class="head">入会协议</div>
+            </el-col>
+          </el-row>
+        </div>        
       </el-form>
     </div>
   </div>

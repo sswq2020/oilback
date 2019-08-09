@@ -432,6 +432,14 @@ export default {
     vipEnable(params) {
         return fetch(oilURL + '/web/hyw/member/member/updateState', params)
     },
+    /**
+      * @author sswq
+      * @param params
+      * @description 获取会员信息(用于会员编辑前请求)
+      * */
+     getVIPInfo(params) {
+        return fetch(oilURL + '/web/hyw/member/member/get', params,'get')
+    },
     // #endregion 
 
     // #region 预警管理
