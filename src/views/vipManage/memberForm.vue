@@ -260,9 +260,9 @@ export default {
       } else {
          this.form.agreementList.push(Adapter(agreeData));
       }
-     Vue.nextTick(function () {
-        that.clearAll()
-     })
+      setTimeout(()=>{
+          that.setAgreeDialogVisible(false)
+      },50)
     },
     _filter(){
       let params = _.cloneDeep(this.form);

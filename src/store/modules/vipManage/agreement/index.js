@@ -53,13 +53,11 @@ const store = {
             commit("overrideStateProps", { agreedialogVisible: true });
         },
         clearAll({ commit }){
-            commit("overrideStateProps", { agreedialogEdit: false });
             commit("overrideStateProps", {
                 agreeFormParams: {
                     ...defaultAgreeFormParams
                 },
             });
-            commit("overrideStateProps", { agreedialogVisible: false });
         },
 
         // 打开编辑弹窗
@@ -69,8 +67,6 @@ const store = {
             commit("overrideStateProps", {
                 agreeFormParams: payload
             });
-            // commit("overrideStateProps", { fileIdList: fileIdList.slice()});
-            // commit("overrideStateProps", { picUrlList: picUrlList.slice()});
             commit("overrideStateProps", { agreedialogVisible: true });
         },
         // 删除某张图片

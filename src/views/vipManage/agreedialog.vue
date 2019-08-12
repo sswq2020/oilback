@@ -1,5 +1,4 @@
 <template>
-  <div v-if="agreedialogVisible">
   <el-dialog :show-close="false" :title="title" :visible="agreedialogVisible" width="600px">
     <el-form :model="agreeFormParams" ref="agreeForm" label-position="right" label-width="150px">
       <el-form-item label="协议名称" prop="agreementName" :rules="[{ required: true, message: '必选'  }]">
@@ -62,7 +61,6 @@
       <el-button type="primary" @click="confirm">确 定</el-button>
     </div>
   </el-dialog>
-  </div>
 </template>
 
 <script>
@@ -116,7 +114,8 @@ export default {
     ]),
     ...mapActions("agreement",[
       "detelePic",
-      "addPic"
+      "addPic",
+      "clearAll"
     ]),
     cancle() {
       this.cancleCb();
@@ -190,10 +189,10 @@ export default {
     agreedialogVisible(newV) {
       if (newV === false) {
         this.checked = false;
-        // setTimeout(()=>{
-        //     this.$refs.agreeForm.resetFields();
-        //     this.$refs.agreeForm.clearValidate();
-        // },20)
+        this.clearAll()
+        setTimeout(()=>{
+            this.$refs.agreeForm.clearValidate();
+        },50)
       } else {
         if(this.agreedialogEdit && !this.agreeFormParams.dueTime){
           this.checked = true
