@@ -197,8 +197,6 @@ export default {
         setTimeout(()=>{
             this.$refs.agreeForm.resetFields();
         },50)
-        
-
       } else {
         if(this.agreedialogEdit && !this.agreeFormParams.dueTime){
           this.checked = true

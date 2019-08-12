@@ -62,21 +62,30 @@
             </el-table-column>
             <el-table-column label="协议有效期" align="center" width="200">
               <template slot-scope="scope">
-                <span>{{form.agreementList[scope.$index].effectTime}}-{{form.agreementList[scope.$index].dueTime || "长期"}}</span>
+                <span>{{form.agreementList[scope.$index].effectTimeText}}-{{form.agreementList[scope.$index].dueTimeText}}</span>
               </template>
             </el-table-column>
-            <el-table-column label="协议图片" >
+            <el-table-column label="协议图片">
               <template slot-scope="scope">
                 <div class="goods">
                   <div class="avatar">
-                     <img :key="index" v-for="(pic,index) in form.agreementList[scope.$index].picUrlList" width="65" height="64" :src="pic"/>
+                    <img
+                      :key="index"
+                      v-for="(pic,index) in form.agreementList[scope.$index].picUrlList"
+                      width="65"
+                      height="64"
+                      :src="pic"
+                    />
                   </div>
                 </div>
               </template>
             </el-table-column>
             <el-table-column label="操作" width="250px" align="center">
               <template slot-scope="scope">
-                <el-button type="text" @click="editDeal(form.agreementList[scope.$index],scope.$index)">编辑</el-button>
+                <el-button
+                  type="text"
+                  @click="editDeal(form.agreementList[scope.$index],scope.$index)"
+                >编辑</el-button>
                 <el-button type="text" @click="deleteDeal(scope.$index)">删除</el-button>
               </template>
             </el-table-column>
@@ -87,12 +96,12 @@
         </div>
         <div class="bottom">
           <el-form-item>
-            <el-button type="primary" :loading="loading" >确定</el-button>
+            <el-button type="primary" :loading="loading" @click="confirm">确定</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
-    <agreedialog 
+    <agreedialog
       :cancleCb="()=>{this.setAgreeDialogVisible(false)}"
       :confirmCb="(agreeData)=>{_update_(agreeData)}"
     ></agreedialog>
@@ -100,7 +109,8 @@
 </template>
 
 <script>
-import { mapState,mapMutations,mapActions } from "vuex";
+import moment from "moment";
+import { mapState, mapMutations, mapActions } from "vuex";
 import Dict from "util/dict.js";
 import hlBreadcrumb from "components/hl-breadcrumb";
 import companyglass from "components/companyglass";
@@ -138,24 +148,37 @@ const rowAdapter = list => {
     list = list.map(row => {
       return (row = {
         ...row,
-        agreementTypeCodeText: `${Dict.AGREE_TYPE[row.agreementTypeCode]}`
+        agreementTypeCodeText: `${Dict.AGREE_TYPE[row.agreementTypeCode]}`,
+        effectTimeText: moment(row.effectTime).format("YYYY-MM-DD"),
+        dueTimeText: row.dueTime
+          ? moment(row.effectTime).format("YYYY-MM-DD")
+          : "长期"
       });
     });
   }
   return list;
 };
 
+const Adapter = obj => {
+  return Object.assign({}, obj, {
+    agreementTypeCodeText: `${Dict.AGREE_TYPE[obj.agreementTypeCode]}`,
+    effectTimeText: moment(obj.effectTime).format("YYYY-MM-DD"),
+    dueTimeText: obj.dueTime
+      ? moment(obj.effectTime).format("YYYY-MM-DD")
+      : "长期"
+  });
+};
 
 export default {
   name: "memberForm",
   data() {
     return {
-      fit:"fill",
-      loading:false,
+      fit: "fill",
+      loading: false,
       form: { ...defualtFormParams },
       tableHeader: defaulttableHeader,
       /**新增的时候是-1,编辑的时候就是数组的序号 */
-      editIndex:-1 
+      editIndex: -1
     };
   },
   components: {
@@ -164,49 +187,88 @@ export default {
     agreedialog
   },
   methods: {
-    ...mapMutations("agreement", ["setAgreeDialogEdit","setAgreeFormParams","setAgreeDialogVisible"]),    
-    ...mapActions("agreement", ["openAddAgreeDialog","openEditAgreeDialog"]),    
+    ...mapMutations("agreement", [
+      "setAgreeDialogEdit",
+      "setAgreeFormParams",
+      "setAgreeDialogVisible"
+    ]),
+    ...mapActions("agreement", ["openAddAgreeDialog", "openEditAgreeDialog"]),
     GoSeller() {
       this.$router.push({
         path: "/web/hyw/member/member/pageSeller"
       });
     },
     _getCompanyInfo(obj) {
-      const {userId,name,creditCode,legalPersonName,address,effectiveDt,expireDt,entType_
+      const {
+        userId,
+        name,
+        creditCode,
+        legalPersonName,
+        address,
+        effectiveDt,
+        expireDt,
+        entType_
       } = obj;
-      this.form = Object.assign({}, this.form, {userId,name,creditCode,legalPersonName,address,effectiveDt,expireDt,entType_
+      this.form = Object.assign({}, this.form, {
+        userId,
+        name,
+        creditCode,
+        legalPersonName,
+        address,
+        effectiveDt,
+        expireDt,
+        entType_
       });
     },
     async _getVIPInfo(userId) {
       const res = await this.$api.getVIPInfo({ userId });
       switch (res.code) {
         case Dict.SUCCESS:
-          this.form = { ...res.data, agreementList: rowAdapter(res.data.agreementList) };      
+          this.form = {
+            ...res.data,
+            agreementList: rowAdapter(res.data.agreementList)
+          };
           break;
         default:
           this.$messageError(res.mesg);
           break;
       }
     },
-    editDeal(item,index){
-      const {picUrlList} = item;
-      this.editIndex = index; 
-      this.openEditAgreeDialog({...item,picLength:picUrlList.length});
+    editDeal(item, index) {
+      const { picUrlList } = item;
+      this.editIndex = index;
+      this.openEditAgreeDialog({ ...item, picLength: picUrlList.length });
     },
-    deleteDeal(index){
-      this.form.agreementList.splice(index,1)
+    deleteDeal(index) {
+      this.form.agreementList.splice(index, 1);
     },
-    addDeal(){
-      this.editIndex = -1; 
-       this.openAddAgreeDialog();
+    addDeal() {
+      this.editIndex = -1;
+      this.openAddAgreeDialog();
     },
-    _update_(agreeData){
-      if(this.editIndex > -1){
-        this.form.agreementList[this.editIndex] = agreeData;
-      }else {
-        this.form.agreementList.push(agreeData);
+    _update_(agreeData) {
+      if (this.editIndex > -1) {
+        this.form.agreementList[this.editIndex] = Adapter(agreeData);
+      } else {
+        this.form.agreementList.push(Adapter(agreeData));
       }
+      setTimeout(() => {
+        this.setAgreeDialogVisible(false);
+      }, 50);
     },
+    confirm() {
+      let that = this;
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          if (that.form.agreementList.length === 0) {
+            that.$messageError("必须上传一个协议列表");
+            return;
+          }
+        } else {
+          return false;
+        }
+      });
+    }
   },
   computed: {
     ...mapState("memberForm", ["memberType", "isEdit", "memberId"]),
@@ -237,7 +299,7 @@ export default {
   .el-table thead {
     color: #909399;
     font-weight: 500;
-    background: #eee
+    background: #eee;
   }
   .form-block {
     padding-bottom: 20px;
@@ -264,10 +326,10 @@ export default {
       vertical-align: top;
       img {
         border-radius: 2px;
-        margin-left:5px;
+        margin-left: 5px;
       }
     }
-}
+  }
 }
 </style>
 

@@ -121,7 +121,7 @@ const agreementList = {
     "agreementName": "买方@CTITLE(2)协议", // 协议名称
     "agreementTypeCode": "@PICK('0','1')", // 协议类型   0线上  1线下
     "dueTime": null, // 到期时间
-    "effectTime": '@DATE("yyyy-MM-dd")', // 生效时间
+    "effectTime": new Date(), // 生效时间
     "fileIdList":new Array(4).fill('984ffb1bcd4145e4951d47573f037415'), // 图片的fileId数组
     "picUrlList":new Array(4).fill('https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'), // 图片的fileId数组对应的URL
     "id|+1":"@INTEGER(1,2019690999)", // 每一行的主键，但是新增的没有
