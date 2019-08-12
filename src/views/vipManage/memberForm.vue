@@ -216,7 +216,6 @@ export default {
       return ["会员管理", `${TypeText}管理`, `${EditText}${TypeText}`];
     }
   },
-  created() {},
   mounted() {
     if (!this.memberType) {
       this.GoSeller();

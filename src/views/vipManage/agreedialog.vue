@@ -70,6 +70,7 @@ import Dict from "util/dict.js";
 import { DICT_SELECT_ARR } from "common/util.js";
 import ImageBox from "components/ImageBox";
 import ImageUpload from "components/ImageUpload";
+import { setTimeout } from 'timers';
 const AgreementTypeList = DICT_SELECT_ARR(Dict.AGREE_TYPE);
 export default {
   name: "agreedialog",
@@ -190,11 +191,14 @@ export default {
     }
   },
   watch: {
-    agreedialogVisible(newV, oldV) {
+    agreedialogVisible(newV) {
       if (newV === false) {
-        // debugger
-        this.$refs.agreeForm.clearValidate();
         this.checked = false;
+        setTimeout(()=>{
+            this.$refs.agreeForm.resetFields();
+        },50)
+        
+
       } else {
         if(this.agreedialogEdit && !this.agreeFormParams.dueTime){
           this.checked = true
