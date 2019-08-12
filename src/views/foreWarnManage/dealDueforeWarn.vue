@@ -5,13 +5,13 @@
       <div class="form-item">
         <label>会员账户</label>
         <div class="form-control">
-          <el-input v-model="form.mock1" placeholder="请输入" size="small"></el-input>
+          <el-input v-model="form.phone" placeholder="请输入" size="small"></el-input>
         </div>
       </div>
       <div class="form-item">
         <label>公司名称</label>
         <div class="form-control">
-          <el-input v-model="form.mock2" placeholder="请输入" size="small"></el-input>
+          <el-input v-model="form.name" placeholder="请输入" size="small"></el-input>
         </div>
       </div>
       <div class="form-item">
@@ -71,11 +71,11 @@ import heltable from "components/hl_table";
 import hlBreadcrumb from "components/hl-breadcrumb";
 
 /**只是请求参数的key,页面中的观察属性却不需要，只在请求的那一刻由timeRange赋值*/
-const EXTRA_PARAMS_KEYS = ["StartTime", "EndTime"];
+const EXTRA_PARAMS_KEYS = ["startTime", "endTime"];
 
 const defaultFormData = {
-  mock1: null,
-  mock2: null,
+  phone: null,
+  name: null,
   timeRange: []
 };
 const defaultListParams = {
@@ -91,19 +91,19 @@ const defaultListData = {
 };
 const defaulttableHeader = [
   {
-    prop: "mock1",
+    prop: "phone",
     label: "会员账户"
   },
   {
-    prop: "mock2",
+    prop: "name",
     label: "公司名称"
   },
   {
-    prop: "mock3",
+    prop: "agreementName",
     label: "到期协议"
   },
   {
-    prop: "mock4",
+    prop: "dueTime",
     label: "到期时间"
   }
 ];
@@ -194,13 +194,6 @@ export default {
     .el-button {
       margin-top: 17px;
     }
-  }
-}
-.tip {
-  margin: 10px 0 20px 0;
-  .line {
-    font-size: 20px;
-    color: red;
   }
 }
 </style>

@@ -620,7 +620,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: '/web/hyw/vip/vip/page',
+            router: '/web/hyw/member/agreement/page',
             result(params) {
                 return {
                     ...body,
