@@ -76,7 +76,7 @@
             </el-table-column>
             <el-table-column label="操作" width="250px" align="center">
               <template slot-scope="scope">
-                <el-button type="text" @click="editDeal(form.agreementList[scope.$index])">编辑</el-button>
+                <el-button type="text" @click="editDeal(form.agreementList[scope.$index],scope.$index)">编辑</el-button>
                 <el-button type="text" @click="deleteDeal(scope.$index)">删除</el-button>
               </template>
             </el-table-column>
@@ -92,14 +92,19 @@
         </div>
       </el-form>
     </div>
+    <agreedialog 
+      :cancleCb="()=>{this.setAgreeDialogVisible(false)}"
+      :confirmCb="(agreeData)=>{_update_(agreeData)}"
+    ></agreedialog>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState,mapMutations,mapActions } from "vuex";
 import Dict from "util/dict.js";
 import hlBreadcrumb from "components/hl-breadcrumb";
 import companyglass from "components/companyglass";
+import agreedialog from "./agreedialog";
 const defaulttableHeader = [
   {
     prop: "agreementName",
@@ -115,13 +120,13 @@ const defaulttableHeader = [
 
 const defualtFormParams = {
   userId: null,
-  name: "惠龙易通国际物流股份有限公司",
-  creditCode: "182361826324876382476",
-  address: "江苏省镇江市润州区长江路758号",
-  entType_: "股份有限公司",
-  legalPersonName: "程清",
-  effectiveDt: "2020-06-06",
-  expireDt: "2020-12-06",
+  name: null,
+  creditCode: null,
+  address: null,
+  entType_: null,
+  legalPersonName: null,
+  effectiveDt: null,
+  expireDt: null,
   agreementList: []
 };
 
@@ -148,14 +153,19 @@ export default {
       fit:"fill",
       loading:false,
       form: { ...defualtFormParams },
-      tableHeader: defaulttableHeader
+      tableHeader: defaulttableHeader,
+      /**新增的时候是-1,编辑的时候就是数组的序号 */
+      editIndex:-1 
     };
   },
   components: {
     hlBreadcrumb,
     companyglass,
+    agreedialog
   },
   methods: {
+    ...mapMutations("agreement", ["setAgreeDialogEdit","setAgreeFormParams","setAgreeDialogVisible"]),    
+    ...mapActions("agreement", ["openAddAgreeDialog","openEditAgreeDialog"]),    
     GoSeller() {
       this.$router.push({
         path: "/web/hyw/member/member/pageSeller"
@@ -171,23 +181,32 @@ export default {
       const res = await this.$api.getVIPInfo({ userId });
       switch (res.code) {
         case Dict.SUCCESS:
-          this.form = { ...res.data, agreementList: rowAdapter(res.data.agreementList) };            
+          this.form = { ...res.data, agreementList: rowAdapter(res.data.agreementList) };      
           break;
         default:
           this.$messageError(res.mesg);
           break;
       }
     },
-    editDeal(item){
-      console.log(item);
+    editDeal(item,index){
+      const {picUrlList} = item;
+      this.editIndex = index; 
+      this.openEditAgreeDialog({...item,picLength:picUrlList.length});
     },
     deleteDeal(index){
-      console.log(index);
       this.form.agreementList.splice(index,1)
     },
     addDeal(){
-      
-    }
+      this.editIndex = -1; 
+       this.openAddAgreeDialog();
+    },
+    _update_(agreeData){
+      if(this.editIndex > -1){
+        this.form.agreementList[this.editIndex] = agreeData;
+      }else {
+        this.form.agreementList.push(agreeData);
+      }
+    },
   },
   computed: {
     ...mapState("memberForm", ["memberType", "isEdit", "memberId"]),
