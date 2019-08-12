@@ -440,6 +440,22 @@ export default {
      getVIPInfo(params) {
         return fetch(oilURL + '/web/hyw/member/member/get', params,'get')
     },
+    /**
+      * @author sswq
+      * @param params
+      * @description 新增会员
+      * */
+    AddVIP(params) {
+        return fetch(oilURL + '/web/hyw/member/member/add', params)
+    },
+    /**
+      * @author sswq
+      * @param params
+      * @description 更新会员
+      * */
+    UpdateVIP(params) {
+        return fetch(oilURL + '/web/hyw/member/member/update', params)
+    },    
     // #endregion 
 
     // #region 预警管理
@@ -490,9 +506,6 @@ export default {
     getEnterpriseList(params) {
         return fetch('/userinfo/enterprise/list/search', params)
     },
-
-
-
     // #endregion
 
 

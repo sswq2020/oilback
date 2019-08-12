@@ -590,6 +590,32 @@ const mockRouterMap = {
         },
         // #endregion
 
+        // #region  新增会员
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/member/member/add',
+            result() {
+                return {
+                    ...body
+                };
+            }
+        },
+        // #endregion
+
+        // #region  更新会员
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/member/member/update',
+            result() {
+                return {
+                    ...body
+                };
+            }
+        },
+        // #endregion
+
         // #region  协议到期预警列表
         {
             isMock: IS_MOCK,
