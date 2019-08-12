@@ -96,7 +96,7 @@
         </div>
         <div class="bottom">
           <el-form-item>
-            <el-button type="primary" :loading="loading" @click="confirm">确定</el-button>
+            <el-button type="primary" :loading="loading" @click="submitForm">确定</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -109,7 +109,9 @@
 </template>
 
 <script>
+import _ from "lodash";
 import moment from "moment";
+import Vue from "vue"
 import { mapState, mapMutations, mapActions } from "vuex";
 import Dict from "util/dict.js";
 import hlBreadcrumb from "components/hl-breadcrumb";
@@ -164,7 +166,7 @@ const Adapter = obj => {
     agreementTypeCodeText: `${Dict.AGREE_TYPE[obj.agreementTypeCode]}`,
     effectTimeText: moment(obj.effectTime).format("YYYY-MM-DD"),
     dueTimeText: obj.dueTime
-      ? moment(obj.effectTime).format("YYYY-MM-DD")
+      ? moment(obj.dueTime).format("YYYY-MM-DD")
       : "长期"
   });
 };
@@ -192,12 +194,17 @@ export default {
       "setAgreeFormParams",
       "setAgreeDialogVisible"
     ]),
-    ...mapActions("agreement", ["openAddAgreeDialog", "openEditAgreeDialog"]),
+    ...mapActions("agreement", ["openAddAgreeDialog", "openEditAgreeDialog","clearAll"]),
     GoSeller() {
       this.$router.push({
         path: "/web/hyw/member/member/pageSeller"
       });
     },
+    GoBuyer() {
+      this.$router.push({
+        path: "/web/hyw/member/member/pageBuyer"
+      });
+    },    
     _getCompanyInfo(obj) {
       const {
         userId,
@@ -247,16 +254,24 @@ export default {
       this.openAddAgreeDialog();
     },
     _update_(agreeData) {
+      let that = this;
       if (this.editIndex > -1) {
         this.form.agreementList[this.editIndex] = Adapter(agreeData);
       } else {
         this.form.agreementList.push(Adapter(agreeData));
       }
-      setTimeout(() => {
-        this.setAgreeDialogVisible(false);
-      }, 50);
+     Vue.nextTick(function () {
+        that.clearAll()
+     })
     },
-    confirm() {
+    _filter(){
+      let params = _.cloneDeep(this.form);
+      params.agreementList = params.agreementList.map((item)=>{
+        return {...item,userId:this.form.userId}
+      })
+      return params
+    },
+    submitForm() {
       let that = this;
       this.$refs.form.validate(valid => {
         if (valid) {
@@ -264,10 +279,52 @@ export default {
             that.$messageError("必须上传一个协议列表");
             return;
           }
+          const params = this._filter();
+          if (this.isEdit) {
+            this._updateVIP_(params);
+          } else {
+            this._addVIP_(params);
+          }
         } else {
           return false;
         }
       });
+    },
+    async _updateVIP_(params){
+      this.loading = true;
+      const res = await this.$api.UpdateVIP(params);
+      this.loading = false;
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.$messageSuccess("更新成功");
+          if (this.memberType === Dict.SELLER_VIP) {
+            this.GoSeller();
+          } else {
+            this.GoBuyer();
+          }
+          break;
+        default:
+          this.$messageError(res.mesg);
+          break;
+      }
+    },
+    async _addVIP_(params){
+      this.loading = true;
+      const res = await this.$api.AddVIP(params);
+      this.loading = false;
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.$messageSuccess("新增成功");
+          if (this.memberType === Dict.SELLER_VIP) {
+            this.GoSeller();
+          } else {
+            this.GoBuyer();
+          }
+          break;
+        default:
+          this.$messageError(res.mesg);
+          break;
+      }
     }
   },
   computed: {

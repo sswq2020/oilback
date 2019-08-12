@@ -1,4 +1,5 @@
 <template>
+  <div v-if="agreedialogVisible">
   <el-dialog :show-close="false" :title="title" :visible="agreedialogVisible" width="600px">
     <el-form :model="agreeFormParams" ref="agreeForm" label-position="right" label-width="150px">
       <el-form-item label="协议名称" prop="agreementName" :rules="[{ required: true, message: '必选'  }]">
@@ -61,6 +62,7 @@
       <el-button type="primary" @click="confirm">确 定</el-button>
     </div>
   </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -70,7 +72,6 @@ import Dict from "util/dict.js";
 import { DICT_SELECT_ARR } from "common/util.js";
 import ImageBox from "components/ImageBox";
 import ImageUpload from "components/ImageUpload";
-import { setTimeout } from 'timers';
 const AgreementTypeList = DICT_SELECT_ARR(Dict.AGREE_TYPE);
 export default {
   name: "agreedialog",
@@ -180,23 +181,19 @@ export default {
     },
     uploadDelete(index){
       this.detelePic(index)
-      // this.agreeFormParams.fileIdList.splice(index,1);
-      // this.agreeFormParams.picUrlList.splice(index,1);
     },
     uploadSuceess(res){
       this.addPic(res.data)
-      // const {id,url} = res.data;
-      // this.agreeFormParams.fileIdList.push(id);
-      // this.agreeFormParams.picUrlList.push(url);
     }
   },
   watch: {
     agreedialogVisible(newV) {
       if (newV === false) {
         this.checked = false;
-        setTimeout(()=>{
-            this.$refs.agreeForm.resetFields();
-        },50)
+        // setTimeout(()=>{
+        //     this.$refs.agreeForm.resetFields();
+        //     this.$refs.agreeForm.clearValidate();
+        // },20)
       } else {
         if(this.agreedialogEdit && !this.agreeFormParams.dueTime){
           this.checked = true
