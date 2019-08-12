@@ -256,9 +256,9 @@ export default {
     _update_(agreeData) {
       let that = this;
       if (this.editIndex > -1) {
-        this.form.agreementList[this.editIndex] = Adapter(agreeData);
+        this.form.agreementList.splice(this.editIndex, 1, Adapter(agreeData)); // 不要直接使用array[index] = item,Vue无法观察数组的变化,必须用变异的函数,这也是弹窗里图片变化.使用了splice和push这种变异的方法
       } else {
-        this.form.agreementList.push(Adapter(agreeData));
+         this.form.agreementList.push(Adapter(agreeData));
       }
      Vue.nextTick(function () {
         that.clearAll()
