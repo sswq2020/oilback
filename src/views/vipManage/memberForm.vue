@@ -111,7 +111,6 @@
 <script>
 import _ from "lodash";
 import moment from "moment";
-import Vue from "vue"
 import { mapState, mapMutations, mapActions } from "vuex";
 import Dict from "util/dict.js";
 import hlBreadcrumb from "components/hl-breadcrumb";
@@ -372,6 +371,10 @@ export default {
       line-height: 50px;
       text-align: center;
       border: 1px dashed #eee;
+      &:hover{
+        color: #ff0000;
+        cursor:pointer 
+      }
     }
   }
   .goods {
