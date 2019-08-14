@@ -61,7 +61,7 @@
                   <span v-else>未设置图片</span>
                 </div>
                 <div class="product-content">
-                  <div class="productName">{{listData.list[scope.$index].productName}}</div>
+                  <div class="productName">{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandard}}</div>
                   <div class="serialNumber">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
                 </div>
               </div>
@@ -98,8 +98,11 @@
               <div class="header">
                 <span class="header-info"></span>
               </div>
-              <div class="otherinfo">
-                <div class="price">{{listData.list[scope.$index].payer}}</div>
+              <div class="otherinfo" style="justify-content: center;">
+                <div class="center">
+                  <div>{{listData.list[scope.$index].buyerTel}}</div>
+                  <div style="color:#3c8bff;text-align:center">查看明细</div>
+                </div>
               </div>
             </div>
           </template>
@@ -127,8 +130,7 @@
               </div>
               <div class="otherinfo" style="justify-content: center;">
                 <div class="center">
-                  <div>待付款</div>
-                  <div>(线上支付)</div>
+                  <div>{{listData.list[scope.$index].statusText}}</div>
                 </div>
               </div>
             </div>
@@ -167,7 +169,7 @@
                   <span v-else>未设置图片</span>
                 </div>
                 <div class="product-content">
-                  <div class="productName">{{listData.list[scope.$index].productName}}</div>
+                  <div class="productName">{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandard}}</div>
                   <div class="serialNumber">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
                 </div>
               </div>
@@ -205,7 +207,10 @@
                 <span class="header-info"></span>
               </div>
               <div class="otherinfo">
-                <div class="price">{{listData.list[scope.$index].payer}}</div>
+                <div class="center">
+                  <div>{{listData.list[scope.$index].buyerTel}}</div>
+                  <div style="color:#3c8bff;text-align:center">查看明细</div>
+                </div>
               </div>
             </div>
           </template>
@@ -223,14 +228,14 @@
           </template>
         </el-table-column>
         <el-table-column label="交易状态" width="250px" align="center">
-          <template>
+          <template slot-scope="scope">
             <div class="goods">
               <div class="header">
                 <span class="header-info"></span>
               </div>
               <div class="otherinfo" style="justify-content: center;">
                 <div class="center">
-                  <div>已付款</div>
+                  <div>{{listData.list[scope.$index].statusText}}</div>
                 </div>
               </div>
             </div>
@@ -303,7 +308,7 @@ export default {
       const res = await this.$api.orderCommodityManage({
         ...this.form,
         ...this.listParams,
-        orderStatus: this.activeName === 'unpay' ? '11' : '50'
+        orderStatus: this.activeName === 'unpay' ? Dict.PAY_AWAIT : Dict.PAY_RECEIVED
       });
       this.isListDataLoading = false;
       switch (res.code) {

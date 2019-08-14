@@ -49,5 +49,15 @@ DICT.AGREE_TYPE = {
 }
 
 
+/**待支付 */
+DICT.PAY_AWAIT = "11"
+/**已付款 */
+DICT.PAY_RECEIVED="50"
+
+
+DICT.PAY_STATUS = {
+    [DICT.PAY_AWAIT]: "待支付",
+    [DICT.PAY_RECEIVED]: "已付款",
+}
 
 export default DICT;
