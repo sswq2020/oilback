@@ -87,7 +87,7 @@
                 <span class="header-info"></span>
               </div>
               <div class="otherinfo">
-                <div class="price">{{listData.list[scope.$index].productWeight}}</div>
+                <div class="price">{{listData.list[scope.$index].productWeight ? parseInt(listData.list[scope.$index].productWeight) : "-" }}</div>
               </div>
             </div>
           </template>
@@ -195,7 +195,7 @@
                 <span class="header-info"></span>
               </div>
               <div class="otherinfo">
-                <div class="price">{{listData.list[scope.$index].productWeight}}</div>
+                <div class="price">{{listData.list[scope.$index].productWeight ? parseInt(listData.list[scope.$index].productWeight) : "-" }}</div>
               </div>
             </div>
           </template>
