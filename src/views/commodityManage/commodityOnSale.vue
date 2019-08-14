@@ -339,7 +339,13 @@ export default {
             that.$messageError(`下架成功,${res.mesg}`);
             break;
         }
-      });
+      })
+      .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     },
     async updatePrice(data) {
       this.priceLoading = true;
