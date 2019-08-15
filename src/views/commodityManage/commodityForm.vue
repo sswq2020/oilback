@@ -94,6 +94,23 @@
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
               <el-form-item
+                label="产地"
+                prop="addressProvince"
+                :rules="[{ required: true, message: '必填' }]"
+              >
+                <el-select v-model="form.addressProvince" placeholder="请选择" size="small">
+                  <el-option
+                    v-for="(item,index) in ProvinceDataList"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.name"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+
+            <el-col :md="12" :sm="12" :xs="24">
+              <el-form-item
                 label="商品价格(元/吨)"
                 prop="price"
                 :rules="[{ required: true, message: '必填' }]"
@@ -188,7 +205,15 @@ import hlBreadcrumb from "components/hl-breadcrumb";
 import ImageBox from "components/ImageBox";
 import ImageUpload from "components/ImageUpload";
 import Dict from "util/dict.js";
+import areaData from "components/areaData.js";
 import _ from "lodash";
+
+const ProvinceDataList = areaData.map(item=>{
+  return {
+    name:item.value
+  }
+})
+
 const defualtFormParams = {
   fileId: null, // 图片上传成功后返回的id
   firstCatalogId: null,
@@ -197,6 +222,7 @@ const defualtFormParams = {
   density: null,
   serialNumber: null,
   manufacturerId: null,
+  addressProvince:null,
   price: null,
   totalWeightInventory: null,
   sellState: "1",
@@ -219,7 +245,8 @@ export default {
       paramsList: [],
       /**参数列表一般是由一二级目录决定，但是编辑页面一开始进入的时候是唯一的外部触发*/
       ExternalTrigger: false,
-      reservaSecondClassId: null
+      reservaSecondClassId: null,
+      ProvinceDataList:ProvinceDataList
     };
   },
   computed: {

@@ -22,7 +22,7 @@ export const imgHost = {
 };
 
 
-const IS_MOCK = true;
+const IS_MOCK = false;
 const oilURL = ""
 
 const dict = { 'SUCCESS': "000000" }
@@ -508,6 +508,7 @@ const mockRouterMap = {
                         emissionStandard: "0",
                         density: 'mock',
                         serialNumber: 'mock',
+                        addressProvince:"@PROVINCE()",
                         manufacturerId: "0",
                         price: '23',
                         totalWeightInventory: "12",
