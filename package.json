@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "commit": "git-cz",
     "start": "npm run serve",
     "serve": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
@@ -29,14 +30,15 @@
     "@vue/cli-service": "^3.5.0",
     "axios": "^0.18.0",
     "babel-eslint": "^10.0.1",
+    "cross-env": "^5.2.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
+    "git-cz": "^3.2.1",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "qs": "^6.6.0",
     "shelljs": "^0.8.3",
     "spritejs": "^2.27.4",
-    "cross-env": "^5.2.0",
     "vue-cropper": "^0.4.8",
     "vue-template-compiler": "^2.5.21"
   },
@@ -62,5 +64,10 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/git-cz"
+    }
+  }
 }
