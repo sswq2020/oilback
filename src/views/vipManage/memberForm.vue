@@ -265,6 +265,7 @@ export default {
     },
     _filter(){
       let params = _.cloneDeep(this.form);
+      params.memberType = this.memberType;
       params.agreementList = params.agreementList.map((item)=>{
         return {...item,userId:this.form.userId}
       })
