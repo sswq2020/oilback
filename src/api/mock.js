@@ -496,7 +496,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'get',
-            router: '/web/hyw/product/product/get',
+            router: '/open/product/product/get',
             result(params) {
                 return {
                     ...body,

@@ -394,7 +394,7 @@ export default {
      * @description 商品详情页/编辑查询
      * */
     getDetailCommodity(params) {
-        return fetch(oilURL + '/web/hyw/product/product/get', params, 'get')
+        return fetch(oilURL + '/open/product/product/get', params, 'get')
     },
     /**
      * @author sswq
