@@ -14,7 +14,7 @@
               <el-form-item
                 label="所属公司:"
                 prop="userId"
-                :rules="[{ required: true, message: '必须选择一个公司'  }]"
+                :rules="[{ required: true, message: '必须选择一个公司',trigger:'blur'}]"
               >
                 <companyglass @companySelect="_getCompanyInfo"></companyglass>
                 <el-input type="hidden" :value="form.userId"></el-input>
