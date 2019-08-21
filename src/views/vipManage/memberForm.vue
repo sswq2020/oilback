@@ -14,7 +14,7 @@
               <el-form-item
                 label="所属公司:"
                 prop="userId"
-                :rules="[{ required: true, message: '必须选择一个公司',trigger:'blur'}]"
+                :rules="[{ required: true, message: '必须选择一个公司'}]"
               >
                 <companyglass @companySelect="_getCompanyInfo"></companyglass>
                 <el-input type="hidden" :value="form.userId"></el-input>
@@ -232,6 +232,7 @@ export default {
         case Dict.SUCCESS:
           this.form = {
             ...res.data,
+            userId:userId,
             agreementList: rowAdapter(res.data.agreementList)
           };
           break;
