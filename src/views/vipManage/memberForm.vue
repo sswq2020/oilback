@@ -16,7 +16,7 @@
                 prop="userId"
                 :rules="[{ required: true, message: '必须选择一个公司'}]"
               >
-                <companyglass @companySelect="_getCompanyInfo"></companyglass>
+                <companyglass @companySelect="_getCompanyInfo" :disabled="isEdit"></companyglass>
                 <el-input type="hidden" :value="form.userId"></el-input>
               </el-form-item>
             </el-col>
@@ -226,13 +226,12 @@ export default {
         entType_
       });
     },
-    async _getVIPInfo(userId) {
-      const res = await this.$api.getVIPInfo({ userId });
+    async _getVIPInfo(id) {
+      const res = await this.$api.getVIPInfo({ id });
       switch (res.code) {
         case Dict.SUCCESS:
           this.form = {
             ...res.data,
-            userId:userId,
             agreementList: rowAdapter(res.data.agreementList)
           };
           break;
@@ -267,6 +266,7 @@ export default {
     _filter(){
       let params = _.cloneDeep(this.form);
       params.memberType = this.memberType;
+      params.id = this.listID;
       params.agreementList = params.agreementList.map((item)=>{
         return {...item,userId:this.form.userId}
       })
@@ -329,7 +329,7 @@ export default {
     }
   },
   computed: {
-    ...mapState("memberForm", ["memberType", "isEdit", "memberId"]),
+    ...mapState("memberForm", ["memberType", "isEdit", "memberId","listID"]),
     breadTitle() {
       const TypeText = this.memberType === Dict.SELLER_VIP ? "卖方" : "买方";
       const EditText = this.isEdit ? "编辑" : "新增";
@@ -342,7 +342,7 @@ export default {
       return;
     }
     if (this.isEdit && this.memberId) {
-      this._getVIPInfo(this.memberId);
+      this._getVIPInfo(this.listID);
       console.info("这是编辑页面");
     } else {
       console.info("这是新增页面");
