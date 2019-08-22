@@ -1,7 +1,7 @@
 <template>
   <div class="companyglass">
     <el-input placeholder="请选择公司" :readonly="true">
-      <el-button slot="append" icon="el-icon-search" @click="open"></el-button>
+      <el-button :disabled="disabled" slot="append" icon="el-icon-search" @click="open"></el-button>
     </el-input>
     <el-dialog
       title="公司"
@@ -143,7 +143,12 @@ const rowAdapter = list => {
 
 export default {
   name: "companyglass",
-  props: {},
+  props: {
+    disabled:{
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       visible: false,
