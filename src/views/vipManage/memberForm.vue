@@ -196,7 +196,7 @@ export default {
     ...mapActions("agreement", ["openAddAgreeDialog", "openEditAgreeDialog","clearAll"]),
     GoSeller() {
       this.$router.push({
-        path: "/web/hyw/member/member/pageSeller"
+        path: "/web/hyw/member/page"
       });
     },
     GoBuyer() {
