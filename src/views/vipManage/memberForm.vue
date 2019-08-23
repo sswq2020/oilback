@@ -194,16 +194,11 @@ export default {
       "setAgreeDialogVisible"
     ]),
     ...mapActions("agreement", ["openAddAgreeDialog", "openEditAgreeDialog","clearAll"]),
-    GoSeller() {
+    GoMember() {
       this.$router.push({
         path: "/web/hyw/member/page"
       });
-    },
-    GoBuyer() {
-      this.$router.push({
-        path: "/web/hyw/member/member/pageBuyer"
-      });
-    },    
+    },   
     _getCompanyInfo(obj) {
       const {
         userId,
@@ -265,7 +260,6 @@ export default {
     },
     _filter(){
       let params = _.cloneDeep(this.form);
-      params.memberType = this.memberType;
       params.id = this.listID;
       params.agreementList = params.agreementList.map((item)=>{
         return {...item,userId:this.form.userId,memberId:this.listID}
@@ -298,11 +292,7 @@ export default {
       switch (res.code) {
         case Dict.SUCCESS:
           this.$messageSuccess("更新成功");
-          if (this.memberType === Dict.SELLER_VIP) {
-            this.GoSeller();
-          } else {
-            this.GoBuyer();
-          }
+            this.GoMember();
           break;
         default:
           this.$messageError(res.mesg);
@@ -315,12 +305,8 @@ export default {
       this.loading = false;
       switch (res.code) {
         case Dict.SUCCESS:
-          this.$messageSuccess("新增成功");
-          if (this.memberType === Dict.SELLER_VIP) {
-            this.GoSeller();
-          } else {
-            this.GoBuyer();
-          }
+          this.$messageSuccess("新增成功");         
+            this.GoMember();
           break;
         default:
           this.$messageError(res.mesg);
@@ -329,16 +315,15 @@ export default {
     }
   },
   computed: {
-    ...mapState("memberForm", ["memberType", "isEdit", "memberId","listID"]),
+    ...mapState("memberForm", ["isEdit", "memberId","listID"]),
     breadTitle() {
-      const TypeText = this.memberType === Dict.SELLER_VIP ? "卖方" : "买方";
       const EditText = this.isEdit ? "编辑" : "新增";
-      return ["会员管理", `${TypeText}管理`, `${EditText}${TypeText}`];
+      return ["会员管理", "交易会员管理", `${EditText}会员`];
     }
   },
   mounted() {
-    if (!this.memberType) {
-      this.GoSeller();
+    if (!this.listID) {
+      this.GoMember();
       return;
     }
     if (this.isEdit && this.memberId) {
