@@ -176,7 +176,7 @@ export default {
     return {
       fit: "fill",
       loading: false,
-      form: { ...defualtFormParams },
+      form: {...defualtFormParams,agreementList:[]},
       tableHeader: defaulttableHeader,
       /**新增的时候是-1,编辑的时候就是数组的序号 */
       editIndex: -1
@@ -268,7 +268,7 @@ export default {
       params.memberType = this.memberType;
       params.id = this.listID;
       params.agreementList = params.agreementList.map((item)=>{
-        return {...item,userId:this.form.userId}
+        return {...item,userId:this.form.userId,memberId:this.listID}
       })
       return params
     },
