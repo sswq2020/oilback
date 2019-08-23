@@ -22,7 +22,7 @@ export const imgHost = {
 };
 
 
-const IS_MOCK = false;
+const IS_MOCK = true;
 const oilURL = ""
 
 const dict = { 'SUCCESS': "000000" }
@@ -91,9 +91,9 @@ const pageMemberList = {
     "id|+1": "@INTEGER(1,2019690999)",
     "phone": "@INTEGER(13012819898,18912819898)",
     "name": "@CTITLE(7,9)公司",
-    "mock4": "@INTEGER(13012819898,18912819898)",
+    "telNo": "@INTEGER(13012819898,18912819898)",
     "address": '@PROVINCE()@CITY()@CTITLE(2,10)@INTEGER(1,100)号',
-    "settledTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
+    "grantTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
     "state": "@PICK('0','1')",  // 1正常 0禁止
     "userId": "@INTEGER(1,2019690999)",  // 会员id
 }
@@ -520,7 +520,7 @@ const mockRouterMap = {
         },
         // #endregion 
 
-        // #region  卖家会员管理列表
+        // #region  交易会员管理列表
         {
             isMock: IS_MOCK,
             methods: 'post',

@@ -74,8 +74,7 @@ const defaultFormData = {
 };
 const defaultListParams = {
   pageSize: 20,
-  page: 1,
-  memberType: Dict.SELLER_VIP // 卖家
+  page: 1
 };
 const defaultListData = {
   paginator: {
@@ -87,7 +86,7 @@ const defaultListData = {
 const defaulttableHeader = [
   {
     prop: "phone",
-    label: "会员账户"
+    label: "用户名"
   },
   {
     prop: "name",
@@ -102,8 +101,8 @@ const defaulttableHeader = [
     label: "公司地址"
   },
   {
-    prop: "settledTime",
-    label: "入驻日期"
+    prop: "grantTime",
+    label: "授权日期"
   },
   {
     prop: "stateText",
@@ -134,7 +133,7 @@ export default {
   },
   data() {
     return {
-      breadTitle: ["会员管理", "卖家管理"],
+      breadTitle: ["会员管理", "交易会员管理"],
       isListDataLoading: false,
       listParams: { ...defaultListParams }, // 页数
       form: { ...defaultFormData }, // 查询参数
@@ -147,7 +146,6 @@ export default {
   methods: {
     ...mapMutations("memberForm", [
       "setIsEdit",
-      "setMemberType",
       "setMemberId",
       "setlistID"
     ]),
@@ -172,7 +170,7 @@ export default {
     toggle(item) {
       let that = this;
       const { state, id } = item;
-      const text = state === Dict.VIP_STATUS_NORMAL ? "禁用卖家" : "激活卖家";
+      const text = state === Dict.VIP_STATUS_NORMAL ? "禁用会员" : "激活会员";
       that
         .$confirm(`确定${text}`, "提示", {
           confirmButtonText: "确定",
@@ -222,7 +220,6 @@ export default {
     },
     add() {
       this.setIsEdit(false);
-      this.setMemberType(Dict.SELLER_VIP);
       this.setMemberId(null);
       this.$router.push({
         path: "/web/hyw/member/member/memberForm"
@@ -231,7 +228,6 @@ export default {
     edit(item) {
       const { userId,id } = item;
       this.setIsEdit(true);
-      this.setMemberType(Dict.SELLER_VIP);
       this.setMemberId(userId);
       this.setlistID(id);
       this.$router.push({
