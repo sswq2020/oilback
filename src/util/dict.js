@@ -38,6 +38,18 @@ DICT.VIP_STATUS = {
     [DICT.VIP_STATUS_FROZEN]: "禁用",
 }
 
+/**允许重复交易*/
+DICT.RETRADE_ABLE = "0"
+/**禁止重复交易*/
+DICT.RETRADE_DISABLE = "1"
+
+DICT.RETRADE_STATUS = {
+    [DICT.RETRADE_ABLE]:"允许",
+    [DICT.RETRADE_DISABLE]:"不允许"
+}
+
+
+
 /**线上协议 */
 DICT.AGREE_ONLINE = "0"
 /**线下协议 */
