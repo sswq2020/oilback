@@ -411,18 +411,10 @@ export default {
     /**
      * @author sswq
      * @param params
-     * @description 卖家会员管理列表
+     * @description 交易会员管理列表
      * */
-    getSellerVIPList(params) {
-        return fetch(oilURL + '/web/hyw/member/member/pageSeller', params)
-    },
-    /**
-     * @author sswq
-     * @param params
-     * @description 买家会员管理列表
-     * */
-    getBuyerVIPList(params) {
-        return fetch(oilURL + '/web/hyw/member/member/pageBuyer', params)
+    getVIPList(params) {
+        return fetch(oilURL + '/web/hyw/member/page', params)
     },
     /**
       * @author sswq

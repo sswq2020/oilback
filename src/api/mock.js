@@ -87,7 +87,7 @@ const dealDueForeWarnList = {
 
 }
 
-const pageSellerList = {
+const pageMemberList = {
     "id|+1": "@INTEGER(1,2019690999)",
     "phone": "@INTEGER(13012819898,18912819898)",
     "name": "@CTITLE(7,9)公司",
@@ -524,34 +524,12 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: '/web/hyw/member/member/pageSeller',
+            router: '/web/hyw/member/page',
             result(params) {
                 return {
                     ...body,
                     data: {
-                        'list|10-20': [pageSellerList],
-                        "paginator": {
-                            "currentPage": params.page,
-                            "pageSize": params.pageSize,
-                            "totalCount": 1000,
-                            "totalPage": 1000 / params.pageSize
-                        }
-                    },
-                };
-            }
-        },
-        // #endregion
-
-        // #region  买家会员管理列表
-        {
-            isMock: IS_MOCK,
-            methods: 'post',
-            router: '/web/hyw/member/member/pageBuyer',
-            result(params) {
-                return {
-                    ...body,
-                    data: {
-                        'list|10-20': [pageSellerList],
+                        'list|10-20': [pageMemberList],
                         "paginator": {
                             "currentPage": params.page,
                             "pageSize": params.pageSize,
