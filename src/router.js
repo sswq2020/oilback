@@ -18,8 +18,6 @@ const OrderManage = () => import('views/commodityManage/orderManage.vue')
 // #region 会员管理
 /**交易会员管理列表*/
 const VipManage = () => import('views/vipManage/index.vue')
-/**买家会员管理列表*/
-const BuyerVipManage = () => import('views/vipManage/buyerVipManage.vue')
 /**新增或者编辑会员表单模块*/
 const MemberForm = () => import('views/vipManage/memberForm.vue')
 // #endregion
@@ -89,11 +87,6 @@ let commonRoutes = {
             name: 'vipManage',
             component: VipManage
         },
-        {
-            path: '/web/hyw/member/member/pageBuyer',
-            name: 'buyerVipManage',
-            component: BuyerVipManage
-        },   
         {
             path: '/web/hyw/member/member/memberForm',
             name: 'memberForm',
