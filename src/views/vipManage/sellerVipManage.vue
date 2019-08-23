@@ -94,7 +94,7 @@ const defaulttableHeader = [
     label: "公司名称"
   },
   {
-    prop: "mock4",
+    prop: "telNo",
     label: "公司电话"
   },
   {
