@@ -80,7 +80,7 @@ export const dictMixin = {
             HywEmissionStandardList: [],
             HywSellStateList: [],
             HywManufacturerList:[],
-            HywContractCompany:[]
+            HywContractCompanyList:[]
         }
     },
     methods: {

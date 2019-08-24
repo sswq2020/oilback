@@ -2,14 +2,26 @@
   <el-dialog :show-close="false" :title="title" :visible="agreedialogVisible" width="600px">
     <el-form :model="agreeFormParams" ref="agreeForm" label-position="right" label-width="150px">
       <el-form-item label="协议名称" prop="agreementName" :rules="[{ required: true, message: '必选'  }]">
-        <el-input v-model="agreeFormParams.agreementName"></el-input>
+        <el-input v-model="agreeFormParams.agreementName" size="small"></el-input>
       </el-form-item>
+
+      <el-form-item label="签约公司" prop="contractCompanyId" :rules="[{ required: true, message: '必填' }]">
+        <el-select style="width:100%" v-model="agreeFormParams.contractCompanyId" placeholder="请选择" size="small">
+          <el-option
+            v-for="(item,index) in HywContractCompanyList"
+            :key="index"
+            :label="item.name"
+            :value="item.id"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+
       <el-form-item
         label="协议类型"
         prop="agreementTypeCode"
         :rules="[{ required: true, message: '必填'  }]"
       >
-        <el-select style="width:100%" v-model="agreeFormParams.agreementTypeCode">
+        <el-select style="width:100%" v-model="agreeFormParams.agreementTypeCode" size="small">
           <el-option
             v-for="item in agreementTypeList"
             :key="item.value"
@@ -20,6 +32,7 @@
       </el-form-item>
       <el-form-item label="协议生效日期" prop="effectTime" :rules="[{ required: true, message: '必选'  }]">
         <el-date-picker
+          size="small"
           v-model="agreeFormParams.effectTime"
           type="date"
           placeholder="选择日期"
@@ -32,6 +45,7 @@
         :rules="validDueTime(agreeFormParams.effectTime,checked)"
       >
         <el-date-picker
+          size="small"
           v-model="agreeFormParams.dueTime"
           :disabled="dueTimeDisabled"
           type="date"
@@ -42,11 +56,7 @@
       <el-form-item label="长期">
         <el-checkbox v-model="checked"></el-checkbox>
       </el-form-item>
-      <el-form-item 
-        label="协议图片" 
-        prop="picLength"
-        :rules="validPic()"
-        >
+      <el-form-item label="协议图片" prop="picLength" :rules="validPic()">
         <div class="imgBox" :key="index" v-for="(url,index) in agreeFormParams.picUrlList">
           <ImageBox :url="url" :onDelete="()=>{uploadDelete(index)}"></ImageBox>
         </div>
@@ -65,7 +75,8 @@
 
 <script>
 import _ from "lodash";
-import { mapState, mapMutations,mapActions } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
+import { dictMixin } from "@/common/mixin.js";
 import Dict from "util/dict.js";
 import { DICT_SELECT_ARR } from "common/util.js";
 import ImageBox from "components/ImageBox";
@@ -73,6 +84,7 @@ import ImageUpload from "components/ImageUpload";
 const AgreementTypeList = DICT_SELECT_ARR(Dict.AGREE_TYPE);
 export default {
   name: "agreedialog",
+  mixins: [dictMixin],
   props: {
     cancleCb: {
       type: Function,
@@ -86,7 +98,7 @@ export default {
   components: {
     ImageBox,
     ImageUpload
-  },  
+  },
   data() {
     return {
       agreementTypeList: AgreementTypeList,
@@ -100,7 +112,7 @@ export default {
     ...mapState("agreement", [
       "agreeFormParams",
       "agreedialogEdit",
-      "agreedialogVisible",
+      "agreedialogVisible"
     ]),
     title() {
       return this.agreedialogEdit ? "编辑入会协议" : "新增入会协议";
@@ -112,11 +124,7 @@ export default {
       "setAgreeFormParams",
       "setAgreeDialogVisible"
     ]),
-    ...mapActions("agreement",[
-      "detelePic",
-      "addPic",
-      "clearAll"
-    ]),
+    ...mapActions("agreement", ["detelePic", "addPic", "clearAll"]),
     cancle() {
       this.cancleCb();
     },
@@ -162,40 +170,40 @@ export default {
         ];
       }
     },
-    validPic(){
-        return [
-          {
-            required: true,
-            message: "必上传"
-          },
-          {
-            validator(rule, value, callback) {
-              if (value === 0) {
-                callback(new Error("至少上传一张"));
-              }
-              callback();
+    validPic() {
+      return [
+        {
+          required: true,
+          message: "必上传"
+        },
+        {
+          validator(rule, value, callback) {
+            if (value === 0) {
+              callback(new Error("至少上传一张"));
             }
+            callback();
           }
-        ];
+        }
+      ];
     },
-    uploadDelete(index){
-      this.detelePic(index)
+    uploadDelete(index) {
+      this.detelePic(index);
     },
-    uploadSuceess(res){
-      this.addPic(res.data)
+    uploadSuceess(res) {
+      this.addPic(res.data);
     }
   },
   watch: {
     agreedialogVisible(newV) {
       if (newV === false) {
         this.checked = false;
-        this.clearAll()
-        setTimeout(()=>{
-            this.$refs.agreeForm.clearValidate();
-        },50)
+        this.clearAll();
+        setTimeout(() => {
+          this.$refs.agreeForm.clearValidate();
+        }, 50);
       } else {
-        if(this.agreedialogEdit && !this.agreeFormParams.dueTime){
-          this.checked = true
+        if (this.agreedialogEdit && !this.agreeFormParams.dueTime) {
+          this.checked = true;
         }
       }
     },
