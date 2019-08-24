@@ -74,7 +74,7 @@ const commodityOrderList = {
     "serialNumber": "@INTEGER(1,2019690999)", // 商品编码
     "orderTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
     "orderCode": "@INTEGER(6237657823644,6997657823644)", // 订单号
-    "exTime": "@INTEGER(1565748967680,1568798967690)",
+    "exTime": "1566808784000",
     "isInvalid": "@PICK('0','1')" // '0'是正常 '1'是失效
 }
 
@@ -801,7 +801,20 @@ const mockRouterMap = {
                                     "text": "出售中"
                                 }
                             ]
-                        }
+                        },
+                        {
+                            "entryCode": "HywContractCompany",
+                            "entryName": "签约公司",
+                            "items": [
+                                {
+                                    "disabled": false,
+                                    "id": "0",
+                                    "orderBy": 0,
+                                    "selected": 0,
+                                    "text": "惠龙易通"
+                                }
+                            ]
+                        },                        
                     ]
                 };
             }
