@@ -119,7 +119,8 @@ const EnterpriseList = {
 
 const agreementList = {
     "agreementName": "买方@CTITLE(2)协议", // 协议名称
-    "agreementTypeCode": "@PICK('0','1')", // 协议类型   0线上  1线下
+    "contractCompany": "惠龙易通",
+    "contractCompanyId":"0",
     "dueTime": null, // 到期时间
     "effectTime": new Date(), // 生效时间
     "fileIdList":new Array(4).fill('984ffb1bcd4145e4951d47573f037415'), // 图片的fileId数组

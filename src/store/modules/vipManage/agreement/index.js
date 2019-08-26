@@ -1,8 +1,7 @@
 const defaultAgreeFormParams = {
     id: null, // 协议ID 新增的没有,编辑有
-    contractCompanyId:null, //签约公司
+    contractCompanyId:null, //签约公司id
     agreementName: null, // 协议名称
-    agreementTypeCode: null, // 协议类型
     effectTime: null, // 协议生效日期
     dueTime: null, // 协议到期日期
     fileIdList:[], // 图片的fileId数组
