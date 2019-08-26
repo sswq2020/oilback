@@ -422,7 +422,7 @@ export default {
       * @description 会员启用禁用
       * */
     vipEnable(params) {
-        return fetch(oilURL + '/web/hyw/member/member/updateState', params)
+        return fetch(oilURL + '/web/hyw/member/updateState', params)
     },
     /**
       * @author sswq
@@ -430,7 +430,7 @@ export default {
       * @description 获取会员信息(用于会员编辑前请求)
       * */
      getVIPInfo(params) {
-        return fetch(oilURL + '/web/hyw/member/member/get', params,'get')
+        return fetch(oilURL + '/web/hyw/member/get', params,'get')
     },
     /**
       * @author sswq
@@ -438,7 +438,7 @@ export default {
       * @description 新增会员
       * */
     AddVIP(params) {
-        return fetch(oilURL + '/web/hyw/member/member/add', params)
+        return fetch(oilURL + '/web/hyw/member/add', params)
     },
     /**
       * @author sswq
@@ -446,7 +446,7 @@ export default {
       * @description 更新会员
       * */
     UpdateVIP(params) {
-        return fetch(oilURL + '/web/hyw/member/member/update', params)
+        return fetch(oilURL + '/web/hyw/member/update', params)
     }, 
     
     /**
