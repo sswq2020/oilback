@@ -465,6 +465,14 @@ export default {
      UpdateAgreement(params) {
         return fetch(oilURL + '/web/hyw/agreement/update', params)
     },  
+    /**
+      * @author sswq
+      * @param params
+      * @description 删除入会协议
+      * */
+     DelAgreement(params) {
+        return fetch(oilURL + '/web/hyw/agreement/delete', params)
+    }, 
     // #endregion 
 
     // #region 预警管理
