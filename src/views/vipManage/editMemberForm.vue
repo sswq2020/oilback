@@ -183,7 +183,7 @@ export default {
           switch (res.code) {
             case Dict.SUCCESS:
               that.$messageSuccess(`${text}成功`);
-              that._getVIPInfo(that.listID);
+              that._getVIPInfo(that.memberId);
               break;
             default:
               that.$messageError(`${text}失败,${res.mesg}`);
@@ -227,8 +227,8 @@ export default {
           break;
       }
     },
-    async _getVIPInfo(id) {
-      const res = await this.$api.getVIPInfo({ id });
+    async _getVIPInfo(userId) {
+      const res = await this.$api.getVIPInfo({ userId });
       switch (res.code) {
         case Dict.SUCCESS:
           this.form = res.data;
@@ -248,7 +248,7 @@ export default {
       switch (res.code) {
         case Dict.SUCCESS:
           this.$messageSuccess(`${text}入会协议成功`);
-          this._getVIPInfo(this.listID);
+          this._getVIPInfo(this.memberId);
           setTimeout(() => {
             this.setAgreeDialogVisible(false);
           }, 50);
@@ -260,7 +260,7 @@ export default {
     },    
   },
   computed: {
-    ...mapState("memberForm", ["isEdit", "memberId", "listID"]),
+    ...mapState("memberForm", ["isEdit", "memberId"]),
     ...mapState("agreement", ["agreedialogEdit"]),
     breadTitle() {
       const EditText = this.isEdit ? "编辑" : "新增";
@@ -272,7 +272,7 @@ export default {
       this.GoMember();
       return;
     }
-      this._getVIPInfo(this.listID);
+      this._getVIPInfo(this.memberId);
     }
   
 };

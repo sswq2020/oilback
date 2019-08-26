@@ -157,8 +157,7 @@ export default {
   methods: {
     ...mapMutations("memberForm", [
       "setIsEdit",
-      "setMemberId",
-      "setlistID"
+      "setMemberId"
     ]),
     clearListParams() {
       this.form = { ...defaultFormData };
@@ -237,10 +236,9 @@ export default {
       });
     },
     edit(item) {
-      const { userId,id } = item;
+      const { userId } = item;
       this.setIsEdit(true);
       this.setMemberId(userId);
-      this.setlistID(id);
       this.$router.push({
         path: "/web/hyw/member/member/editmemberForm"
       });

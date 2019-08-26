@@ -274,9 +274,8 @@ export default {
     },
     _filter() {
       let params = _.cloneDeep(this.form);
-      params.id = this.listID;
       params.agreementList = params.agreementList.map(item => {
-        return { ...item, userId: this.form.userId, memberId: this.listID };
+        return { ...item, userId: this.form.userId};
       });
       return params;
     },
@@ -311,7 +310,7 @@ export default {
     }
   },
   computed: {
-    ...mapState("memberForm", ["isEdit", "memberId", "listID"]),
+    ...mapState("memberForm", ["isEdit", "memberId"]),
     breadTitle() {
       const EditText = this.isEdit ? "编辑" : "新增";
       return ["会员管理", "交易会员管理", `${EditText}会员`];
