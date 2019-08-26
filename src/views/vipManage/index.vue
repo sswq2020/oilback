@@ -222,7 +222,7 @@ export default {
       this.setIsEdit(false);
       this.setMemberId(null);
       this.$router.push({
-        path: "/web/hyw/member/member/memberForm"
+        path: "/web/hyw/member/member/addmemberForm"
       });
     },
     edit(item) {
@@ -231,7 +231,7 @@ export default {
       this.setMemberId(userId);
       this.setlistID(id);
       this.$router.push({
-        path: "/web/hyw/member/member/memberForm"
+        path: "/web/hyw/member/member/editmemberForm"
       });
     },
     init() {
