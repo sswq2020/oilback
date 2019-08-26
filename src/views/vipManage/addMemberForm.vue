@@ -249,20 +249,6 @@ export default {
         entType_
       });
     },
-    async _getVIPInfo(id) {
-      const res = await this.$api.getVIPInfo({ id });
-      switch (res.code) {
-        case Dict.SUCCESS:
-          this.form = {
-            ...res.data,
-            agreementList: rowAdapter(res.data.agreementList)
-          };
-          break;
-        default:
-          this.$messageError(res.mesg);
-          break;
-      }
-    },
     editDeal(item, index) {
       const { picUrlList } = item;
       this.editIndex = index;

@@ -72,7 +72,7 @@
                   type="text"
                   @click="editDeal(form.agreementList[scope.$index],scope.$index)"
                 >编辑</el-button>
-                <el-button type="text" @click="deleteDeal(scope.$index)">删除</el-button>
+                <el-button type="text" @click="delete(scope.$index)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -82,14 +82,15 @@
         </div>
         <div class="bottom">
           <el-form-item>
-            <el-button type="primary" :loading="loading" @click="submitForm">确定</el-button>
+            <el-button type="primary" @click="submitForm" :loading="viploading">确定</el-button>
           </el-form-item>
         </div>
       </el-form>
     </div>
     <agreedialog
       :cancleCb="()=>{this.setAgreeDialogVisible(false)}"
-      :confirmCb="(agreeData)=>{_update_(agreeData)}"
+      :confirmCb="(agreeData)=>{addEdit(agreeData)}"
+      :loading="loading"
     ></agreedialog>
   </div>
 </template>
@@ -101,7 +102,6 @@ import { mapState, mapMutations, mapActions } from "vuex";
 import Dict from "util/dict.js";
 import { DICT_SELECT_ARR } from "common/util.js";
 import hlBreadcrumb from "components/hl-breadcrumb";
-import companyglass from "components/companyglass";
 import agreedialog from "./agreedialog";
 const RetradestatusList = DICT_SELECT_ARR(Dict.RETRADE_STATUS);
 const defaulttableHeader = [
@@ -141,29 +141,20 @@ const rowAdapter = list => {
   return list;
 };
 
-const Adapter = obj => {
-  return Object.assign({}, obj, {
-    effectTimeText: moment(obj.effectTime).format("YYYY-MM-DD"),
-    dueTimeText: obj.dueTime ? moment(obj.dueTime).format("YYYY-MM-DD") : "长期"
-  });
-};
-
 export default {
   name: "editMemberForm",
   data() {
     return {
       fit: "fill",
       loading: false,
+      viploading:false,
       form: { ...defualtFormParams, agreementList: [] },
       tableHeader: defaulttableHeader,
-      /**新增的时候是-1,编辑的时候就是数组的序号 */
-      editIndex: -1,
       retradestatusList: RetradestatusList
     };
   },
   components: {
     hlBreadcrumb,
-    companyglass,
     agreedialog
   },
   methods: {
@@ -204,6 +195,72 @@ export default {
         entType_
       });
     },
+    delete(item) {
+      let that = this;
+      const { id } = item;
+      const text = "删除入会协议";
+      that
+        .$confirm(`确定?${text}`, "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+        .then(async () => {
+          const res = await that.$api.DelAgreement({ id });
+          switch (res.code) {
+            case Dict.SUCCESS:
+              that.$messageSuccess(`${text}成功`);
+              that._getVIPInfo(that.listID);
+              break;
+            default:
+              that.$messageError(`${text}失败,${res.mesg}`);
+              break;
+          }
+        })
+        .catch(() => {
+          that.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    addDeal() {
+      this.openAddAgreeDialog();
+    },
+    editDeal(item) {
+      const { picUrlList } = item;
+      this.openEditAgreeDialog({ ...item, picLength: picUrlList.length });
+    },    
+    addEdit(agreeData) {
+      if (this.agreedialogEdit) {
+        this._updateAgreement_(agreeData);
+      } else {
+        this._addAgreement_(agreeData);
+      }
+    },
+    submitForm() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this._UpdateVIP_(this.form);
+        } else {
+          return false;
+        }
+      });
+    },
+    async _UpdateVIP_(params) {
+      this.viploading = true;
+      const res = await this.$api.UpdateVIP(params);
+      this.viploading = false;
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.$messageSuccess("更新成功重复交易");
+          this.GoMember();
+          break;
+        default:
+          this.$messageError(res.mesg);
+          break;
+      }
+    },
     async _getVIPInfo(id) {
       const res = await this.$api.getVIPInfo({ id });
       switch (res.code) {
@@ -218,78 +275,34 @@ export default {
           break;
       }
     },
-    editDeal(item, index) {
-      const { picUrlList } = item;
-      this.editIndex = index;
-      this.openEditAgreeDialog({ ...item, picLength: picUrlList.length });
-    },
-    deleteDeal(index) {
-      this.form.agreementList.splice(index, 1);
-    },
-    addDeal() {
-      this.editIndex = -1;
-      this.openAddAgreeDialog();
-    },
-    _update_(agreeData) {
-      let that = this;
-      if (this.editIndex > -1) {
-        this.form.agreementList.splice(this.editIndex, 1, Adapter(agreeData)); // 不要直接使用array[index] = item,Vue无法观察数组的变化,必须用变异的函数,这也是弹窗里图片变化.使用了splice和push这种变异的方法
-      } else {
-        this.form.agreementList.push(Adapter(agreeData));
-      }
-      setTimeout(() => {
-        that.setAgreeDialogVisible(false);
-      }, 50);
-    },
-    _filter() {
-      let params = _.cloneDeep(this.form);
-      params.id = this.listID;
-      params.agreementList = params.agreementList.map(item => {
-        return { ...item, userId: this.form.userId, memberId: this.listID };
-      });
-      return params;
-    },
-    submitForm() {
-      let that = this;
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          if (that.form.agreementList.length === 0) {
-            that.$messageError("必须上传一个协议列表");
-            return;
-          }
-          const params = this._filter();
-          if (this.isEdit) {
-            this._updateVIP_(params);
-          } else {
-            this._addVIP_(params);
-          }
-        } else {
-          return false;
-        }
-      });
-    },
-    async _updateVIP_(params) {
+    async _updateAgreement_(params) {
       this.loading = true;
-      const res = await this.$api.UpdateVIP(params);
+      const res = await this.$api.UpdateAgreement(params);
       this.loading = false;
       switch (res.code) {
         case Dict.SUCCESS:
-          this.$messageSuccess("更新成功");
-          this.GoMember();
+          this.$messageSuccess("更新入会协议成功");
+          this._getVIPInfo(this.listID);
+          setTimeout(() => {
+            this.setAgreeDialogVisible(false);
+          }, 50);
           break;
         default:
           this.$messageError(res.mesg);
           break;
       }
     },
-    async _addVIP_(params) {
+    async _addAgreement_(params) {
       this.loading = true;
-      const res = await this.$api.AddVIP(params);
+      const res = await this.$api.AddAgreement(params);
       this.loading = false;
       switch (res.code) {
         case Dict.SUCCESS:
-          this.$messageSuccess("新增成功");
-          this.GoMember();
+          this.$messageSuccess("新增入会协议成功");
+          this._getVIPInfo(this.listID);
+          setTimeout(() => {
+            this.setAgreeDialogVisible(false);
+          }, 50);
           break;
         default:
           this.$messageError(res.mesg);
@@ -299,6 +312,7 @@ export default {
   },
   computed: {
     ...mapState("memberForm", ["isEdit", "memberId", "listID"]),
+    ...mapState("agreement", ["agreedialogEdit"]),
     breadTitle() {
       const EditText = this.isEdit ? "编辑" : "新增";
       return ["会员管理", "交易会员管理", `${EditText}会员`];
