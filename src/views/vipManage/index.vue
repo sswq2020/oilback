@@ -5,11 +5,17 @@
     </hlBreadcrumb>
     <div class="search-box">
       <div class="form-item">
-        <label>会员账户</label>
+        <label>用户名</label>
+        <div class="form-control">
+          <el-input v-model="form.username" placeholder="请输入" size="small"></el-input>
+        </div>
+      </div>
+      <div class="form-item">
+        <label>手机号</label>
         <div class="form-control">
           <el-input v-model="form.phone" placeholder="请输入" size="small"></el-input>
         </div>
-      </div>
+      </div>         
       <div class="form-item">
         <label>公司名称</label>
         <div class="form-control">
@@ -70,7 +76,8 @@ import hlBreadcrumb from "components/hl-breadcrumb";
 
 const defaultFormData = {
   name: null,
-  phone: null
+  phone: null,
+  username:null
 };
 const defaultListParams = {
   pageSize: 20,
@@ -85,8 +92,12 @@ const defaultListData = {
 };
 const defaulttableHeader = [
   {
-    prop: "phone",
+    prop: "username",
     label: "用户名"
+  },
+  {
+    prop: "phone",
+    label: "手机号"
   },
   {
     prop: "name",
