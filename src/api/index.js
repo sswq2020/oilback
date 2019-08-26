@@ -447,7 +447,24 @@ export default {
       * */
     UpdateVIP(params) {
         return fetch(oilURL + '/web/hyw/member/member/update', params)
-    },    
+    }, 
+    
+    /**
+      * @author sswq
+      * @param params
+      * @description 新增入会协议
+      * */
+     AddAgreement(params) {
+        return fetch(oilURL + '/web/hyw/agreement/add', params)
+    },        
+    /**
+      * @author sswq
+      * @param params
+      * @description 编辑入会协议
+      * */
+     UpdateAgreement(params) {
+        return fetch(oilURL + '/web/hyw/agreement/update', params)
+    },  
     // #endregion 
 
     // #region 预警管理
