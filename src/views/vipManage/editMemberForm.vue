@@ -89,7 +89,7 @@
     </div>
     <agreedialog
       :cancleCb="()=>{this.setAgreeDialogVisible(false)}"
-      :confirmCb="(agreeData)=>{addEdit(agreeData)}"
+      :confirmCb="(agreeData)=>{this.addEdit(agreeData)}"
       :loading="loading"
     ></agreedialog>
   </div>
@@ -119,7 +119,6 @@ const defaulttableHeader = [
 
 const defualtFormParams = {
   isRetrade: Dict.RETRADE_DISABLE,
-  agreementList: []
 };
 
 const rowAdapter = list => {
