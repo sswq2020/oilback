@@ -183,7 +183,7 @@ export default {
           switch (res.code) {
             case Dict.SUCCESS:
               that.$messageSuccess(`${text}成功`);
-              that._getVIPInfo(that.memberId);
+              that._getAgreementList(that.memberId);
               break;
             default:
               that.$messageError(`${text}失败,${res.mesg}`);
@@ -232,7 +232,17 @@ export default {
       switch (res.code) {
         case Dict.SUCCESS:
           this.form = res.data;
-          this.agreementList = rowAdapter(res.data.agreementList);
+          break;
+        default:
+          this.$messageError(res.mesg);
+          break;
+      }
+    },
+    async _getAgreementList(userId){
+      const res = await this.$api.getVIPInfo({ userId });
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.agreementList = rowAdapter(res.data.list);
           break;
         default:
           this.$messageError(res.mesg);
@@ -248,7 +258,7 @@ export default {
       switch (res.code) {
         case Dict.SUCCESS:
           this.$messageSuccess(`${text}入会协议成功`);
-          this._getVIPInfo(this.memberId);
+          this._getAgreementList(this.memberId);
           setTimeout(() => {
             this.setAgreeDialogVisible(false);
           }, 50);
@@ -273,6 +283,7 @@ export default {
       return;
     }
       this._getVIPInfo(this.memberId);
+      this._getAgreementList(this.memberId);
     }
   
 };
