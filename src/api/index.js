@@ -482,7 +482,7 @@ export default {
      * @description 协议到期预警列表
      * */
     getDealDueForeWarnList(params) {
-        return fetch(oilURL + '/web/hyw/member/agreement/page', params)
+        return fetch(oilURL + '/web/hyw/agreement/page', params)
     },
     // #endregion 
 
