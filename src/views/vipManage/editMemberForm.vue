@@ -96,7 +96,6 @@
 </template>
 
 <script>
-import _ from "lodash";
 import moment from "moment";
 import { mapState, mapMutations, mapActions } from "vuex";
 import Dict from "util/dict.js";
@@ -164,47 +163,22 @@ export default {
     ]),
     ...mapActions("agreement", [
       "openAddAgreeDialog",
-      "openEditAgreeDialog",
-      "clearAll"
+      "openEditAgreeDialog"
     ]),
     GoMember() {
       this.$router.push({
         path: "/web/hyw/member/page"
       });
     },
-    _getCompanyInfo(obj) {
-      const {
-        userId,
-        name,
-        creditCode,
-        legalPersonName,
-        address,
-        effectiveDt,
-        expireDt,
-        entType_
-      } = obj;
-      this.form = Object.assign({}, this.form, {
-        userId,
-        name,
-        creditCode,
-        legalPersonName,
-        address,
-        effectiveDt,
-        expireDt,
-        entType_
-      });
-    },
     del(item) {
       let that = this;
       const { id } = item;
       const text = "删除入会协议";
-      that
-        .$confirm(`确定?${text}`, "提示", {
+      this.$confirm(`确定?${text}`, "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
-        })
-        .then(async () => {
+        }).then(async () => {
           const res = await that.$api.DelAgreement({ id });
           switch (res.code) {
             case Dict.SUCCESS:
@@ -230,13 +204,6 @@ export default {
       const { picUrlList } = item;
       this.openEditAgreeDialog({ ...item, picLength: picUrlList.length });
     },    
-    addEdit(agreeData) {
-      if (this.agreedialogEdit) {
-        this._updateAgreement_(agreeData);
-      } else {
-        this._addAgreement_(agreeData);
-      }
-    },
     submitForm() {
       this.$refs.form.validate(valid => {
         if (valid) {
@@ -272,13 +239,15 @@ export default {
           break;
       }
     },
-    async _updateAgreement_(params) {
+    async addEdit(agreeData) {
+      const text  = this.agreedialogEdit ? '更新':'新增';
+      const url = this.agreedialogEdit ? 'UpdateAgreement' : 'AddAgreement';
       this.loading = true;
-      const res = await this.$api.UpdateAgreement(params);
+      const res = await this.$api[url](agreeData);
       this.loading = false;
       switch (res.code) {
         case Dict.SUCCESS:
-          this.$messageSuccess("更新入会协议成功");
+          this.$messageSuccess(`${text}入会协议成功`);
           this._getVIPInfo(this.listID);
           setTimeout(() => {
             this.setAgreeDialogVisible(false);
@@ -287,25 +256,8 @@ export default {
         default:
           this.$messageError(res.mesg);
           break;
-      }
-    },
-    async _addAgreement_(params) {
-      this.loading = true;
-      const res = await this.$api.AddAgreement(params);
-      this.loading = false;
-      switch (res.code) {
-        case Dict.SUCCESS:
-          this.$messageSuccess("新增入会协议成功");
-          this._getVIPInfo(this.listID);
-          setTimeout(() => {
-            this.setAgreeDialogVisible(false);
-          }, 50);
-          break;
-        default:
-          this.$messageError(res.mesg);
-          break;
-      }
-    }
+      }      
+    },    
   },
   computed: {
     ...mapState("memberForm", ["isEdit", "memberId", "listID"]),

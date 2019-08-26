@@ -548,7 +548,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: '/web/hyw/member/member/updateState',
+            router: '/web/hyw/member/updateState',
             result() {
                 return {
                     ...body
@@ -561,7 +561,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'get',
-            router: '/web/hyw/member/member/get',
+            router: '/web/hyw/member/get',
             result(params) {
                 return {
                     ...body,
@@ -575,7 +575,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: '/web/hyw/member/member/add',
+            router: '/web/hyw/member/add',
             result() {
                 return {
                     ...body
@@ -588,7 +588,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: '/web/hyw/member/member/update',
+            router: '/web/hyw/member/update',
             result() {
                 return {
                     ...body
