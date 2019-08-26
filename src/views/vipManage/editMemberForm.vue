@@ -239,7 +239,7 @@ export default {
       }
     },
     async _getAgreementList(userId){
-      const res = await this.$api.getVIPInfo({ userId });
+      const res = await this.$api.getDealDueForeWarnList({ userId });
       switch (res.code) {
         case Dict.SUCCESS:
           this.agreementList = rowAdapter(res.data.list);
