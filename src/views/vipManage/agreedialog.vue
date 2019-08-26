@@ -53,7 +53,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="cancle">取 消</el-button>
-      <el-button type="primary" @click="confirm">确 定</el-button>
+      <el-button type="primary" @click="confirm" :loading="loading"    >确 定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -70,6 +70,10 @@ export default {
   name: "agreedialog",
   mixins: [dictMixin],
   props: {
+    loading:{
+      type:Boolean,
+      default:false
+    },
     cancleCb: {
       type: Function,
       default: () => {}
