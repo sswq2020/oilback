@@ -303,29 +303,11 @@ export default {
             return;
           }
           const params = this._filter();
-          if (this.isEdit) {
-            this._updateVIP_(params);
-          } else {
             this._addVIP_(params);
-          }
         } else {
           return false;
         }
       });
-    },
-    async _updateVIP_(params) {
-      this.loading = true;
-      const res = await this.$api.UpdateVIP(params);
-      this.loading = false;
-      switch (res.code) {
-        case Dict.SUCCESS:
-          this.$messageSuccess("更新成功");
-          this.GoMember();
-          break;
-        default:
-          this.$messageError(res.mesg);
-          break;
-      }
     },
     async _addVIP_(params) {
       this.loading = true;
