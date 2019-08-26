@@ -640,12 +640,12 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: '/web/hyw/member/agreement/page',
+            router: '/web/hyw/agreement/page',
             result(params) {
                 return {
                     ...body,
                     data: {
-                        'list|10-20': [dealDueForeWarnList],
+                        'list|3-4': [agreementList],
                         "paginator": {
                             "currentPage": params.page,
                             "pageSize": params.pageSize,

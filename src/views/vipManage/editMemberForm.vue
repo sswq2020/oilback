@@ -76,6 +76,15 @@
               </template>
             </el-table-column>
           </el-table>
+          <div class="right">
+            <el-pagination
+              @current-change="changePage"
+              :current-page="listParams.page"
+              :page-size="listParams.pageSize"
+              layout="total, prev, pager, next"
+              :total="listData.paginator.totalCount"
+            ></el-pagination>
+          </div>
           <div class="uploadDeal" @click="addDeal">
             <i class="el-icon-plus"></i>上传协议
           </div>
@@ -103,6 +112,17 @@ import { DICT_SELECT_ARR } from "common/util.js";
 import hlBreadcrumb from "components/hl-breadcrumb";
 import agreedialog from "./agreedialog";
 const RetradestatusList = DICT_SELECT_ARR(Dict.RETRADE_STATUS);
+const defaultListParams = {
+  pageSize: 20,
+  page: 1
+};
+const defaultListData = {
+  paginator: {
+    totalCount: 0,
+    totalPage: 1
+  }
+};
+
 const defaulttableHeader = [
   {
     prop: "agreementName",
@@ -145,6 +165,8 @@ export default {
       fit: "fill",
       loading: false,
       viploading:false,
+      listParams: { ...defaultListParams }, // 页数
+      listData: { ...defaultListData }, // 返回list的数据结构
       form: { ...defualtFormParams},
       agreementList:[],
       tableHeader: defaulttableHeader,
@@ -239,9 +261,10 @@ export default {
       }
     },
     async _getAgreementList(userId){
-      const res = await this.$api.getDealDueForeWarnList({ userId });
+      const res = await this.$api.getDealDueForeWarnList({...this.listParams,userId });
       switch (res.code) {
         case Dict.SUCCESS:
+          this.listData = res.data;
           this.agreementList = rowAdapter(res.data.list);
           break;
         default:
@@ -267,7 +290,12 @@ export default {
           this.$messageError(res.mesg);
           break;
       }      
-    },    
+    }, 
+    changePage(page){
+      this.listParams.page = page;
+      this._getAgreementList(this.memberId)
+
+    }   
   },
   computed: {
     ...mapState("memberForm", ["isEdit", "memberId"]),
@@ -329,6 +357,9 @@ export default {
         margin-left: 5px;
       }
     }
+  }
+  .right{
+    text-align: right
   }
 }
 </style>
