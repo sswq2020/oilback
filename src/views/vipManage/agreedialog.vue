@@ -15,21 +15,6 @@
           ></el-option>
         </el-select>
       </el-form-item>
-
-      <el-form-item
-        label="协议类型"
-        prop="agreementTypeCode"
-        :rules="[{ required: true, message: '必填'  }]"
-      >
-        <el-select style="width:100%" v-model="agreeFormParams.agreementTypeCode" size="small">
-          <el-option
-            v-for="item in agreementTypeList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </el-form-item>
       <el-form-item label="协议生效日期" prop="effectTime" :rules="[{ required: true, message: '必选'  }]">
         <el-date-picker
           size="small"
@@ -77,11 +62,10 @@
 import _ from "lodash";
 import { mapState, mapMutations, mapActions } from "vuex";
 import { dictMixin } from "@/common/mixin.js";
-import Dict from "util/dict.js";
-import { DICT_SELECT_ARR } from "common/util.js";
+// import Dict from "util/dict.js";
+// import { DICT_SELECT_ARR } from "common/util.js";
 import ImageBox from "components/ImageBox";
 import ImageUpload from "components/ImageUpload";
-const AgreementTypeList = DICT_SELECT_ARR(Dict.AGREE_TYPE);
 export default {
   name: "agreedialog",
   mixins: [dictMixin],
@@ -101,7 +85,6 @@ export default {
   },
   data() {
     return {
-      agreementTypeList: AgreementTypeList,
       /**长期勾选,则可以不选到期时间*/
       checked: false,
       /**到期时间不可编辑,默认可编辑*/
@@ -128,11 +111,38 @@ export default {
     cancle() {
       this.cancleCb();
     },
+    _findName(arr = [], id) {
+      let copy = _.clone(arr);
+      const index = _.findIndex(copy, o => {
+        return o.id == id;
+      });
+      if (index > -1) {
+        return copy[index].name;
+      } else {
+        return null;
+      }
+    },
+    _filter() {
+      const params = _.clone(
+        Object.assign(
+          {},
+          this.agreeFormParams,
+          {
+            contractCompany: this._findName(
+              this.HywContractCompanyList,
+              this.agreeFormParams.contractCompanyId
+            )
+          }
+        )
+      );
+      return params;
+    },
     confirm() {
       let that = this;
       this.$refs.agreeForm.validate(valid => {
         if (valid) {
-          that.confirmCb(_.cloneDeep(this.agreeFormParams));
+          const params = that._filter()
+          that.confirmCb(_.cloneDeep(params));
         } else {
           return false;
         }
