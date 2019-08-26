@@ -32,7 +32,7 @@
               <div class="head">入会协议</div>
             </el-col>
           </el-row>
-          <el-table :data="form.agreementList" stripe border>
+          <el-table :data="agreementList" stripe border>
             <el-table-column
               :prop="item.prop"
               :label="item.label"
@@ -43,12 +43,12 @@
               v-for="(item,index) in tableHeader"
             >
               <template slot-scope="scope">
-                <span>{{form.agreementList[scope.$index][item.prop]}}</span>
+                <span>{{agreementList[scope.$index][item.prop]}}</span>
               </template>
             </el-table-column>
             <el-table-column label="协议有效期" align="center" width="200">
               <template slot-scope="scope">
-                <span>{{form.agreementList[scope.$index].effectTimeText}}-{{form.agreementList[scope.$index].dueTimeText}}</span>
+                <span>{{agreementList[scope.$index].effectTimeText}}-{{agreementList[scope.$index].dueTimeText}}</span>
               </template>
             </el-table-column>
             <el-table-column label="协议图片">
@@ -57,7 +57,7 @@
                   <div class="avatar">
                     <img
                       :key="index"
-                      v-for="(pic,index) in form.agreementList[scope.$index].picUrlList"
+                      v-for="(pic,index) in agreementList[scope.$index].picUrlList"
                       width="65"
                       height="64"
                       :src="pic"
@@ -70,9 +70,9 @@
               <template slot-scope="scope">
                 <el-button
                   type="text"
-                  @click="editDeal(form.agreementList[scope.$index],scope.$index)"
+                  @click="editDeal(agreementList[scope.$index],scope.$index)"
                 >编辑</el-button>
-                <el-button type="text" @click="delete(scope.$index)">删除</el-button>
+                <el-button type="text" @click="del(agreementList[scope.$index])">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -130,7 +130,6 @@ const rowAdapter = list => {
     list = list.map(row => {
       return (row = {
         ...row,
-        agreementTypeCodeText: `${Dict.AGREE_TYPE[row.agreementTypeCode]}`,
         effectTimeText: moment(row.effectTime).format("YYYY-MM-DD"),
         dueTimeText: row.dueTime
           ? moment(row.effectTime).format("YYYY-MM-DD")
@@ -148,7 +147,8 @@ export default {
       fit: "fill",
       loading: false,
       viploading:false,
-      form: { ...defualtFormParams, agreementList: [] },
+      form: { ...defualtFormParams},
+      agreementList:[],
       tableHeader: defaulttableHeader,
       retradestatusList: RetradestatusList
     };
@@ -195,7 +195,7 @@ export default {
         entType_
       });
     },
-    delete(item) {
+    del(item) {
       let that = this;
       const { id } = item;
       const text = "删除入会协议";
@@ -265,10 +265,8 @@ export default {
       const res = await this.$api.getVIPInfo({ id });
       switch (res.code) {
         case Dict.SUCCESS:
-          this.form = {
-            ...res.data,
-            agreementList: rowAdapter(res.data.agreementList)
-          };
+          this.form = res.data;
+          this.agreementList = rowAdapter(res.data.agreementList);
           break;
         default:
           this.$messageError(res.mesg);
@@ -319,14 +317,13 @@ export default {
     }
   },
   mounted() {
-    if (this.isEdit) {
-      if (!this.memberId) {
-        this.GoMember();
-        return;
-      }
+    if (!this.memberId || !this.isEdit) {
+      this.GoMember();
+      return;
+    }
       this._getVIPInfo(this.listID);
     }
-  }
+  
 };
 </script>
 

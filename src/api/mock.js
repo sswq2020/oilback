@@ -114,6 +114,7 @@ const EnterpriseList = {
         "name": "@CNAME()", // 企业名称
         "province": "@PROVINCE()", //所属省
         "userId": "@INTEGER(1,2019690999)", //用户id
+        "isRetrade":"@PICK('0','1')" // 重复交易
     }
 }
 
@@ -595,6 +596,45 @@ const mockRouterMap = {
             }
         },
         // #endregion
+
+        // #region  新增协议
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/agreement/add',
+            result() {
+                return {
+                    ...body
+                };
+            }
+        },
+        // #endregion
+
+        // #region  更新协议
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/agreement/update',
+            result() {
+                return {
+                    ...body
+                };
+            }
+        },
+        // #endregion
+
+        // #region  删除协议
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/agreement/delete',
+            result() {
+                return {
+                    ...body
+                };
+            }
+        },
+        // #endregion        
 
         // #region  协议到期预警列表
         {
