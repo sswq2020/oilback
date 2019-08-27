@@ -104,7 +104,7 @@ let commonRoutes = {
 
         // #region  预警管理      
         {
-            path: '/web/hyw/agreement/page',
+            path: '/web/hyw/agreement/pageWarn',
             name: 'dealDueforeWarn',
             component: DealDueforeWarn
         },
