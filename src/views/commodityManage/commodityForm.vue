@@ -190,7 +190,7 @@
         </div>
         <div class="bottom">
           <el-form-item>
-            <el-button type="primary" :loading="loading" @click="submitForm('form')">发布</el-button>
+            <el-button type="primary" :loading="loading" v-if="hywGoodAdd || hywGoodEdit" @click="submitForm('form')">发布</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -207,6 +207,7 @@ import ImageUpload from "components/ImageUpload";
 import Dict from "util/dict.js";
 import areaData from "components/areaData.js";
 import _ from "lodash";
+import { judgeAuth } from "util/util.js";
 
 const ProvinceDataList = areaData.map(item=>{
   return {
@@ -239,6 +240,9 @@ export default {
   },
   data() {
     return {
+      // 权限
+      hywGoodAdd:false,
+      hywGoodEdit:false,
       loading: false,
       url: "#", // 后台改成上传成功后返回的url
       form: { ...defualtFormParams },
@@ -405,7 +409,16 @@ export default {
           this.$messageError(res.mesg);
           break;
       }
-    }
+    },
+    perm() {
+      this.hywGoodAdd = judgeAuth("hyw:productadd");
+      this.hywGoodEdit = judgeAuth("hyw:hyw:productupdate");
+    },
+    init() {
+      setTimeout(() => {
+        this.perm();
+      }, 20)
+    },    
   },
   mounted() {
     if (this.isEdit && this.commodityId) {
@@ -418,6 +431,7 @@ export default {
         this.back();
       }
     }
+    this.init()
   },
   created() {
   },
