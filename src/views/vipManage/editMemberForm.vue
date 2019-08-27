@@ -261,7 +261,7 @@ export default {
       }
     },
     async _getAgreementList(userId){
-      const res = await this.$api.getDealDueForeWarnList({...this.listParams,userId });
+      const res = await this.$api.getAgreementList({...this.listParams,userId });
       switch (res.code) {
         case Dict.SUCCESS:
           this.listData = res.data;

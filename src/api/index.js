@@ -479,10 +479,18 @@ export default {
     /**
      * @author sswq
      * @param params
+     * @description 入会协议分页
+     * */
+    getAgreementList(params) {
+        return fetch(oilURL + '/web/hyw/agreement/page', params)
+    },
+    /**
+     * @author sswq
+     * @param params
      * @description 协议到期预警列表
      * */
     getDealDueForeWarnList(params) {
-        return fetch(oilURL + '/web/hyw/agreement/page', params)
+        return fetch(oilURL + '/web/hyw/agreement/pageWarn', params)
     },
     // #endregion 
 
