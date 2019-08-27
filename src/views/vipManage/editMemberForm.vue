@@ -276,6 +276,7 @@ export default {
       const text  = this.agreedialogEdit ? '更新':'新增';
       const url = this.agreedialogEdit ? 'UpdateAgreement' : 'AddAgreement';
       this.loading = true;
+      agreeData.id = this.memberId;
       const res = await this.$api[url](agreeData);
       this.loading = false;
       switch (res.code) {
