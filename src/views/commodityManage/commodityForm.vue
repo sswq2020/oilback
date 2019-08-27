@@ -409,17 +409,18 @@ export default {
   },
   mounted() {
     if (this.isEdit && this.commodityId) {
-      console.info("这是编辑页面");
       this.ExternalTrigger = true;
-      this._getDetailCommodity(this.commodityId);
+      this._getClass().then(() => {
+        this._getDetailCommodity(this.commodityId);
+      })      
     } else {
       if (this.$route.name === "editOldCommodity") {
         this.back();
       }
-      console.info("这是新增页面");
     }
   },
-  created() {},
+  created() {
+  },
   beforeDestroy() {
     this.setIsEdit(false);
     this.setCommodityId(null);
