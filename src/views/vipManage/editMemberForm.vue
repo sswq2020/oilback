@@ -237,7 +237,8 @@ export default {
     },
     async _UpdateVIP_(params) {
       this.viploading = true;
-      const res = await this.$api.UpdateVIP(params);
+      const {userId,isRetrade} = params
+      const res = await this.$api.UpdateVIP({userId,isRetrade});
       this.viploading = false;
       switch (res.code) {
         case Dict.SUCCESS:
