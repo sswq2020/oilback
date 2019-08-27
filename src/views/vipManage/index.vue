@@ -179,7 +179,7 @@ export default {
     },
     toggle(item) {
       let that = this;
-      const { state, id } = item;
+      const { state, userId } = item;
       const text = state === Dict.VIP_STATUS_NORMAL ? "禁用会员" : "激活会员";
       that
         .$confirm(`确定${text}`, "提示", {
@@ -193,7 +193,7 @@ export default {
               state === Dict.VIP_STATUS_NORMAL
                 ? Dict.VIP_STATUS_FROZEN
                 : Dict.VIP_STATUS_NORMAL,
-              id
+              userId
           });
           switch (res.code) {
             case Dict.SUCCESS:
