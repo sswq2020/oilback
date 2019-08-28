@@ -190,7 +190,7 @@
         </div>
         <div class="bottom">
           <el-form-item>
-            <el-button type="primary" :loading="loading" v-if="hywGoodAdd || hywGoodEdit" @click="submitForm('form')">发布</el-button>
+            <el-button type="primary" :loading="loading" v-if="auth" @click="submitForm('form')">发布</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -259,6 +259,13 @@ export default {
       return this.isEdit
         ? ["商品管理", "编辑商品"]
         : ["商品管理", "发布新商品"];
+    },
+    auth(){
+      if(this.isEdit) {
+        return this.hywGoodEdit
+      }else {
+        return this.hywGoodAdd
+      }
     }
   },
   methods: {
@@ -412,7 +419,7 @@ export default {
     },
     perm() {
       this.hywGoodAdd = judgeAuth("hyw:productadd");
-      this.hywGoodEdit = judgeAuth("hyw:hyw:productupdate");
+      this.hywGoodEdit = judgeAuth("hyw:productupdate");
     },
     init() {
       setTimeout(() => {
