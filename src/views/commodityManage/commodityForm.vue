@@ -398,6 +398,7 @@ export default {
       const res = await this.$api.getDetailCommodity({ id });
       switch (res.code) {
         case Dict.SUCCESS:
+          this.url = res.data.picUrl || "#";
           this.reservaSecondClassId = _.cloneDeep(res.data.secondCatalogId);
           this.form = { ...res.data, secondCatalogId: null };
           break;
