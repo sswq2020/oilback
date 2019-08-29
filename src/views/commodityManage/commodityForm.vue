@@ -122,7 +122,8 @@
               <el-form-item
                 label="库存(吨)"
                 prop="totalWeightInventory"
-                :rules="[{ required: true, message: '必填' }]"
+                :rules="[{ required: true, message: '必填', trigger: 'blur'},
+                        { pattern: /^[1-9][0-9]{0,3}$/,message: '必须是正整数'}]"
               >
                 <el-input v-model="form.totalWeightInventory"></el-input>
               </el-form-item>
@@ -352,7 +353,8 @@ export default {
           { url: this.url },
           {
             sellStateEnum: null,
-            emissionStandardEnum: null
+            emissionStandardEnum: null,
+            manufacturerId_:null
           }
         )
       );
