@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :show-close="false" :title="title" :visible="agreedialogVisible" width="600px">
+  <el-dialog :show-close="false" :title="title" :visible="agreedialogVisible" width="600px" append-to-body>
     <el-form :model="agreeFormParams" ref="agreeForm" label-position="right" label-width="150px">
       <el-form-item label="协议名称" prop="agreementName" :rules="[{ required: true, message: '必选'  }]">
         <el-input v-model="agreeFormParams.agreementName" size="small"></el-input>
