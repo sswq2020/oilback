@@ -123,7 +123,7 @@
                 label="库存(吨)"
                 prop="totalWeightInventory"
                 :rules="[{ required: true, message: '必填', trigger: 'blur'},
-                        { pattern: /^[1-9][0-9]{0,3}$/,message: '必须是正整数'}]"
+                        { pattern: /^[1-9][0-9]{0,3}$/,message: '只能输入1-9999'}]"
               >
                 <el-input v-model="form.totalWeightInventory"></el-input>
               </el-form-item>
@@ -334,7 +334,7 @@ export default {
       }
     },
     _filter() {
-      const params = _.clone(
+      let params = _.clone(
         Object.assign(
           {},
           this.form,
@@ -354,10 +354,12 @@ export default {
           {
             sellStateEnum: null,
             emissionStandardEnum: null,
-            manufacturerId_:null
           }
         )
       );
+      if(params.hasOwnProperty('manufacturerId_')) {
+        delete params.manufacturerId_
+      }
       return params;
     },
     uploadSuceess(res) {
