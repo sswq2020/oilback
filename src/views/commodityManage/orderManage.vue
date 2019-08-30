@@ -17,7 +17,7 @@
       <div class="form-item">
         <label>商品编码</label>
         <div class="form-control">
-          <el-input v-model="form.orderStatus" placeholder="请输入内容" size="small"></el-input>
+          <el-input v-model="form.productNumber" placeholder="请输入内容" size="small"></el-input>
         </div>
       </div>
       <div class="form-item">
@@ -62,7 +62,7 @@
                 </div>
                 <div class="product-content">
                   <div class="productName">{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandard}}</div>
-                  <div class="serialNumber">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
+                  <div class="productNumber">商品编码:{{listData.list[scope.$index].productNumber}}</div>
                 </div>
               </div>
             </div>
@@ -170,7 +170,7 @@
                 </div>
                 <div class="product-content">
                   <div class="productName">{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandard}}</div>
-                  <div class="serialNumber">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
+                  <div class="productNumber">商品编码:{{listData.list[scope.$index].productNumber}}</div>
                 </div>
               </div>
             </div>
@@ -253,7 +253,7 @@ import countdown from "components/countdown";
 import Dict from "@/util/dict.js";
 const defaultFormData = {
   orderCode: null,
-  serialNumber: null
+  productNumber: null
 };
 const defaultListParams = {
   pageSize: 5,
@@ -400,7 +400,7 @@ export default {
         font-size: 12px;
         color: #3c8bff;
       }
-      .serialNumber {
+      .productNumber {
         font-size: 12px;
         color: #333;
       }
