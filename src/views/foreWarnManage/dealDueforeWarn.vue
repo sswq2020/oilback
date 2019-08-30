@@ -3,9 +3,9 @@
     <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
     <div class="search-box">
       <div class="form-item">
-        <label>会员账户</label>
+        <label>用户名</label>
         <div class="form-control">
-          <el-input v-model="form.phone" placeholder="请输入" size="small"></el-input>
+          <el-input v-model="form.username" placeholder="请输入" size="small"></el-input>
         </div>
       </div>
       <div class="form-item">
@@ -74,7 +74,7 @@ import hlBreadcrumb from "components/hl-breadcrumb";
 const EXTRA_PARAMS_KEYS = ["startTime", "endTime"];
 
 const defaultFormData = {
-  phone: null,
+  username: null,
   name: null,
   timeRange: []
 };
@@ -91,8 +91,8 @@ const defaultListData = {
 };
 const defaulttableHeader = [
   {
-    prop: "phone",
-    label: "会员账户"
+    prop: "username",
+    label: "用户名"
   },
   {
     prop: "name",
