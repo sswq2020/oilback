@@ -94,7 +94,7 @@
               <div
                 class="productName"
               >{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandardEnum.text || '-'}}</div>
-              <div class="serialNumber">商品编码:{{listData.list[scope.$index].serialNumber}}</div>
+              <div class="serialNumber">商品编码:{{listData.list[scope.$index].productNumber}}</div>
             </div>
           </div>
         </template>
