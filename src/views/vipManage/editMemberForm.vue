@@ -1,106 +1,80 @@
 <template>
-  <div class="container single-page">
-    <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
-    <div class="memberForm">
-      <el-form ref="form" :model="form" label-width="140px" size="small">
-        <div class="form-block">
-          <el-row>
-            <el-col :md="24" :sm="24" :xs="24">
-              <div class="head">权限中心</div>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :md="24" :sm="24" :xs="24">
-              <el-form-item
-                label="是否允许重复交易"
-                prop="isRetrade"
-                :rules="[{ required: true, message: '必填' }]"
-              >
-                <el-radio
-                  v-for="item in retradestatusList"
-                  :key="item.value"
-                  v-model="form.isRetrade"
-                  :label="item.value"
-                >{{item.label}}</el-radio>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </div>
-        <div class="form-block">
-          <el-row>
-            <el-col :md="24" :sm="24" :xs="24">
-              <div class="head">入会协议</div>
-            </el-col>
-          </el-row>
-          <el-table :data="agreementList" stripe border>
-            <el-table-column
-              :prop="item.prop"
-              :label="item.label"
-              :width="item.width || 'auto'"
-              :align="item.align || 'center'"
-              header-align="center"
-              :key="index"
-              v-for="(item,index) in tableHeader"
-            >
-              <template slot-scope="scope">
-                <span>{{agreementList[scope.$index][item.prop]}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="协议有效期" align="center" width="200">
-              <template slot-scope="scope">
-                <span>{{agreementList[scope.$index].effectTimeText}}-{{agreementList[scope.$index].dueTimeText}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="协议图片">
-              <template slot-scope="scope">
-                <div class="goods">
-                  <div class="avatar">
-                    <img
-                      :key="index"
-                      v-for="(pic,index) in agreementList[scope.$index].picUrlList"
-                      width="65"
-                      height="64"
-                      :src="pic"
-                    />
-                  </div>
+  <div class="memberForm">
+    <el-form ref="form" :model="form" label-width="140px" size="small">
+      <div class="form-block">
+        <el-row>
+          <el-col :md="24" :sm="24" :xs="24">
+            <div class="head">入会协议</div>
+          </el-col>
+        </el-row>
+        <el-table :data="agreementList" stripe border>
+          <el-table-column
+            :prop="item.prop"
+            :label="item.label"
+            :width="item.width || 'auto'"
+            :align="item.align || 'center'"
+            header-align="center"
+            :key="index"
+            v-for="(item,index) in tableHeader"
+          >
+            <template slot-scope="scope">
+              <span>{{agreementList[scope.$index][item.prop]}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="协议有效期" align="center" width="200">
+            <template slot-scope="scope">
+              <span>{{agreementList[scope.$index].effectTimeText}}-{{agreementList[scope.$index].dueTimeText}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="协议图片">
+            <template slot-scope="scope">
+              <div class="goods">
+                <div class="avatar">
+                  <img
+                    :key="index"
+                    v-for="(pic,index) in agreementList[scope.$index].picUrlList"
+                    width="65"
+                    height="64"
+                    :src="pic"
+                  />
                 </div>
-              </template>
-            </el-table-column>
-            <el-table-column label="操作" width="250px" align="center">
-              <template slot-scope="scope">
-                <el-button
-                  type="text"
-                  @click="editDeal(agreementList[scope.$index],scope.$index)"
-                >编辑</el-button>
-                <el-button type="text" @click="del(agreementList[scope.$index])">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-          <div class="right">
-            <el-pagination
-              @current-change="changePage"
-              :current-page="listParams.page"
-              :page-size="listParams.pageSize"
-              layout="total, prev, pager, next"
-              :total="listData.paginator.totalCount"
-            ></el-pagination>
-          </div>
-          <div class="uploadDeal" @click="addDeal">
-            <i class="el-icon-plus"></i>上传协议
-          </div>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="250px" align="center">
+            <template slot-scope="scope">
+              <el-button
+                type="text"
+                @click="editDeal(agreementList[scope.$index],scope.$index)"
+              >编辑</el-button>
+              <el-button type="text" @click="del(agreementList[scope.$index])">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div class="right">
+          <el-pagination
+            @current-change="changePage"
+            :current-page="listParams.page"
+            :page-size="listParams.pageSize"
+            layout="total, prev, pager, next"
+            :total="listData.paginator.totalCount"
+          ></el-pagination>
         </div>
-        <div class="bottom">
-          <el-form-item>
-            <el-button type="primary" @click="submitForm" :loading="viploading">确定</el-button>
-          </el-form-item>
+        <div class="uploadDeal" @click="addDeal">
+          <i class="el-icon-plus"></i>上传协议
         </div>
-      </el-form>
-    </div>
+      </div>
+      <div class="bottom">
+        <el-form-item>
+          <el-button  @click="GoMember">取消</el-button>
+        </el-form-item>
+      </div>
+    </el-form>
     <agreedialog
-      :cancleCb="()=>{this.setAgreeDialogVisible(false)}"
-      :confirmCb="(agreeData)=>{this.addEdit(agreeData)}"
-      :loading="loading"
-    ></agreedialog>
+    :cancleCb="()=>{this.setAgreeDialogVisible(false)}"
+    :confirmCb="(agreeData)=>{this.addEdit(agreeData)}"
+    :loading="loading"
+      ></agreedialog>
   </div>
 </template>
 
@@ -109,7 +83,6 @@ import moment from "moment";
 import { mapState, mapMutations, mapActions } from "vuex";
 import Dict from "util/dict.js";
 import { DICT_SELECT_ARR } from "common/util.js";
-import hlBreadcrumb from "components/hl-breadcrumb";
 import agreedialog from "./agreedialog";
 const RetradestatusList = DICT_SELECT_ARR(Dict.RETRADE_STATUS);
 const defaultListParams = {
@@ -150,7 +123,7 @@ const rowAdapter = list => {
         ...row,
         effectTimeText: moment(row.effectTime).format("YYYY-MM-DD"),
         dueTimeText: row.dueTime
-          ? moment(row.effectTime).format("YYYY-MM-DD")
+          ? moment(row.dueTime).format("YYYY-MM-DD")
           : "长期"
       });
     });
@@ -164,7 +137,6 @@ export default {
     return {
       fit: "fill",
       loading: false,
-      viploading:false,
       listParams: { ...defaultListParams }, // 页数
       listData: { ...defaultListData }, // 返回list的数据结构
       form: { ...defualtFormParams},
@@ -174,7 +146,6 @@ export default {
     };
   },
   components: {
-    hlBreadcrumb,
     agreedialog
   },
   methods: {
@@ -188,9 +159,7 @@ export default {
       "openEditAgreeDialog"
     ]),
     GoMember() {
-      this.$router.push({
-        path: "/web/hyw/member/page"
-      });
+      this.$emit('agreemtClose')
     },
     del(item) {
       let that = this;
@@ -226,41 +195,6 @@ export default {
       const { picUrlList } = item;
       this.openEditAgreeDialog({ ...item, picLength: picUrlList.length });
     },    
-    submitForm() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          this._UpdateVIP_(this.form);
-        } else {
-          return false;
-        }
-      });
-    },
-    async _UpdateVIP_(params) {
-      this.viploading = true;
-      const {userId,isRetrade} = params
-      const res = await this.$api.UpdateVIP({userId,isRetrade});
-      this.viploading = false;
-      switch (res.code) {
-        case Dict.SUCCESS:
-          this.$messageSuccess("更新成功重复交易");
-          this.GoMember();
-          break;
-        default:
-          this.$messageError(res.mesg);
-          break;
-      }
-    },
-    async _getVIPInfo(userId) {
-      const res = await this.$api.getVIPInfo({ userId });
-      switch (res.code) {
-        case Dict.SUCCESS:
-          this.form = res.data;
-          break;
-        default:
-          this.$messageError(res.mesg);
-          break;
-      }
-    },
     async _getAgreementList(userId){
       const res = await this.$api.getAgreementList({...this.listParams,userId });
       switch (res.code) {
@@ -302,17 +236,12 @@ export default {
   computed: {
     ...mapState("memberForm", ["isEdit", "memberId"]),
     ...mapState("agreement", ["agreedialogEdit"]),
-    breadTitle() {
-      const EditText = this.isEdit ? "编辑" : "新增";
-      return ["会员管理", "交易会员管理", `${EditText}会员`];
-    }
   },
   mounted() {
     if (!this.memberId || !this.isEdit) {
       this.GoMember();
       return;
     }
-      this._getVIPInfo(this.memberId);
       this._getAgreementList(this.memberId);
     }
   

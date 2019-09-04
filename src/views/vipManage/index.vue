@@ -65,6 +65,7 @@
         </template>
       </el-table-column>
     </heltable>
+    <UserDialog :visible.sync="visible"  @updateVisible="updateVisible"/>
   </div>
 </template>
 
@@ -73,6 +74,7 @@ import { mapMutations } from "vuex";
 import Dict from "util/dict.js";
 import heltable from "components/hl_table";
 import hlBreadcrumb from "components/hl-breadcrumb";
+import UserDialog from './components/userDialog';
 
 const defaultFormData = {
   name: null,
@@ -140,7 +142,8 @@ export default {
   name: "vipManage",
   components: {
     heltable,
-    hlBreadcrumb
+    hlBreadcrumb,
+    UserDialog
   },
   data() {
     return {
@@ -151,7 +154,8 @@ export default {
       listData: { ...defaultListData }, // 返回list的数据结构
       tableHeader: defaulttableHeader,
       showOverflowTooltip: true,
-      VIP_STATUS_NORMAL: Dict.VIP_STATUS_NORMAL
+      VIP_STATUS_NORMAL: Dict.VIP_STATUS_NORMAL,
+      visible:false
     };
   },
   methods: {
@@ -159,6 +163,9 @@ export default {
       "setIsEdit",
       "setMemberId"
     ]),
+    updateVisible(bol){
+      this.visible = bol;
+    },
     clearListParams() {
       this.form = { ...defaultFormData };
       this.listParams = { ...defaultListParams };
@@ -239,9 +246,10 @@ export default {
       const { userId } = item;
       this.setIsEdit(true);
       this.setMemberId(userId);
-      this.$router.push({
-        path: "/web/hyw/member/member/editmemberForm"
-      });
+      this.visible = true;
+      // this.$router.push({
+      //   path: "/web/hyw/member/member/editmemberForm"
+      // });
     },
     init() {
       setTimeout(() => {
