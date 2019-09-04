@@ -313,15 +313,14 @@ export default {
     },
     takenoff(item = null) {
       let that = this;
-      let params, serialNumber, info,url;
+      let params, serialNumber, info;
+      const url = 'batchUpdateCommodity'
       if (item) {
-        params = {'id':item.id,'sellState':"1"}
+        params = [{'id':item.id,'sellState':"1"}]
         serialNumber = item.serialNumber;
-        url = 'updateCommodity'
       } else {
         params = this.ids.map((item)=>{return {'id':item,'sellState':"1"}});
         serialNumber = this.serialNumbers.join();
-        url = 'batchUpdateCommodity'
       }
       info = `商品编码${serialNumber}`;
       this.$confirm(`确定要下架${info}`, "提示", {
