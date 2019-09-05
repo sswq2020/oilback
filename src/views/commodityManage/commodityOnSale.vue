@@ -348,7 +348,7 @@ export default {
     },
     async updatePrice(data) {
       this.priceLoading = true;
-      const res = await this.$api.updateCommodity(data);
+      const res = await this.$api.updatePriceAndInventory(data);
       this.priceLoading = false;
       switch (res.code) {
         case Dict.SUCCESS:

@@ -383,6 +383,14 @@ export default {
     /**
      * @author sswq
      * @param params
+     * @description 修改单价和库存
+     * */
+    updatePriceAndInventory(params) {
+        return fetch(oilURL + '/web/hyw/product/product/updatePriceAndInventory', params)
+    },
+    /**
+     * @author sswq
+     * @param params
      * @description 批量更新商品
      * */
     batchUpdateCommodity(params) {
