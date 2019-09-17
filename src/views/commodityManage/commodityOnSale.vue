@@ -94,7 +94,7 @@
               <div
                 class="productName"
               >{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandardEnum.text || '-'}}</div>
-              <div class="serialNumber">商品编码:{{listData.list[scope.$index].productNumber}}</div>
+              <div class="productNumber">商品编码:{{listData.list[scope.$index].productNumber}}</div>
             </div>
           </div>
         </template>
@@ -172,7 +172,7 @@ const defaultFormData = {
 const defaultListParams = {
   pageSize: 5,
   page: 1,
-  sellState: "0"
+  sellState: Dict.SELL_STATUS_ON 
 };
 const defaultListData = {
   paginator: {
@@ -222,9 +222,9 @@ export default {
         return item.id;
       });
     },
-    serialNumbers() {
+    productNumbers() {
       return this.selectedItems.map(item => {
-        return item.serialNumber;
+        return item.productNumber;
       });
     }
   },
@@ -294,8 +294,8 @@ export default {
       }
     },
     open(item) {
-      const { id, price, totalWeightInventory, firstCatalogName,secondCatalogName,emissionStandardEnum, serialNumber } = item;
-      this.editProductName = `编辑商品${firstCatalogName+secondCatalogName+emissionStandardEnum.text},编码为${serialNumber}`;
+      const { id, price, totalWeightInventory, firstCatalogName,secondCatalogName,emissionStandardEnum, productNumber } = item;
+      this.editProductName = `编辑商品${firstCatalogName+secondCatalogName+emissionStandardEnum.text},编码为${productNumber}`;
       this.openPriceDialog({ id, price, totalWeightInventory });
     },
     GoReleaseNewCommodity() {
@@ -313,16 +313,16 @@ export default {
     },
     takenoff(item = null) {
       let that = this;
-      let params, serialNumber, info;
+      let params, productNumber, info;
       const url = 'batchUpdateCommodity'
       if (item) {
-        params = [{'id':item.id,'sellState':"1"}]
-        serialNumber = item.serialNumber;
+        params = [{'id':item.id,'sellState':Dict.SELL_STATUS_OFF}]
+        productNumber = item.productNumber;
       } else {
-        params = this.ids.map((item)=>{return {'id':item,'sellState':"1"}});
-        serialNumber = this.serialNumbers.join();
+        params = this.ids.map((item)=>{return {'id':item,'sellState':Dict.SELL_STATUS_OFF}});
+        productNumber = this.productNumbers.join();
       }
-      info = `商品编码${serialNumber}`;
+      info = `商品编码${productNumber}`;
       this.$confirm(`确定要下架${info}`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -423,7 +423,7 @@ export default {
       font-size: 12px;
       color: #3c8bff;
     }
-    .serialNumber {
+    .productNumber {
       font-size: 12px;
       color: #333;
     }
