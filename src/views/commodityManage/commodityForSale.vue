@@ -172,7 +172,7 @@ const defaultFormData = {
 const defaultListParams = {
   pageSize: 5,
   page: 1,
-  sellState: Dict.SELL_STATUS_ON
+  sellState: Dict.SELL_STATUS_OFF
 };
 const defaultListData = {
   paginator: {
