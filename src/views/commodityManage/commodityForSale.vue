@@ -380,10 +380,10 @@ export default {
     this.init();
   },
   watch: {
-    "form.mock1": {
+    "form.firstCatalogId": {
       handler(newV, oldV) {
         if (newV !== oldV) {
-          this.form.mock2 = null;
+          this.form.secondCatalogId = null;
           if (newV) {
             const index = _.findIndex(this.firstClassList, o => {
               return o.id == newV;
