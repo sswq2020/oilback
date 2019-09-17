@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations,mapActions } from "vuex";
 export default {
   name: "app",
   computed: {
@@ -13,6 +13,7 @@ export default {
   },
   methods: {
     ...mapMutations("app",["SET_ROLE","SET_USER_ID","SET_USER_NAME"]),
+    ...mapActions("app",["setYcData"]),
     async getInfo() {
       const res = await this.$api.getUser();
       if (res.code === "000000") {
@@ -28,7 +29,10 @@ export default {
     }
   },
   created() {
-    this.getInfo()
+    this.setYcData().then(()=>{
+       this.getInfo()
+    })
+
   }
 };
 </script>
