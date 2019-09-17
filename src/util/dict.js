@@ -1,4 +1,4 @@
-const DICT = {};
+const DICT = Object.create(null);
 /** 成功 */
 DICT.SUCCESS = '000000';
 /** 导入 */
@@ -31,6 +31,13 @@ DICT.VIP_TYPE = {
 DICT.VIP_STATUS_FROZEN = 0
 /**会员状态正常*/
 DICT.VIP_STATUS_NORMAL = 1
+
+
+/**销售状态上架*/
+DICT.SELL_STATUS_ON = "0"
+/**销售状态下架*/
+DICT.SELL_STATUS_OFF = "1"
+
 
 /**会员状态 */
 DICT.VIP_STATUS = {
