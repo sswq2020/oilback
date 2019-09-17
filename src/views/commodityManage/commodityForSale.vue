@@ -19,7 +19,7 @@
     </hlBreadcrumb>
     <div class="search-box">
       <div class="form-item">
-        <label>一级目录</label>
+        <label>品类</label>
         <div class="form-control">
           <el-select v-model="form.firstCatalogId" placeholder="请选择" size="small">
             <el-option
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="form-item">
-        <label>二级目录</label>
+        <label>牌号</label>
         <div class="form-control">
           <el-select v-model="form.secondCatalogId" placeholder="请选择" size="small">
             <el-option

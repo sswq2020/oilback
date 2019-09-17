@@ -335,7 +335,7 @@ export default {
     /**
      * @author sswq
      * @param params
-     * @description 一级二级目录
+     * @description 一级牌号
      * */
     getClass() {
         return fetch(oilURL + '/open/productInterface/getClassify', '', 'get')
@@ -343,7 +343,7 @@ export default {
     /**
      * @author sswq
      * @param params
-     * @description 二级目录下动态加载的
+     * @description 牌号下动态加载的
      * */
     getParameterById(id) {
         return fetch(oilURL + '/open/productInterface/getParameterById', { id }, 'get')

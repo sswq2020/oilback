@@ -12,7 +12,7 @@
           <el-row :gutter="20">
             <el-col :md="12" :sm="12" :xs="24">
               <el-form-item
-                label="一级目录"
+                label="品类"
                 prop="firstCatalogId"
                 :rules="[{ required: true, message: '必选'  }]"
               >
@@ -28,7 +28,7 @@
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
               <el-form-item
-                label="二级目录"
+                label="牌号"
                 prop="secondCatalogId"
                 :rules="[{ required: true, message:'必选'  }]"
               >
@@ -69,7 +69,7 @@
             </el-col>
             <el-col :md="12" :sm="12" :xs="24">
               <el-form-item
-                label="产品编号"
+                label="产品型号"
                 prop="serialNumber"
                 :rules="[{ required: true, message: '必填' }]"
               >
@@ -248,7 +248,7 @@ export default {
       url: "#", // 后台改成上传成功后返回的url
       form: { ...defualtFormParams },
       paramsList: [],
-      /**参数列表一般是由一二级目录决定，但是编辑页面一开始进入的时候是唯一的外部触发*/
+      /**参数列表一般是由一牌号决定，但是编辑页面一开始进入的时候是唯一的外部触发*/
       ExternalTrigger: false,
       reservaSecondClassId: null,
       ProvinceDataList:ProvinceDataList
