@@ -21,24 +21,17 @@
               <span>{{agreementList[scope.$index][item.prop]}}</span>
             </template>
           </el-table-column>
-          <el-table-column label="协议有效期" align="center" width="200">
+          <el-table-column label="协议有效期" align="center">
             <template slot-scope="scope">
               <span>{{agreementList[scope.$index].effectTimeText}}-{{agreementList[scope.$index].dueTimeText}}</span>
             </template>
           </el-table-column>
-          <el-table-column label="协议图片">
+          <el-table-column label="协议图片" align="center">
             <template slot-scope="scope">
-              <div class="goods">
-                <div class="avatar">
-                  <img
-                    :key="index"
-                    v-for="(pic,index) in agreementList[scope.$index].picUrlList"
-                    width="65"
-                    height="64"
-                    :src="pic"
-                  />
-                </div>
-              </div>
+              <el-button
+                type="text"
+                @click="openImage(agreementList[scope.$index])"
+              >点击查看</el-button>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="250px" align="center">
@@ -75,6 +68,9 @@
     :confirmCb="(agreeData)=>{this.addEdit(agreeData)}"
     :loading="loading"
       ></agreedialog>
+    <div class="images" v-show="false" v-viewer="{inline: false}">
+      <img v-for="(src,index) in images" :src="src" :key="index">
+    </div>
   </div>
 </template>
 
@@ -99,13 +95,11 @@ const defaultListData = {
 const defaulttableHeader = [
   {
     prop: "agreementName",
-    label: "协议名称",
-    width: "250"
+    label: "协议名称"
   },
   {
     prop: "contractCompany",
-    label: "签约公司",
-    width: "150"
+    label: "签约公司"
   }
 ];
 
@@ -142,7 +136,8 @@ export default {
       form: { ...defualtFormParams},
       agreementList:[],
       tableHeader: defaulttableHeader,
-      retradestatusList: RetradestatusList
+      retradestatusList: RetradestatusList,
+      images:[]
     };
   },
   components: {
@@ -231,7 +226,14 @@ export default {
       this.listParams.page = page;
       this._getAgreementList(this.memberId)
 
-    }   
+    },
+    openImage(item) {
+      this.images = item.picUrlList;
+      setTimeout(()=>{
+        const viewer = this.$el.querySelector('.images').$viewer
+        viewer.show()
+      },500)
+    }       
   },
   computed: {
     ...mapState("memberForm", ["isEdit", "memberId"]),
@@ -250,7 +252,8 @@ export default {
 
 <style lang="less" scoped>
 .memberForm {
-  padding: 30px 15px 50px 15px;
+  padding: 15px;
+  background: white;
   .el-table thead {
     color: #909399;
     font-weight: 500;
@@ -264,33 +267,21 @@ export default {
       font-weight: 700;
     }
     .uploadDeal {
+      margin-top: 10px;
       font-size: 12px;
       color: #909399;
-      height: 50px;
-      line-height: 50px;
+      height: 28px;
+      line-height: 28px;
       text-align: center;
-      border: 1px dashed #eee;
+      border: 2px dashed #eee;
       &:hover {
         color: #ff0000;
         cursor: pointer;
       }
     }
   }
-  .goods {
-    position: relative;
-    padding: 9px 10px 11px 15px;
-    font-size: 0px;
-    .avatar {
-      display: inline-block;
-      vertical-align: top;
-      img {
-        border-radius: 2px;
-        margin-left: 5px;
-      }
-    }
-  }
-  .right{
-    text-align: right
+  .right {
+    text-align: right;
   }
 }
 </style>
