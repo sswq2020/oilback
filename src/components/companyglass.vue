@@ -1,6 +1,6 @@
 <template>
   <div class="companyglass">
-    <el-input placeholder="请选择公司" :readonly="true">
+    <el-input placeholder="请选择公司" :value="value" :readonly="true">
       <el-button :disabled="disabled" slot="append" icon="el-icon-search" @click="open"></el-button>
     </el-input>
     <el-dialog
@@ -157,7 +157,8 @@ export default {
       form: { ...defaultFormData }, // 查询参数
       listData: { ...defaultListData }, // 返回list的数据结构
       tableHeader: [...defaultAuditResultTableHeader],
-      currentRow:null //选中的那一行数据
+      currentRow:null, //选中的那一行数据
+      value: null
     };
   },
   methods: {
@@ -207,6 +208,7 @@ export default {
         this.$messageError("必须选中一行才能确认");
         return
       }
+      this.value = this.currentRow.name || "";
       this.$emit('companySelect',this.currentRow);
       this.cancel();
     },

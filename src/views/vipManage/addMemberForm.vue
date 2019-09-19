@@ -2,7 +2,7 @@
   <div class="container single-page">
     <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
     <div class="memberForm">
-      <el-form ref="form" :model="form" label-width="140px" size="small">
+      <el-form ref="form" :model="form" label-width="200px" size="small">
         <div class="form-block">
           <el-row>
             <el-col :md="24" :sm="24" :xs="24">
@@ -10,32 +10,34 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :md="6" :sm="24" :xs="24">
+            <el-col :md="12" :sm="24" :xs="24">
               <el-form-item
                 label="所属公司:"
                 prop="userId"
                 :rules="[{ required: true, message: '必须选择一个公司'}]"
               >
                 <companyglass @companySelect="_getCompanyInfo" :disabled="isEdit"></companyglass>
-                <el-input type="hidden" :value="form.userId"></el-input>
+                <el-input type="hidden" :value="form.userId" style="display:inline;height:0"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :md="24" :sm="24" :xs="24">
+          </el-row>
+          <el-row v-if="form.userId">  
+            <el-col :md="12" :sm="24" :xs="24">
               <el-form-item label="公司名称:">{{form.name}}</el-form-item>
             </el-col>
-            <el-col :md="24" :sm="24" :xs="24">
+            <el-col :md="12" :sm="24" :xs="24">
               <el-form-item label="统一社会信用代码:">{{form.creditCode}}</el-form-item>
             </el-col>
-            <el-col :md="24" :sm="24" :xs="24">
+            <el-col :md="12" :sm="24" :xs="24">
               <el-form-item label="公司地址:">{{form.address}}</el-form-item>
             </el-col>
-            <el-col :md="24" :sm="24" :xs="24">
+            <el-col :md="12" :sm="24" :xs="24">
               <el-form-item label="公司类型:">{{form.entType_}}</el-form-item>
             </el-col>
-            <el-col :md="24" :sm="24" :xs="24">
+            <el-col :md="12" :sm="24" :xs="24">
               <el-form-item label="法人:">{{form.legalPersonName}}</el-form-item>
             </el-col>
-            <el-col :md="24" :sm="24" :xs="24">
+            <el-col :md="12" :sm="24" :xs="24">
               <el-form-item label="营业有效期:">{{form.effectiveDt}} - {{form.expireDt}}</el-form-item>
             </el-col>
           </el-row>
