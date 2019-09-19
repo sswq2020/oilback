@@ -9,6 +9,8 @@ import 'hletong-ui/lib/hletong-ui.css'
 import './static/reset.css';
 import './static/common.css';
 import './static/new_common.css';
+import 'viewerjs/dist/viewer.css'
+import Viewer from 'v-viewer'
 import {router} from './router';
 import api from '@/api';
 import store from "./store";
@@ -18,6 +20,7 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(Hletong);
 Vue.use(VueCropper);
+Vue.use(Viewer)
 Vue.prototype.$api = api;
 
 Vue.prototype.$messageError = content => Vue.prototype.$message({
