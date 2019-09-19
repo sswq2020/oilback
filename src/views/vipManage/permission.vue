@@ -108,7 +108,8 @@ export default {
 
 <style lang="less" scoped>
 .memberForm {
-  padding: 30px 15px 50px 15px;
+  padding: 15px;
+  background: white;
   .el-table thead {
     color: #909399;
     font-weight: 500;
@@ -121,35 +122,8 @@ export default {
       font-size: 18px;
       font-weight: 700;
     }
-    .uploadDeal {
-      font-size: 12px;
-      color: #909399;
-      height: 50px;
-      line-height: 50px;
-      text-align: center;
-      border: 1px dashed #eee;
-      &:hover {
-        color: #ff0000;
-        cursor: pointer;
-      }
-    }
   }
-  .goods {
-    position: relative;
-    padding: 9px 10px 11px 15px;
-    font-size: 0px;
-    .avatar {
-      display: inline-block;
-      vertical-align: top;
-      img {
-        border-radius: 2px;
-        margin-left: 5px;
-      }
-    }
-  }
-  .right{
-    text-align: right
-  }
+
 }
 </style>
 

@@ -10,7 +10,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :md="12" :sm="24" :xs="24">
+            <el-col :md="8" :sm="24" :xs="24">
               <el-form-item
                 label="所属公司:"
                 prop="userId"
@@ -51,7 +51,7 @@
           <el-row>
             <el-col :md="24" :sm="24" :xs="24">
               <el-form-item
-                label="是否允许重复交易"
+                label="是否允许重复交易:"
                 prop="isRetrade"
                 :rules="[{ required: true, message: '必填' }]"
               >
@@ -167,25 +167,6 @@ const defualtFormParams = {
   expireDt: null,
   isRetrade: Dict.RETRADE_DISABLE,
   agreementList: []
-};
-
-const rowAdapter = list => {
-  if (!list) {
-    return [];
-  }
-  if (list.length > 0) {
-    list = list.map(row => {
-      return (row = {
-        ...row,
-        agreementTypeCodeText: `${Dict.AGREE_TYPE[row.agreementTypeCode]}`,
-        effectTimeText: moment(row.effectTime).format("YYYY-MM-DD"),
-        dueTimeText: row.dueTime
-          ? moment(row.effectTime).format("YYYY-MM-DD")
-          : "长期"
-      });
-    });
-  }
-  return list;
 };
 
 const Adapter = obj => {

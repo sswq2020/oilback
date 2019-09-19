@@ -118,16 +118,26 @@ const EnterpriseList = {
     }
 }
 
-const agreementList = {
-    "agreementName": "买方@CTITLE(2)协议", // 协议名称
-    "contractCompany": "惠龙易通",
-    "contractCompanyId":"0",
-    "dueTime": null, // 到期时间
-    "effectTime": new Date(), // 生效时间
-    "fileIdList":new Array(4).fill('984ffb1bcd4145e4951d47573f037415'), // 图片的fileId数组
-    "picUrlList":new Array(4).fill('https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'), // 图片的fileId数组对应的URL
-    "id|+1":"@INTEGER(1,2019690999)", // 每一行的主键，但是新增的没有
-}
+const PICLIST1 = [
+    'https://gss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3764408578,1682053584&fm=173&app=49&f=JPEG?w=218&h=146&s=EEBA33C344B0359C0B9CD01A0100C092',
+    'https://gss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1704057549,3981133715&fm=173&app=49&f=JPEG?w=218&h=146&s=2D9306D971B8EE3ED25DA1DA0300D033',
+    ]
+    
+    const PICLIST2 = [
+        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+            'https://gss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3245319348,1127212882&fm=173&app=49&f=PNG?w=218&h=146&s=BD01703354107BC2122849CF0300E030'
+        ]
+    
+    const agreementList = {
+        "agreementName": "买方@CTITLE(2)协议", // 协议名称
+        "contractCompany": "惠龙易通",
+        "contractCompanyId":"0",
+        "dueTime": null, // 到期时间
+        "effectTime": new Date(), // 生效时间
+        "fileIdList":new Array(4).fill('984ffb1bcd4145e4951d47573f037415'), // 图片的fileId数组
+        "picUrlList": Math.random() > 0.3 ?  PICLIST1 : PICLIST2 , // 图片的fileId数组对应的URL
+        "id|+1":"@INTEGER(1,2019690999)", // 每一行的主键，但是新增的没有
+    }
 
 const VIPInfoData = {
     ...EnterpriseList.extInfo,
