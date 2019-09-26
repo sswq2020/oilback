@@ -2,7 +2,7 @@
   <div class="container single-page" style="position:relative">
     <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
     <div class="form">
-      <el-form ref="form" :model="form" label-width="120px" size="small">
+      <el-form ref="form" :model="form" label-width="125px" size="small">
         <div class="form-block">
           <div class="head">商品信息</div>
           <el-row>
