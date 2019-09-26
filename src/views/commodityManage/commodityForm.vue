@@ -1,16 +1,12 @@
 <template>
-  <div class="container single-page">
+  <div class="container single-page" style="position:relative">
     <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
     <div class="form">
-      <el-form ref="form" :model="form" label-width="200px" size="small">
+      <el-form ref="form" :model="form" label-width="120px" size="small">
         <div class="form-block">
+          <div class="head">商品信息</div>
           <el-row>
-            <el-col :md="12" :sm="12" :xs="24">
-              <div class="head">商品信息</div>
-            </el-col>
-          </el-row>
-          <el-row :gutter="20">
-            <el-col :md="12" :sm="12" :xs="24">
+            <el-col :lg="8" :md="12" :sm="12" :xs="24">
               <el-form-item
                 label="品类"
                 prop="firstCatalogId"
@@ -26,7 +22,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :md="12" :sm="12" :xs="24">
+            <el-col :lg="8" :md="12" :sm="12" :xs="24">
               <el-form-item
                 label="牌号"
                 prop="secondCatalogId"
@@ -42,7 +38,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :md="12" :sm="12" :xs="24">
+            <el-col :lg="8" :md="12" :sm="12" :xs="24">
               <el-form-item
                 label="排放标准"
                 prop="emissionStandard"
@@ -58,7 +54,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :md="12" :sm="12" :xs="24">
+            <el-col :lg="8" :md="12" :sm="12" :xs="24">
               <el-form-item
                 label="密度(kg/m³)"
                 prop="density"
@@ -67,7 +63,7 @@
                 <el-input v-model="form.density"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :md="12" :sm="12" :xs="24">
+            <el-col :lg="8" :md="12" :sm="12" :xs="24">
               <el-form-item
                 label="产品型号"
                 prop="serialNumber"
@@ -76,7 +72,7 @@
                 <el-input v-model="form.serialNumber"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :md="12" :sm="12" :xs="24">
+            <el-col :lg="8" :md="12" :sm="12" :xs="24">
               <el-form-item
                 label="生产商"
                 prop="manufacturerId"
@@ -92,7 +88,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :md="12" :sm="12" :xs="24">
+            <el-col :lg="8" :md="12" :sm="12" :xs="24">
               <el-form-item
                 label="产地"
                 prop="addressProvince"
@@ -109,7 +105,7 @@
               </el-form-item>
             </el-col>
 
-            <el-col :md="12" :sm="12" :xs="24">
+            <el-col :lg="8" :md="12" :sm="12" :xs="24">
               <el-form-item
                 label="商品价格(元/吨)"
                 prop="price"
@@ -118,7 +114,7 @@
                 <el-input v-model="form.price"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :md="12" :sm="12" :xs="24">
+            <el-col :lg="8" :md="12" :sm="12" :xs="24">
               <el-form-item
                 label="库存(吨)"
                 prop="totalWeightInventory"
@@ -130,7 +126,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :md="12" :sm="12" :xs="24">
+            <el-col :lg="8" :md="12" :sm="12" :xs="24">
               <el-form-item
                 label="上传图片"
                 prop="fileId"
@@ -145,35 +141,15 @@
                     style="display:inline-block;vertical-align:text-bottom;font-size:12px;color:#333;margin-left:10px;"
                   >尺寸最大800*800。图片大小小于3M</div>
                 </div>
-                <el-input type="hidden" :value="form.fileId"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </div>
-        <div class="form-block" v-show="form.parameterList.length">
-          <div class="head">参数信息</div>
-          <el-row :gutter="30">
-            <el-col
-              :md="12"
-              :sm="12"
-              :xs="24"
-              v-for="(item, index) in form.parameterList"
-              :key="item.id"
-            >
-              <el-form-item
-                :label="item.paraName"
-                :prop="'parameterList.' + index + '.paraValue'"
-                :rules="{required: true, message: '必填', trigger: 'blur'}"
-              >
-                <el-input v-model="item.paraValue"></el-input>
+                <el-input type="hidden" :value="form.fileId" style="display:inline;height:0"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
         </div>
         <div class="form-block">
           <div class="head">销售状态</div>
-          <el-row :gutter="30">
-            <el-col :md="12" :sm="12" :xs="24">
+          <el-row>
+            <el-col :lg="8" :md="12" :sm="12" :xs="24">
               <el-form-item
                 label="销售状态"
                 prop="sellState"
@@ -189,12 +165,41 @@
             </el-col>
           </el-row>
         </div>
-        <div class="bottom">
-          <el-form-item>
-            <el-button type="primary" :loading="loading" v-if="auth" @click="submitForm('form')">发布</el-button>
-          </el-form-item>
+        <div class="form-block">
+          <div class="head">参数信息</div>
+          <div style="overflow-y:auto;overflow-x:hidden"
+          :style="computedHeight"
+          id="parameterList"
+          v-show="form.parameterList.length">
+          <el-row>
+            <el-col
+              :lg="8" :md="12"
+              :sm="12"
+              :xs="24"
+              v-for="(item, index) in form.parameterList"
+              :key="item.id"
+            >
+              <el-form-item
+                :label="item.paraName"
+                :prop="'parameterList.' + index + '.paraValue'"
+                :rules="{required: true, message: '必填', trigger: 'blur'}"
+              >
+                <el-input v-model="item.paraValue"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          </div>
         </div>
       </el-form>
+    </div>
+    <div class="bottom">
+        <el-button
+          type="primary"
+          size="medium"
+          :loading="loading"
+          v-if="auth"
+          @click="submitForm('form')"
+        >发布</el-button>
     </div>
   </div>
 </template>
@@ -208,13 +213,14 @@ import ImageUpload from "components/ImageUpload";
 import Dict from "util/dict.js";
 import areaData from "components/areaData.js";
 import _ from "lodash";
+import $ from "jquery";
 import { judgeAuth } from "util/util.js";
 
-const ProvinceDataList = areaData.map(item=>{
+const ProvinceDataList = areaData.map(item => {
   return {
-    name:item.value
-  }
-})
+    name: item.value
+  };
+});
 
 const defualtFormParams = {
   fileId: null, // 图片上传成功后返回的id
@@ -224,7 +230,7 @@ const defualtFormParams = {
   density: null,
   serialNumber: null,
   manufacturerId: null,
-  addressProvince:null,
+  addressProvince: null,
   price: null,
   totalWeightInventory: null,
   sellState: "1",
@@ -242,8 +248,8 @@ export default {
   data() {
     return {
       // 权限
-      hywGoodAdd:false,
-      hywGoodEdit:false,
+      hywGoodAdd: false,
+      hywGoodEdit: false,
       loading: false,
       url: "#", // 后台改成上传成功后返回的url
       form: { ...defualtFormParams },
@@ -251,7 +257,8 @@ export default {
       /**参数列表一般是由一牌号决定，但是编辑页面一开始进入的时候是唯一的外部触发*/
       ExternalTrigger: false,
       reservaSecondClassId: null,
-      ProvinceDataList:ProvinceDataList
+      ProvinceDataList: ProvinceDataList,
+      height: 0
     };
   },
   computed: {
@@ -261,11 +268,14 @@ export default {
         ? ["商品管理", "编辑商品"]
         : ["商品管理", "发布新商品"];
     },
-    auth(){
-      if(this.isEdit) {
-        return this.hywGoodEdit
-      }else {
-        return this.hywGoodAdd
+    computedHeight() {
+      return `height:${this.height}px`;
+    },
+    auth() {
+      if (this.isEdit) {
+        return this.hywGoodEdit;
+      } else {
+        return this.hywGoodAdd;
       }
     }
   },
@@ -353,12 +363,12 @@ export default {
           { url: this.url },
           {
             sellStateEnum: null,
-            emissionStandardEnum: null,
+            emissionStandardEnum: null
           }
         )
       );
-      if(params.hasOwnProperty('manufacturerId_')) {
-        delete params.manufacturerId_
+      if (params.hasOwnProperty("manufacturerId_")) {
+        delete params.manufacturerId_;
       }
       return params;
     },
@@ -422,31 +432,46 @@ export default {
           break;
       }
     },
+    setHeight() {
+      this.height =
+        document.body.clientHeight -
+        document.getElementById("parameterList").getBoundingClientRect().top -
+        720;
+    },
     perm() {
       this.hywGoodAdd = judgeAuth("hyw:productadd");
       this.hywGoodEdit = judgeAuth("hyw:productupdate");
     },
     init() {
       setTimeout(() => {
+        this.setHeight();
         this.perm();
-      }, 20)
-    },    
+      }, 20);
+    }
   },
   mounted() {
     if (this.isEdit && this.commodityId) {
       this.ExternalTrigger = true;
       this._getClass().then(() => {
         this._getDetailCommodity(this.commodityId);
-      })      
+      });
     } else {
       if (this.$route.name === "editOldCommodity") {
         this.back();
       }
     }
-    this.init()
+    this.init();
+    $(window).bind(
+      "resize",
+      _.throttle(() => {
+        this.setHeight();
+      }, 400)
+    );
   },
-  created() {
+  destroyed() {
+    $(window).off("resize");
   },
+  created() {},
   beforeDestroy() {
     this.setIsEdit(false);
     this.setCommodityId(null);
@@ -502,14 +527,32 @@ export default {
 
 <style scoped lang="less">
 .form {
-  padding: 30px 15px 50px 15px;
+  padding: 20px 15px 20px 20px;
   .form-block {
-    padding-bottom: 20px;
     .head {
-      margin-bottom: 15px;
-      font-size: 18px;
-      font-weight: 700;
+      margin-bottom: 10px;
+      padding-left: 20px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 14px;
+      color: #333333;
+      background: #f6f8fa;
     }
+  }
+}
+.bottom {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: #f6f8fa;
+  width: calc(100% - 40px);
+  height: 50px;
+  box-shadow: 0 -1px 4px 0 hsla(0, 0%, 80%, 0.5);
+  .el-button {
+    min-width: 64px;
+    position: absolute;
+    margin-left: 20px;
+    margin-top: 10px;
   }
 }
 </style>

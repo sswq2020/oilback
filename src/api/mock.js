@@ -740,7 +740,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'get',
-            router: '/productInterface/getClassify',
+            router: '/open/productInterface/getClassify',
             result() {
                 return {
                     ...body,
@@ -751,11 +751,11 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'get',
-            router: '/productInterface/getParameterById',
+            router: '/open/productInterface/getParameterById',
             result(params) {
                 return {
                     ...body,
-                    'data|3-4': [{ ...paramsData, ...{ classifyId: params.id } }]
+                    'data|20-30': [{ ...paramsData, ...{ classifyId: params.id } }]
                 };
             }
         },
