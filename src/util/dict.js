@@ -67,6 +67,27 @@ DICT.AGREE_TYPE = {
     [DICT.AGREE_OFFLINE]: "线下协议",
 }
 
+/**云仓*/
+DICT.IS_YC = "1"
+/**非云仓*/
+DICT.IS_NOT_YC = "0"
+
+
+
+/**恢复 */
+DICT.DELETE_RECOVER = "0"
+/**普通删除 */
+DICT.DELETE_NORMAL = "1"
+/**彻底删除 */
+DICT.DELETE_COMPLETE = "2"
+/**商品删除恢复状态 */
+DICT.DELETE_STATUS = {
+    [DICT.DELETE_RECOVER]: "恢复",
+    [DICT.DELETE_COMPLETE]: "普通删除",
+    [DICT.DELETE_COMPLETE]: "彻底删除",
+}
+
+
 
 /**待支付 */
 DICT.PAY_AWAIT = "11"
