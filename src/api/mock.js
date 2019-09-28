@@ -73,7 +73,9 @@ const commodityOrderList = {
     "productTotal": "@INTEGER(2019690999,2219690999)", // 金额
     "productWeight": "@INTEGER(3489,20196)", // 数量
     "payer": "@INTEGER(13702260943,18702260943)", // 买家
-    "productName": "@CTITLE(2,4)", // 商品名称
+    "firstCatalogName": "@CTITLE(2,4)", // 商品名称
+    "secondCatalogName":"@CTITLE(2,4)",
+    "emissionStandard":"惠龙排放标准1",
     "productNumber":"@INTEGER(1,2019690999)",
     "serialNumber": "@INTEGER(1,2019690999)", // 商品编码
     "orderTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间

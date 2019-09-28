@@ -2,10 +2,8 @@
   <div class="container single-page">
     <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
     <div class="tabs">
-      <el-tabs v-model="activeName" type="card">
-        <el-tab-pane label="待付款" name="unpay"></el-tab-pane>
-        <el-tab-pane label="已付款" name="payed"></el-tab-pane>
-      </el-tabs>
+        <span class="tab-item" @click="activeName = 'unpay'"  :class="{'active':activeName==='unpay'}">待付款</span>
+        <span class="tab-item" @click="activeName = 'payed'"  :class="{'active':activeName==='payed'}">已付款</span>
     </div>
     <div class="search-box">
       <div class="form-item">
@@ -30,7 +28,7 @@
         <el-button size="small" @click="clearListParams">重置</el-button>
       </div>
     </div>
-    <div v-if="activeName=='unpay'">
+    <div v-if="activeName==='unpay'">
       <heltable
         ref="tb"
         @pageChange="changePage"
@@ -138,7 +136,7 @@
         </el-table-column>
       </heltable>
     </div>
-    <div v-if="activeName=='payed'">
+    <div v-if="activeName==='payed'">
       <heltable
         ref="tb"
         @pageChange="changePage"
@@ -347,11 +345,28 @@ export default {
 
 <style scoped lang="less">
 .tabs {
-  background-color: white;
-  //   height: 30px;
-  //   line-height: 30px;
-  // padding: 0 15px;
+  box-sizing: border-box;
+  margin: 20px 15px 20px 20px;
+  padding-left:10px;
+  height:40px;
+  background: #f6f8fa;
   font-size: 14px;
+  position: relative;
+  .tab-item{
+    margin-top:5px;
+    height:35px;
+    width:80px;
+    line-height: 35px;
+    display: inline-block;
+    box-sizing: border-box;
+    font-size:14px;
+    text-align: center;
+    &.active{
+      background: #fff;
+      color:#3c8bff;
+      border-top:3px solid #3c8bff
+    }
+  }
 }
 
 .search-box {
@@ -368,7 +383,6 @@ export default {
 .goods {
   position: relative;
   font-size: 0px;
-
   .header {
     height: 30px;
     line-height: 29px;
