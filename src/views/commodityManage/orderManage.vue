@@ -346,7 +346,7 @@ export default {
 <style scoped lang="less">
 .tabs {
   box-sizing: border-box;
-  margin: 20px 15px 20px 20px;
+  margin: 20px 15px 0px 20px;
   padding-left:10px;
   height:40px;
   background: #f6f8fa;
