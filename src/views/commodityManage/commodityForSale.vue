@@ -5,6 +5,14 @@
         type="primary"
         plain
         size="small"
+        :disabled="!selectedItems.length"
+        @click="completelyDel(null)"
+        icon="el-icon-delete"
+      >批量删除</el-button>
+      <el-button
+        type="primary"
+        plain
+        size="small"
         @click="GoReleaseNewCommodity"
         icon="el-icon-plus"
       >发布新商品</el-button>
@@ -83,7 +91,8 @@
         <template slot-scope="scope">
           <div class="goods">
             <div class="avatar">
-             <img v-if="listData.list[scope.$index].picUrl"
+              <img
+                v-if="listData.list[scope.$index].picUrl"
                 width="65"
                 height="64"
                 :src="listData.list[scope.$index].picUrl"
@@ -92,7 +101,9 @@
             </div>
             <div class="goods-content">
               <div class="productName">
-                <span class="notyc">{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandardEnum.text || '-'}}</span>
+                <span
+                  class="notyc"
+                >{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandardEnum.text || '-'}}</span>
                 <span class="yc" v-if="listData.list[scope.$index].isYC === Dict.IS_YC">云仓</span>
               </div>
               <div class="productNumber">商品编码:{{listData.list[scope.$index].productNumber}}</div>
@@ -141,6 +152,7 @@
         <template slot-scope="scope">
           <el-button type="text" @click="GoEditOldCommodity(listData.list[scope.$index])">编辑商品</el-button>
           <el-button type="text" @click="shelves(listData.list[scope.$index])">上架</el-button>
+          <el-button type="text" @click="completelyDel(listData.list[scope.$index])">彻底删除</el-button>
         </template>
       </el-table-column>
     </heltable>
@@ -214,7 +226,7 @@ export default {
       selectedItems: [],
       editProductName: "编辑修改",
       priceLoading: false,
-      Dict:Dict
+      Dict: Dict
     };
   },
   computed: {
@@ -369,6 +381,36 @@ export default {
           break;
       }
     },
+    completelyDel(item = null) {
+      let that = this;
+      let params, productNumber, info;
+      if (item) {
+        params = [{ id: item.id, isDeleted: Dict.DELETE_NORMAL}];
+        productNumber = item.productNumber;
+      } else {
+        params = this.ids.map(item => {
+          return { id: item, isDeleted: Dict.DELETE_NORMAL};
+        });
+        productNumber = this.productNumbers.join();
+      }
+      info = `商品编码${productNumber}`;
+      this.$confirm(`确定要删除${info}`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(async () => {
+        const res = await that.$api.delOrResume(params);
+        switch (res.code) {
+          case Dict.SUCCESS:
+            that.$messageSuccess(`删除成功`);
+            that.getListData();
+            break;
+          default:
+            that.$messageError(`删除成功,${res.mesg}`);
+            break;
+        }
+      });
+    },
     init() {
       setTimeout(() => {
         this.clearListParams();
@@ -430,18 +472,18 @@ export default {
     .productName {
       font-size: 12px;
       color: #3c8bff;
-      .notyc{
-        display: inline-block;        
+      .notyc {
+        display: inline-block;
       }
       .yc {
-        margin-left:15px;
+        margin-left: 15px;
         text-align: center;
         color: #fff;
         display: inline-block;
-        width:40px;
-        height:18px;
+        width: 40px;
+        height: 18px;
         line-height: 18px;
-        background:#FFA715;
+        background: #ffa715;
         border-radius: 4px;
       }
     }

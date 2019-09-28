@@ -60,6 +60,7 @@ const commodityOnSaleList = {
     "secondCatalogName": "@CTITLE(2,4)", // 商品名称
     "emissionStandardEnum": { text: "惠龙排放标准1" },
     "serialNumber": "@INTEGER(1,2019690999)", // 商品编码
+    "productNumber":"@INTEGER(1,2019690999)",
     "createdTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
     "fileId": "@INTEGER(1,2019690999)"
 }
@@ -73,6 +74,7 @@ const commodityOrderList = {
     "productWeight": "@INTEGER(3489,20196)", // 数量
     "payer": "@INTEGER(13702260943,18702260943)", // 买家
     "productName": "@CTITLE(2,4)", // 商品名称
+    "productNumber":"@INTEGER(1,2019690999)",
     "serialNumber": "@INTEGER(1,2019690999)", // 商品编码
     "orderTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
     "orderCode": "@INTEGER(6237657823644,6997657823644)", // 订单号

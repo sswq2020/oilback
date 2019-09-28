@@ -8,7 +8,7 @@
         :disabled="!selectedItems.length"
         @click="completelyDel(null)"
         icon="el-icon-delete"
-      >全部删除</el-button>
+      >批量删除</el-button>
     </hlBreadcrumb>
     <heltable
       ref="tb"
