@@ -34,6 +34,7 @@
     <div class="container">
       <el-pagination
         class="page"
+        background
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
@@ -99,7 +100,7 @@ export default {
       default: 1
     },
     layout: {
-      default: "total, sizes, prev, pager, next, jumper"
+      default: "total, prev, pager, next,sizes, jumper"
     },
     autoHeigit: {
       type: Boolean,
@@ -184,7 +185,7 @@ export default {
     display: block;
     position: absolute;
     top: 10px;
-    right: 10px;
+    left: 10px;
   }
 }
 </style>

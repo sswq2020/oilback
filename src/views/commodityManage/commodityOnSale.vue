@@ -90,10 +90,11 @@
               />
               <span v-else>未设置图片</span>
             </div>
-            <div class="goods-content">
-              <div
-                class="productName"
-              >{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandardEnum.text || '-'}}</div>
+             <div class="goods-content">
+              <div class="productName">
+                <span class="notyc">{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandardEnum.text || '-'}}</span>
+                <span class="yc" v-if="listData.list[scope.$index].isYC === Dict.IS_YC">云仓</span>
+              </div>
               <div class="productNumber">商品编码:{{listData.list[scope.$index].productNumber}}</div>
             </div>
           </div>
@@ -212,7 +213,8 @@ export default {
       showOverflowTooltip: true,
       selectedItems: [],
       editProductName: "编辑修改",
-      priceLoading: false
+      priceLoading: false,
+      Dict:Dict
     };
   },
   computed: {
@@ -422,6 +424,20 @@ export default {
     .productName {
       font-size: 12px;
       color: #3c8bff;
+      .notyc{
+        display: inline-block;        
+      }
+      .yc {
+        margin-left:15px;
+        text-align: center;
+        color: #fff;
+        display: inline-block;
+        width:40px;
+        height:18px;
+        line-height: 18px;
+        background:#FFA715;
+        border-radius: 4px;
+      }
     }
     .productNumber {
       font-size: 12px;

@@ -52,6 +52,7 @@ const body_fail = {
 
 const commodityOnSaleList = {
     "id|+1": "@INTEGER(1,2019690999)",
+    "isYC": "@PICK('0','1')",
     "price": "@INTEGER(1,2019690999)", // 售价
     "totalWeightInventory": "@INTEGER(1000,5000)", // 库存数量
     "volumeWeightSold": "@INTEGER(1000,5000)", // 总销量
@@ -67,6 +68,7 @@ const commodityOrderList = {
     "orderId|+1": "@INTEGER(1,2019690999)",
     "picUrl": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
     "productPrice": "@INTEGER(1,200)", // 单价
+    "isYC": "@PICK('0','1')",
     "productTotal": "@INTEGER(2019690999,2219690999)", // 金额
     "productWeight": "@INTEGER(3489,20196)", // 数量
     "payer": "@INTEGER(13702260943,18702260943)", // 买家
@@ -83,7 +85,7 @@ const RecycleList = {
     "updatedTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 删除时间
     "density": 12,
     "productNumber":"@INTEGER(1,2019690999)",
-    "isYc": "@PICK('0','1')",
+    "isYC": "@PICK('0','1')",
     "manufacturerId_": "@CTITLE(2,4)公司",
     "emissionStandardEnum": { text: "惠龙排放标准1" },
 }
@@ -450,7 +452,29 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: '/web/hyw/product/product/page',
+            router: '/web/hyw/product/product/pageOnSale',
+            result(params) {
+                return {
+                    ...body,
+                    data: {
+                        'list|4-7': [commodityOnSaleList],
+                        "paginator": {
+                            "currentPage": params.page,
+                            "pageSize": params.pageSize,
+                            "totalCount": 1000,
+                            "totalPage": 1000 / params.pageSize
+                        }
+                    },
+                };
+            }
+        },
+        // #endregion     
+
+        // #region  待售中的商品列表
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/product/product/pageForSale',
             result(params) {
                 return {
                     ...body,
