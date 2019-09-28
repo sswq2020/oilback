@@ -78,6 +78,18 @@ const commodityOrderList = {
     "isInvalid": "@PICK('0','1')" // '0'是正常 '1'是失效
 }
 
+const RecycleList = {
+    ...commodityOnSaleList,
+    "updatedTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 删除时间
+    "density": 12,
+    "productNumber":"@INTEGER(1,2019690999)",
+    "isYc": "@PICK('0','1')",
+    "manufacturerId_": "@CTITLE(2,4)公司",
+    "emissionStandardEnum": { text: "惠龙排放标准1" },
+}
+
+
+
 const dealDueForeWarnList = {
     "id|+1": "@INTEGER(1,2019690999)",
     "mock1": "@INTEGER(13012819898,18912819898)",
@@ -99,7 +111,7 @@ const pageMemberList = {
 }
 
 const EnterpriseList = {
-    "id|+1":"@INTEGER(1,2019690999)",
+    "id|+1": "@INTEGER(1,2019690999)",
     "extInfo": {
         "address": '@PROVINCE()@CITY()@CTITLE(2,10)@INTEGER(1,100)号', // 地址
         "bizIdNo": "@INTEGER(321102199108120001,321102200208120034)",  //业务联系人身份证号
@@ -114,34 +126,34 @@ const EnterpriseList = {
         "name": "@CNAME()", // 企业名称
         "province": "@PROVINCE()", //所属省
         "userId": "@INTEGER(1,2019690999)", //用户id
-        "isRetrade":"@PICK('0','1')" // 重复交易
+        "isRetrade": "@PICK('0','1')" // 重复交易
     }
 }
 
 const PICLIST1 = [
     'https://gss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3764408578,1682053584&fm=173&app=49&f=JPEG?w=218&h=146&s=EEBA33C344B0359C0B9CD01A0100C092',
     'https://gss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1704057549,3981133715&fm=173&app=49&f=JPEG?w=218&h=146&s=2D9306D971B8EE3ED25DA1DA0300D033',
-    ]
-    
-    const PICLIST2 = [
-        'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-            'https://gss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3245319348,1127212882&fm=173&app=49&f=PNG?w=218&h=146&s=BD01703354107BC2122849CF0300E030'
-        ]
-    
-    const agreementList = {
-        "agreementName": "买方@CTITLE(2)协议", // 协议名称
-        "contractCompany": "惠龙易通",
-        "contractCompanyId":"0",
-        "dueTime": null, // 到期时间
-        "effectTime": new Date(), // 生效时间
-        "fileIdList":new Array(4).fill('984ffb1bcd4145e4951d47573f037415'), // 图片的fileId数组
-        "picUrlList": Math.random() > 0.3 ?  PICLIST1 : PICLIST2 , // 图片的fileId数组对应的URL
-        "id|+1":"@INTEGER(1,2019690999)", // 每一行的主键，但是新增的没有
-    }
+]
+
+const PICLIST2 = [
+    'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+    'https://gss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3245319348,1127212882&fm=173&app=49&f=PNG?w=218&h=146&s=BD01703354107BC2122849CF0300E030'
+]
+
+const agreementList = {
+    "agreementName": "买方@CTITLE(2)协议", // 协议名称
+    "contractCompany": "惠龙易通",
+    "contractCompanyId": "0",
+    "dueTime": null, // 到期时间
+    "effectTime": new Date(), // 生效时间
+    "fileIdList": new Array(4).fill('984ffb1bcd4145e4951d47573f037415'), // 图片的fileId数组
+    "picUrlList": Math.random() > 0.3 ? PICLIST1 : PICLIST2, // 图片的fileId数组对应的URL
+    "id|+1": "@INTEGER(1,2019690999)", // 每一行的主键，但是新增的没有
+}
 
 const VIPInfoData = {
     ...EnterpriseList.extInfo,
-    "agreementList|2-3":[agreementList]
+    "agreementList|2-3": [agreementList]
 }
 
 
@@ -520,7 +532,7 @@ const mockRouterMap = {
                         emissionStandard: "0",
                         density: 'mock',
                         serialNumber: 'mock',
-                        addressProvince:"@PROVINCE()",
+                        addressProvince: "@PROVINCE()",
                         manufacturerId: "0",
                         price: '23',
                         totalWeightInventory: "12",
@@ -531,6 +543,42 @@ const mockRouterMap = {
             }
         },
         // #endregion 
+
+        // #region  回收站分页
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/product/product/pageForRecycle',
+            result(params) {
+                return {
+                    ...body,
+                    data: {
+                        'list|4-5': [RecycleList],
+                        "paginator": {
+                            "currentPage": params.page,
+                            "pageSize": params.pageSize,
+                            "totalCount": 1000,
+                            "totalPage": 1000 / params.pageSize
+                        }
+                    },
+                };
+            }
+        },
+        // #endregion     
+
+
+        // #region  回收站删除商品
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/product/product/delOrResume',
+            result() {
+                return {
+                    ...body
+                };
+            }
+        },
+        // #endregion         
 
         // #region  交易会员管理列表
         {
@@ -575,7 +623,7 @@ const mockRouterMap = {
             result(params) {
                 return {
                     ...body,
-                    data:{...VIPInfoData,userId:params.userId}                                          
+                    data: { ...VIPInfoData, userId: params.userId }
                 };
             }
         },
@@ -865,7 +913,7 @@ const mockRouterMap = {
                                     "text": "惠龙易通"
                                 }
                             ]
-                        },                        
+                        },
                     ]
                 };
             }

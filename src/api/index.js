@@ -407,6 +407,22 @@ export default {
     /**
      * @author sswq
      * @param params
+     * @description 回收站分页
+     * */
+    getRecycleList(params) {
+        return fetch(oilURL + '/web/hyw/product/product/pageForRecycle', params)
+    },
+    /**
+     * @author sswq
+     * @param params
+     * @description 回收站删除商品
+     * */
+    delOrResume(params) {
+        return fetch(oilURL + '/web/hyw/product/product/delOrResume', params)
+    },
+    /**
+     * @author sswq
+     * @param params
      * @description 订单管理列表
      * */
     orderCommodityManage(params) {

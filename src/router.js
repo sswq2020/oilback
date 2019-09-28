@@ -13,6 +13,8 @@ const CommodityOnSale = () => import('views/commodityManage/commodityOnSale.vue'
 const CommodityForSale = () => import('views/commodityManage/commodityForSale.vue')
 /**订单管理*/
 const OrderManage = () => import('views/commodityManage/orderManage.vue')
+/**回收站*/
+const RecycleManage = () => import('views/commodityManage/recycleManage.vue')
 // #endregion
 
 // #region 会员管理
@@ -80,6 +82,11 @@ let commonRoutes = {
             path: '/web/hyw/shopping/order/seller',
             name: 'orderManage',
             component: OrderManage
+        },
+        {
+            path: '/web/hyw/product/product/pageForRecycle',
+            name: 'RecycleManage',
+            component: RecycleManage
         },
         // #endregion           
 
