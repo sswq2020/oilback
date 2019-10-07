@@ -15,6 +15,8 @@ const CommodityForSale = () => import('views/commodityManage/commodityForSale.vu
 const OrderManage = () => import('views/commodityManage/orderManage.vue')
 /**回收站*/
 const RecycleManage = () => import('views/commodityManage/recycleManage.vue')
+/**库存发布*/
+const ReleaseInventory = () => import('views/commodityManage/releaseInventory.vue')
 // #endregion
 
 // #region 会员管理
@@ -85,8 +87,13 @@ let commonRoutes = {
         },
         {
             path: '/web/hyw/product/product/pageForRecycle',
-            name: 'RecycleManage',
+            name: 'recycleManage',
             component: RecycleManage
+        },
+        {
+            path: '/web/hyw/product/product/pageForYc',
+            name: 'releaseInventory',
+            component: ReleaseInventory
         },
         // #endregion           
 
