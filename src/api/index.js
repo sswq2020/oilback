@@ -428,7 +428,36 @@ export default {
     orderCommodityManage(params) {
         return fetch(oilURL + '/web/hyw/shopping/order/seller', params)
     },
-
+    /**
+     * @author sswq
+     * @param params
+     * @description 库存发布列表
+     * */
+    releaseycList(params) {
+        return fetch(oilURL + '/web/hyw/product/product/pageForYc', params)
+    },
+    /**
+     * @author sswq
+     * @param params
+     * @description 新增商品FROM云仓
+     * */
+    releaseYc(params) {
+        return fetch(oilURL + '/web/hyw/product/product/addYc', params)
+    },
+    /**
+     * @author sswq
+     * @description 生产商下拉列表
+     * */
+    getProducerSelectList() {
+        return fetch(oilURL + '/product/product/selectProducers', '', 'get')
+    },
+    /**
+     * @author sswq
+     * @description 品类牌号
+     * */
+    getTransferBaseList(productType) {
+        return fetch(oilURL + '/product/product/transferBaseList', {productType}, 'get')
+    },
     // #endregion
 
     // #region 会员管理
