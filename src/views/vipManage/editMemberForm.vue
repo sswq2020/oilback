@@ -2,12 +2,8 @@
   <div class="memberForm">
     <el-form ref="form" :model="form" label-width="140px" size="small">
       <div class="form-block">
-        <el-row>
-          <el-col :md="24" :sm="24" :xs="24">
-            <div class="head">入会协议</div>
-          </el-col>
-        </el-row>
-        <el-table :data="agreementList" stripe border>
+        <div class="head">入会协议</div>
+        <el-table :data="agreementList" :header-cell-style="tableHeaderColor" stripe border>
           <el-table-column
             :prop="item.prop"
             :label="item.label"
@@ -233,7 +229,13 @@ export default {
         const viewer = this.$el.querySelector('.images').$viewer
         viewer.show()
       },500)
-    }       
+    },
+    // 修改table header的背景色
+    tableHeaderColor({ rowIndex }) {
+      if (rowIndex === 0) {
+        return "background-color: #F6F8FA;color: #262626;font-weight: 500;";
+      }
+    }           
   },
   computed: {
     ...mapState("memberForm", ["isEdit", "memberId"]),

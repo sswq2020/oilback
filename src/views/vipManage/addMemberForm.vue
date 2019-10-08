@@ -18,22 +18,22 @@
             </el-col>
           </el-row>
           <el-row v-if="form.userId">  
-            <el-col :md="12" :sm="24" :xs="24">
+            <el-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
               <el-form-item label="公司名称:">{{form.name}}</el-form-item>
             </el-col>
-            <el-col :md="12" :sm="24" :xs="24">
+            <el-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
               <el-form-item label="统一社会信用代码:">{{form.creditCode}}</el-form-item>
             </el-col>
-            <el-col :md="12" :sm="24" :xs="24">
+            <el-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
               <el-form-item label="公司地址:">{{form.address}}</el-form-item>
             </el-col>
-            <el-col :md="12" :sm="24" :xs="24">
+            <el-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
               <el-form-item label="公司类型:">{{form.entType_}}</el-form-item>
             </el-col>
-            <el-col :md="12" :sm="24" :xs="24">
+            <el-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
               <el-form-item label="法人:">{{form.legalPersonName}}</el-form-item>
             </el-col>
-            <el-col :md="12" :sm="24" :xs="24">
+            <el-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
               <el-form-item label="营业有效期:">{{form.effectiveDt}} - {{form.expireDt}}</el-form-item>
             </el-col>
           </el-row>
@@ -59,7 +59,7 @@
         </div>
         <div class="form-block">
           <div class="head">入会协议</div>
-          <el-table :data="form.agreementList" stripe border>
+          <el-table :data="form.agreementList" :header-cell-style="tableHeaderColor" stripe border>
             <el-table-column
               :prop="item.prop"
               :label="item.label"
@@ -277,7 +277,13 @@ export default {
           this.$messageError(res.mesg);
           break;
       }
-    }
+    },
+    // 修改table header的背景色
+    tableHeaderColor({ rowIndex }) {
+      if (rowIndex === 0) {
+        return "background-color: #F6F8FA;color: #262626;font-weight: 500;";
+      }
+    }    
   },
   computed: {
     ...mapState("memberForm", ["isEdit", "memberId"]),
@@ -319,12 +325,12 @@ export default {
   }
 }
 .bottom {
-  position: absolute;
+  position: fixed;
+  width: 86%;
   bottom: 20px;
-  left: 20px;
-  background-color: #f6f8fa;
-  width: calc(100% - 40px);
   height: 50px;
+  background-color: #f6f8fa;
+  margin-left: 20px;
   box-shadow: 0 -1px 4px 0 hsla(0, 0%, 80%, 0.5);
   .el-button {
     min-width: 64px;

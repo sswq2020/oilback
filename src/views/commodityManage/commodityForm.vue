@@ -6,7 +6,7 @@
         <div class="form-block">
           <div class="head">商品信息</div>
           <el-row>
-            <el-col :lg="8" :md="12" :sm="12" :xs="24">
+            <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
               <el-form-item
                 label="品类"
                 prop="firstCatalogId"
@@ -22,7 +22,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :lg="8" :md="12" :sm="12" :xs="24">
+            <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
               <el-form-item
                 label="牌号"
                 prop="secondCatalogId"
@@ -38,7 +38,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :lg="8" :md="12" :sm="12" :xs="24">
+            <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
               <el-form-item
                 label="排放标准"
                 prop="emissionStandard"
@@ -54,7 +54,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :lg="8" :md="12" :sm="12" :xs="24">
+            <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
               <el-form-item
                 label="密度(kg/m³)"
                 prop="density"
@@ -63,7 +63,7 @@
                 <el-input v-model="form.density"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :lg="8" :md="12" :sm="12" :xs="24">
+            <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
               <el-form-item
                 label="产品型号"
                 prop="serialNumber"
@@ -72,7 +72,7 @@
                 <el-input v-model="form.serialNumber"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :lg="8" :md="12" :sm="12" :xs="24">
+            <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
               <el-form-item
                 label="生产商"
                 prop="manufacturerId"
@@ -88,7 +88,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :lg="8" :md="12" :sm="12" :xs="24">
+            <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
               <el-form-item
                 label="产地"
                 prop="addressProvince"
@@ -105,7 +105,7 @@
               </el-form-item>
             </el-col>
 
-            <el-col :lg="8" :md="12" :sm="12" :xs="24">
+            <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
               <el-form-item
                 label="商品价格(元/吨)"
                 prop="price"
@@ -114,7 +114,7 @@
                 <el-input v-model="form.price"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :lg="8" :md="12" :sm="12" :xs="24">
+            <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
               <el-form-item
                 label="库存(吨)"
                 prop="totalWeightInventory"
@@ -126,7 +126,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :lg="8" :md="12" :sm="12" :xs="24">
+            <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
               <el-form-item
                 label="上传图片"
                 prop="fileId"
@@ -149,7 +149,7 @@
         <div class="form-block">
           <div class="head">销售状态</div>
           <el-row>
-            <el-col :lg="8" :md="12" :sm="12" :xs="24">
+            <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
               <el-form-item
                 label="销售状态"
                 prop="sellState"
@@ -173,8 +173,8 @@
           v-show="form.parameterList.length">
           <el-row>
             <el-col
-              :lg="8" :md="12"
-              :sm="12"
+              :xl="8" :lg="12" :md="24"
+              :sm="24"
               :xs="24"
               v-for="(item, index) in form.parameterList"
               :key="item.id"
@@ -541,16 +541,15 @@ export default {
   }
 }
 .bottom {
-  position: absolute;
+  position: fixed;
+  width: 86%;
   bottom: 20px;
-  left: 20px;
-  background-color: #f6f8fa;
-  width: calc(100% - 40px);
   height: 50px;
+  background-color: #f6f8fa;
+  margin-left: 20px;
   box-shadow: 0 -1px 4px 0 hsla(0, 0%, 80%, 0.5);
   .el-button {
     min-width: 64px;
-    position: absolute;
     margin-left: 20px;
     margin-top: 10px;
   }
