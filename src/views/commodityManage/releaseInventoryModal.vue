@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :show-close="false" title="发布货源" :visible.sync="visible" width="550px">
+  <el-dialog :show-close="false" title="发布货源" :close-on-click-modal="false" :visible.sync="visible" width="550px">
     <el-form :model="formParams" ref="ruleForm" label-position="right" label-width="135px">
       <el-form-item label="品名" style="margin-bottom:0px">{{formParams.firstCatalogName}}</el-form-item>
       <el-form-item label="牌号" style="margin-bottom:0px">{{formParams.totalWeightInventory}}</el-form-item>
@@ -88,7 +88,7 @@ export default {
         {
           validator(rule, value, callback) {
             if (weight && value > weight) {
-              callback(new Error(`超出最抵质押量${weight}，请重新填写`));
+              callback(new Error(`超出可用量,请重新填写`));
             }
             callback();
           }
