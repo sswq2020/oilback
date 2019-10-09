@@ -70,6 +70,7 @@ export default {
 
 <style scoped lang="less">
 .avatar-uploader {
+  box-sizing: border-box;
   display: inline-block;
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -86,15 +87,10 @@ export default {
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 90px;
-  height: 90px;
-  line-height: 90px;
+  width: 74px;
+  height: 74px;
+  line-height: 74px;
   text-align: center;
-}
-.avatar {
-  width: 90px;
-  height: 90px;
-  display: block;
 }
 </style>
 
