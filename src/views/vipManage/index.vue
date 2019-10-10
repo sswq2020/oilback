@@ -65,7 +65,15 @@
         </template>
       </el-table-column>
     </heltable>
-    <UserDialog :visible.sync="visible"  @updateVisible="updateVisible"/>
+    <UserDialog :visible.sync="visible"  @updateVisible="updateVisible">
+      <el-tab-pane label="权限中心" v-if="visible">
+        <permission @permissionClose="updateVisible(false)"/>
+      </el-tab-pane>
+      <el-tab-pane label="入会协议" v-if="visible">
+        <editMemberForm @agreemtClose="updateVisible(false)"/>
+      </el-tab-pane>
+
+    </UserDialog>
   </div>
 </template>
 
@@ -74,7 +82,9 @@ import { mapMutations } from "vuex";
 import Dict from "util/dict.js";
 import heltable from "components/hl_table";
 import hlBreadcrumb from "components/hl-breadcrumb";
-import UserDialog from './components/userDialog';
+import UserDialog from 'components/userDialog';
+import editMemberForm from './editMemberForm.vue'
+import permission from './permission.vue'
 
 const defaultFormData = {
   name: null,
@@ -143,7 +153,9 @@ export default {
   components: {
     heltable,
     hlBreadcrumb,
-    UserDialog
+    UserDialog,
+    editMemberForm,
+    permission
   },
   data() {
     return {
