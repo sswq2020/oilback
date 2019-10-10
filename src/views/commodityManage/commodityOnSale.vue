@@ -337,7 +337,7 @@ export default {
             that.getListData();
             break;
           default:
-            that.$messageError(`下架成功,${res.mesg}`);
+            that.$messageError(`下架失败,${res.mesg}`);
             break;
         }
       })
