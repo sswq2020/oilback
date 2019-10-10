@@ -3,7 +3,7 @@
     <el-form ref="form" :model="form" label-width="140px" size="small">
       <div class="form-block">
         <div class="head">入会协议</div>
-        <el-table :data="agreementList" :header-cell-style="tableHeaderColor" stripe border>
+        <el-table :data="agreementList"  v-loading="isLoading" :header-cell-style="tableHeaderColor" stripe border>
           <el-table-column
             :prop="item.prop"
             :label="item.label"
@@ -127,6 +127,7 @@ export default {
     return {
       fit: "fill",
       loading: false,
+      isLoading:false,
       listParams: { ...defaultListParams }, // 页数
       listData: { ...defaultListData }, // 返回list的数据结构
       form: { ...defualtFormParams},
@@ -187,7 +188,9 @@ export default {
       this.openEditAgreeDialog({ ...item, picLength: picUrlList.length });
     },    
     async _getAgreementList(userId){
+      this.isLoading = true
       const res = await this.$api.getAgreementList({...this.listParams,userId });
+      this.isLoading = false
       switch (res.code) {
         case Dict.SUCCESS:
           this.listData = res.data;
