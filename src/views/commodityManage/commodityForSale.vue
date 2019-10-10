@@ -152,7 +152,7 @@
         <template slot-scope="scope">
           <el-button type="text" @click="GoEditOldCommodity(listData.list[scope.$index])">编辑商品</el-button>
           <el-button type="text" @click="shelves(listData.list[scope.$index])">上架</el-button>
-          <el-button type="text" @click="completelyDel(listData.list[scope.$index])">彻底删除</el-button>
+          <el-button type="text" @click="completelyDel(listData.list[scope.$index])">删除</el-button>
         </template>
       </el-table-column>
     </heltable>
