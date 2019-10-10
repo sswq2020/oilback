@@ -2,7 +2,7 @@
   <el-dialog :show-close="false" title="发布货源" :close-on-click-modal="false" :visible.sync="visible" width="550px">
     <el-form :model="formParams" ref="ruleForm" label-position="right" label-width="135px">
       <el-form-item label="品名" style="margin-bottom:0px">{{formParams.firstCatalogName}}</el-form-item>
-      <el-form-item label="牌号" style="margin-bottom:0px">{{formParams.totalWeightInventory}}</el-form-item>
+      <el-form-item label="牌号" style="margin-bottom:0px">{{formParams.secondCatalogName}}</el-form-item>
       <el-form-item label="排放标准" style="margin-bottom:0px">{{formParams.emissionStandardEnumText}}</el-form-item>
       <el-form-item label="密度" style="margin-bottom:0px">{{formParams.density}}</el-form-item>
       <el-form-item label="生产商" style="margin-bottom:0px">{{formParams.manufacturerId_}}</el-form-item>
@@ -33,6 +33,7 @@
 <script>
 const defaultFormParams = {
   firstCatalogName: null,
+  secondCatalogName:null,
   totalWeightInventory: null,
   emissionStandardEnumText: null,
   density: null,
