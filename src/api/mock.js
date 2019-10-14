@@ -94,6 +94,16 @@ const RecycleList = {
     "emissionStandardEnum": { text: "惠龙排放标准1" },
 }
 
+const AdmissionAuditList = {
+    "id|+1": "@INTEGER(1,2019690999)",
+    "username": '@CNAME()',
+    "name": '@CNAME()公司',
+    "telNo": 18732423434,
+    "applyTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
+    "checkResult": "@PICK('0','1')",
+    "checkState": "@PICK('0','1')",
+    "userId":"@INTEGER(1,2019690999)"
+}
 
 
 const dealDueForeWarnList = {
@@ -594,7 +604,6 @@ const mockRouterMap = {
         },
         // #endregion     
 
-
         // #region  回收站删除商品
         {
             isMock: IS_MOCK,
@@ -743,6 +752,31 @@ const mockRouterMap = {
             }
         },
         // #endregion
+
+        // #region  审核管理列表
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/admissionAudit/page',
+            result(params) {
+                return {
+                    ...body,
+                    data: {
+                        'list|10-20': [AdmissionAuditList],
+                        "paginator": {
+                            "currentPage": params.page,
+                            "pageSize": params.pageSize,
+                            "totalCount": 1000,
+                            "totalPage": 1000 / params.pageSize
+                        }
+                    },
+                };
+            }
+        },
+        // #endregion
+
+
+
 
         // #region  字典项
         {

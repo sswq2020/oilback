@@ -28,6 +28,11 @@ const AddMemberForm = () => import('views/vipManage/addMemberForm.vue')
 const EditMemberForm = () => import('views/vipManage/editMemberForm.vue')
 // #endregion
 
+// #region 审核管理
+/**入会审核*/
+const InitiateAudit = () => import('views/auditManage/initiateAudit.vue')
+// #endregion
+
 // #region 预警管理
 /**协议到期预警*/
 const DealDueforeWarn = () => import('views/foreWarnManage/dealDueforeWarn.vue')
@@ -114,7 +119,14 @@ let commonRoutes = {
             component: EditMemberForm
         },
         // #endregion     
-
+        
+        // #region  审核管理      
+        {
+            path: '/web/hyw/admissionAudit/page',
+            name: 'initiateAudit',
+            component: InitiateAudit
+        },
+        // #endregion      
 
         // #region  预警管理      
         {

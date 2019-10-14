@@ -3,6 +3,7 @@ const store = {
     state: {
         isEdit: false, // 默认新增
         memberId:null, // 会员ID
+        auditId:null // 审核ID
     },
     mutations: {
         setIsEdit(state,payload) {
@@ -10,7 +11,10 @@ const store = {
         },
         setMemberId(state,payload){
             state.memberId = payload
-        }
+        },
+        setAuditId(state,payload){
+            state.auditId = payload
+        }        
 
     },
     actions: {

@@ -528,6 +528,17 @@ export default {
     }, 
     // #endregion 
 
+    // #region 审核管理
+    /**
+     * @author sswq
+     * @param params
+     * @description 审核管理列表
+     * */
+    getInitiateAuditList(params) {
+        return fetch(oilURL + '/web/hyw/admissionAudit/page', params)
+    },
+    // #endregion 
+
     // #region 预警管理
     /**
      * @author sswq
@@ -546,7 +557,6 @@ export default {
         return fetch(oilURL + '/web/hyw/agreement/pageWarn', params)
     },
     // #endregion 
-
 
     // #region  字典项
     /**
