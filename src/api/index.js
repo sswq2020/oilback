@@ -537,6 +537,15 @@ export default {
     getInitiateAuditList(params) {
         return fetch(oilURL + '/web/hyw/admissionAudit/page', params)
     },
+    /**
+     * @author sswq
+     * @param params
+     * @description 更新入会审核
+     * */
+    updateAdmissionAudit(params) {
+        return fetch(oilURL + '/web/hyw/admissionAudit/update', params)
+    },
+
     // #endregion 
 
     // #region 预警管理

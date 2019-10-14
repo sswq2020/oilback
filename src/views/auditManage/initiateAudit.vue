@@ -80,7 +80,9 @@
       <el-tab-pane label="入会协议" v-if="visible">
         <editMemberForm @agreemtClose="updateVisible(false)" />
       </el-tab-pane>
-      <el-tab-pane label="入会审核" v-if="visible"></el-tab-pane>
+      <el-tab-pane label="入会审核" v-if="visible">
+        <audit @auditClose="updateVisible(false)"></audit>
+      </el-tab-pane>
     </UserDialog>
   </div>
 </template>
@@ -93,6 +95,7 @@ import heltable from "components/hl_table";
 import hlBreadcrumb from "components/hl-breadcrumb";
 import UserDialog from "components/userDialog";
 import editMemberForm from "../vipManage/editMemberForm.vue";
+import audit from "./audit.vue";
 const AuditStatusList = DICT_SELECT_ARR(Dict.AUDIT_STATUS);
 const AuditResultList = DICT_SELECT_ARR(Dict.AUDIT_RESULT);
 
@@ -160,7 +163,8 @@ export default {
     heltable,
     hlBreadcrumb,
     UserDialog,
-    editMemberForm
+    editMemberForm,
+    audit
   },
   data() {
     return {

@@ -775,7 +775,18 @@ const mockRouterMap = {
         },
         // #endregion
 
-
+        // #region  更新入会审核
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/admissionAudit/update',
+            result() {
+                return {
+                    ...body
+                };
+            }
+        },
+        // #endregion
 
 
         // #region  字典项
