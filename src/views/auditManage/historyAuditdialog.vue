@@ -37,11 +37,6 @@
 import Dict from "util/dict.js";
 import { mapState } from "vuex";
 
-const defaultForm = {
-  id: null,
-  username: null,
-  name: null
-};
 const defaultTableHeader = [
   {
     prop: "createdBy",
@@ -91,7 +86,6 @@ export default {
       showClose: false,
       tableHeader: defaultTableHeader,
       listData: [],
-      form: { ...defaultForm },
       isListDataLoading: false
     };
   },
