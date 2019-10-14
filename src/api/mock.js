@@ -106,10 +106,12 @@ const AdmissionAuditList = {
 }
 
 const AuditHistoryList ={
-    "mock1":'@CNAME()',
-    "mock2":'@DATE("yyyy-MM-dd HH:mm:ss")',
-    "mock3":'@CNAME()',
-    "mock4":'没什么意见',
+    "createdBy":'@CNAME()',
+    "checkTime":'@DATE("yyyy-MM-dd HH:mm:ss")',
+    "checkResult":"@PICK('0','1')",
+    "checkAdvice":'没什么意见',
+    "name": '@CNAME()公司',
+    "username": '@CNAME()',
 }
 
 const dealDueForeWarnList = {
@@ -798,7 +800,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: '/web/hyw/admissionAudit/history',
+            router: '/web/hyw/admissionAuditHistory/page',
             result() {
                 return {
                     ...body,

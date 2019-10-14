@@ -551,7 +551,7 @@ export default {
      * @description 历史审核意见
      * */
     historyAudit(params) {
-        return fetch(oilURL + '/web/hyw/admissionAudit/history', params)
+        return fetch(oilURL + '/web/hyw/admissionAuditHistory/page', params)
     },
     // #endregion 
 
