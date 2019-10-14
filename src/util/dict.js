@@ -113,4 +113,25 @@ DICT.PAY_STATUS = {
     [DICT.PAY_RECEIVED]: "已付款",
 }
 
+/**待审核 */
+DICT.WAIT_AUDIT = "0"
+/**已审核 */
+DICT.DONE_AUDIT="1"
+
+DICT.AUDIT_STATUS = {
+    [DICT.WAIT_AUDIT]: "待审核",
+    [DICT.DONE_AUDIT]: "已审核",
+}
+
+/**审核不通过 */
+DICT.NOPASS_AUDIT = "0"
+/**审核通过 */
+DICT.PASS_AUDIT = "1"
+
+DICT.AUDIT_RESULT = {
+    [DICT.NOPASS_AUDIT]: "审核不通过",
+    [DICT.PASS_AUDIT]: "审核通过",
+}
+
+
 export default DICT;
