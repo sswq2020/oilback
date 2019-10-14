@@ -545,7 +545,14 @@ export default {
     updateAdmissionAudit(params) {
         return fetch(oilURL + '/web/hyw/admissionAudit/update', params)
     },
-
+    /**
+     * @author sswq
+     * @param params
+     * @description 历史审核意见
+     * */
+    historyAudit(params) {
+        return fetch(oilURL + '/web/hyw/admissionAudit/history', params)
+    },
     // #endregion 
 
     // #region 预警管理

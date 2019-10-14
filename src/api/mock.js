@@ -60,7 +60,7 @@ const commodityOnSaleList = {
     "secondCatalogName": "@CTITLE(2,4)", // 商品名称
     "emissionStandardEnum": { text: "惠龙排放标准1" },
     "serialNumber": "@INTEGER(1,2019690999)", // 商品编码
-    "productNumber":"@INTEGER(1,2019690999)",
+    "productNumber": "@INTEGER(1,2019690999)",
     "createdTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
     "fileId": "@INTEGER(1,2019690999)"
 }
@@ -74,9 +74,9 @@ const commodityOrderList = {
     "productWeight": "@INTEGER(3489,20196)", // 数量
     "payer": "@INTEGER(13702260943,18702260943)", // 买家
     "firstCatalogName": "@CTITLE(2,4)", // 商品名称
-    "secondCatalogName":"@CTITLE(2,4)",
-    "emissionStandard":"惠龙排放标准1",
-    "productNumber":"@INTEGER(1,2019690999)",
+    "secondCatalogName": "@CTITLE(2,4)",
+    "emissionStandard": "惠龙排放标准1",
+    "productNumber": "@INTEGER(1,2019690999)",
     "serialNumber": "@INTEGER(1,2019690999)", // 商品编码
     "orderTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 发布时间
     "orderCode": "@INTEGER(6237657823644,6997657823644)", // 订单号
@@ -88,7 +88,7 @@ const RecycleList = {
     ...commodityOnSaleList,
     "updatedTime": '@DATE("yyyy-MM-dd HH:mm:ss")', // 删除时间
     "density": 12,
-    "productNumber":"@INTEGER(1,2019690999)",
+    "productNumber": "@INTEGER(1,2019690999)",
     "isYC": "@PICK('0','1')",
     "manufacturerId_": "@CTITLE(2,4)公司",
     "emissionStandardEnum": { text: "惠龙排放标准1" },
@@ -102,9 +102,15 @@ const AdmissionAuditList = {
     "applyTime": '@DATE("yyyy-MM-dd HH:mm:ss")',
     "checkResult": "@PICK('0','1')",
     "checkState": "@PICK('0','1')",
-    "userId":"@INTEGER(1,2019690999)"
+    "userId": "@INTEGER(1,2019690999)"
 }
 
+const AuditHistoryList ={
+    "mock1":'@CNAME()',
+    "mock2":'@DATE("yyyy-MM-dd HH:mm:ss")',
+    "mock3":'@CNAME()',
+    "mock4":'没什么意见',
+}
 
 const dealDueForeWarnList = {
     "id|+1": "@INTEGER(1,2019690999)",
@@ -783,6 +789,20 @@ const mockRouterMap = {
             result() {
                 return {
                     ...body
+                };
+            }
+        },
+        // #endregion
+
+        // #region  历史审核意见
+        {
+            isMock: IS_MOCK,
+            methods: 'post',
+            router: '/web/hyw/admissionAudit/history',
+            result() {
+                return {
+                    ...body,
+                    'data|1-5': [AuditHistoryList]
                 };
             }
         },

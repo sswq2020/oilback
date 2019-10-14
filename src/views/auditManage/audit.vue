@@ -41,11 +41,10 @@
         </el-form-item>
       </div>
     </el-form>
-    <!-- <historyAuditdialog
-      :auditId="auditId"
+    <historyAuditdialog
       :visible="visible"
       :cancelCb="cancel"
-    ></historyAuditdialog>-->
+    ></historyAuditdialog>
   </div>
 </template>
 
@@ -53,7 +52,7 @@
 import { mapState } from "vuex";
 import Dict from "util/dict.js";
 import { DICT_SELECT_ARR } from "common/util.js";
-// import historyAuditdialog from "./historyAuditdialog";
+import historyAuditdialog from "./historyAuditdialog";
 
 const AuditResultList = DICT_SELECT_ARR(Dict.AUDIT_RESULT);
 const defualtFormParams = {
@@ -72,14 +71,13 @@ export default {
     };
   },
   components: {
-    // historyAuditdialog
+    historyAuditdialog
   },
   methods: {
     cancel() {
       this.visible = false;
     },
     open() {
-      console.log(1);
       this.visible = true;
     },
     GoMember() {
