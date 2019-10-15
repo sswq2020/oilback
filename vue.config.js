@@ -13,7 +13,8 @@ module.exports = {
         proxy: {
             '/api': {
                 // target: 'https://beidou.hletong.com/',
-                target: 'http://192.168.4.16:25084/',// 周杨
+                //target: 'http://192.168.4.16:25084/',// 周杨
+                target: 'http://192.168.4.16:25098/',// 毛
                 //  target: 'http://192.168.4.16:25091/',// 佘慧
                 // target: 'http://192.168.4.16:25092/',// 尹凯
                 // target:'http://10.1.15.119:8202/',
