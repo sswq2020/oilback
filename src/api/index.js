@@ -458,6 +458,13 @@ export default {
     getTransferBaseList(productType) {
         return fetch(oilURL + '/product/product/transferBaseList', {productType}, 'get')
     },
+    /**
+     * @author sswq
+     * @description 云仓中商品相关信息(详情)
+     * */
+    ycProductDetail(id) {
+        return fetch(oilURL + '/product/product/ycProductDetail', {id}, 'get')
+    },
     // #endregion
 
     // #region 会员管理

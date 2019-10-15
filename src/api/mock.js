@@ -22,7 +22,7 @@ export const imgHost = {
 };
 
 
-const IS_MOCK = true;
+const IS_MOCK = false;
 const oilURL = ""
 
 const dict = { 'SUCCESS': "000000" }
@@ -810,6 +810,29 @@ const mockRouterMap = {
         },
         // #endregion
 
+        // #region  云仓中商品相关信息(详情)
+        {
+            isMock: IS_MOCK,
+            methods: 'get',
+            router: '/product/product/ycProductDetail',
+            result() {
+                return {
+                    ...body,
+                    'data':{
+                        firstCatalogName: '92',
+                        secondCatalogName:'-10',
+                        totalWeightInventory: 98,
+                        emissionStandardEnumText: 32,
+                        density: 23,
+                        manufacturerId_: 334,
+                        pilePosition: '3号',
+                        weightInventory: 78,
+                        price: 88                        
+                    }
+                };
+            }
+        },
+        // #endregion
 
         // #region  字典项
         {
