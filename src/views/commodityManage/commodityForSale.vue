@@ -117,7 +117,13 @@
           <div class="price">
             {{listData.list[scope.$index].price}}
             <i
+              v-if="listData.list[scope.$index].isYC !== Dict.IS_YC"
               @click="open(listData.list[scope.$index])"
+              class="el-icon-edit"
+            ></i>
+            <i
+              v-if="listData.list[scope.$index].isYC === Dict.IS_YC"
+              @click="editItem(listData.list[scope.$index])"
               class="el-icon-edit"
             ></i>
           </div>
@@ -128,7 +134,13 @@
           <div class="price">
             {{listData.list[scope.$index].totalWeightInventory}}
             <i
+              v-if="listData.list[scope.$index].isYC !== Dict.IS_YC"
               @click="open(listData.list[scope.$index])"
+              class="el-icon-edit"
+            ></i>
+            <i
+              v-if="listData.list[scope.$index].isYC === Dict.IS_YC"
+              @click="editItem(listData.list[scope.$index])"
               class="el-icon-edit"
             ></i>
           </div>
@@ -161,6 +173,15 @@
       :priceLoading="priceLoading"
       :confirmCb="(data)=>{this.updatePrice(data)}"
     ></pricedialog>
+    <releaseInventoryModal
+      :cancleCb="cancleCb"
+      :confirmCb="(obj)=>{this.releaseGoods(obj)}"
+      :releaseLoading="priceLoading"
+      :visible="visible"
+      :title="title"
+      :releaseObj="releaseObj"
+    >
+    </releaseInventoryModal>
   </div>
 </template>
 
@@ -173,6 +194,7 @@ import Dict from "@/util/dict.js";
 import heltable from "@/components/hl_table";
 import hlBreadcrumb from "@/components/hl-breadcrumb";
 import pricedialog from "./pricedialog.vue";
+import releaseInventoryModal from "./releaseInventoryModal.vue";
 import { number3 } from "util/validate.js";
 
 const defaultFormData = {
@@ -212,7 +234,8 @@ export default {
   components: {
     heltable,
     hlBreadcrumb,
-    pricedialog
+    pricedialog,
+    releaseInventoryModal
   },
   data() {
     return {
@@ -226,7 +249,11 @@ export default {
       selectedItems: [],
       editProductName: "编辑修改",
       priceLoading: false,
-      Dict: Dict
+      Dict: Dict,
+      /*****云仓弹窗的*****/
+      visible:false,
+      releaseObj:Object.create(null),
+      title:'修改'
     };
   },
   computed: {
@@ -246,6 +273,23 @@ export default {
     ...mapMutations("releaseNewCommodity", ["setIsEdit", "setCommodityId"]),
     ...mapMutations("commodityOnSale", ["setPricedialog"]),
     ...mapActions("commodityOnSale", ["openPriceDialog"]),
+    cancleCb(){
+      this.releaseObj = Object.create(null);
+      this.visible = false;
+    },
+    async editItem(obj){
+      const {id} = obj
+      const res = await this.$api.ycProductDetail(id);
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.releaseObj = res.data
+          this.visible = true
+          break;
+        default:
+          this.$messageError(res.mesg);
+          break;
+      }      
+    },
     selectChange(selection) {
       this.selectedItems = selection.slice();
     },
@@ -410,6 +454,23 @@ export default {
             break;
         }
       });
+    },
+    async releaseGoods(obj) {
+      const {weightInventory} = obj
+      this.priceLoading = true;
+      obj.totalWeightInventory = weightInventory;
+      const res = await this.$api.updatePriceAndInventory(obj);
+      this.priceLoading = false;
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.$messageSuccess("修改成功");
+          this.cancleCb();
+          this.getListData();
+          break;
+        default:
+          this.$messageError(res.mesg);
+          break;
+      }
     },
     init() {
       setTimeout(() => {

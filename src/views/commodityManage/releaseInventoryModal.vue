@@ -1,12 +1,12 @@
 <template>
-  <el-dialog :show-close="false" title="发布货源" :close-on-click-modal="false" :visible.sync="visible" width="550px">
+  <el-dialog :show-close="false" :title="title" :close-on-click-modal="false" :visible.sync="visible" width="550px">
     <el-form :model="formParams" ref="ruleForm" label-position="right" label-width="135px">
       <el-form-item label="品名" style="margin-bottom:0px">{{formParams.firstCatalogName}}</el-form-item>
       <el-form-item label="牌号" style="margin-bottom:0px">{{formParams.secondCatalogName}}</el-form-item>
       <el-form-item label="排放标准" style="margin-bottom:0px">{{formParams.emissionStandardEnumText}}</el-form-item>
       <el-form-item label="密度" style="margin-bottom:0px">{{formParams.density}}</el-form-item>
       <el-form-item label="生产商" style="margin-bottom:0px">{{formParams.manufacturerId_}}</el-form-item>
-      <el-form-item label="地址" style="margin-bottom:0px">{{formParams.address}}</el-form-item>
+      <el-form-item label="地址(区桩位)" style="margin-bottom:0px">{{formParams.pilePosition}}</el-form-item>
       <el-form-item label="库存吨数">{{formParams.totalWeightInventory}}</el-form-item>
       <el-form-item
         label="发布吨数(吨)"
@@ -38,13 +38,17 @@ const defaultFormParams = {
   emissionStandardEnumText: null,
   density: null,
   manufacturerId_: null,
-  address: null,
+  pilePosition: null,
   weightInventory: null,
   price: null
 };
 export default {
   name: "releaseInventoryModal",
   props: {
+    title:{
+      type:String,
+      default:'发布货源'
+    },
     cancleCb: {
       type: Function,
       default: () => {}
@@ -81,7 +85,6 @@ export default {
           message: "必填",
           trigger: "blur"
         },
-        { max: 10, message: "最多10位", trigger: "blur" },
         {
           pattern: /^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,3})?$/,
           message: "正数可以包含3位小数"
