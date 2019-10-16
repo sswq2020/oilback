@@ -87,7 +87,7 @@
       @selection-change="selectChange"
       :loading="isListDataLoading"
     >
-      <el-table-column label="商品信息" width="500px">
+      <el-table-column label="商品信息" width="500px" align="left">
         <template slot-scope="scope">
           <div class="goods">
             <div class="avatar">
@@ -112,7 +112,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="售价" width="200px">
+      <el-table-column label="售价" width="200px" align="center">
         <template slot-scope="scope">
           <div class="price">
             {{listData.list[scope.$index].price}}
@@ -129,7 +129,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="库存" width="200px">
+      <el-table-column label="库存" width="200px" align="center">
         <template slot-scope="scope">
           <div class="price">
             {{listData.list[scope.$index].totalWeightInventory}}
@@ -220,7 +220,6 @@ const defaulttableHeader = [
   {
     prop: "volumeWeightSold",
     label: "总销量",
-    align: "right"
   },
   {
     prop: "createdTime",
