@@ -150,7 +150,7 @@
         :border="border"
         :loading="isListDataLoading"
       >
-        <el-table-column label="商品信息" width="500px">
+        <el-table-column label="商品信息" width="500px" align="left">
           <template slot-scope="scope">
             <div class="goods">
               <div class="header">
@@ -174,7 +174,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="单价">
+        <el-table-column label="单价" align="center">
           <template slot-scope="scope">
             <div class="goods">
               <div class="header">
@@ -186,7 +186,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="数量">
+        <el-table-column label="数量" align="center">
           <template slot-scope="scope">
             <div class="goods">
               <div class="header">
@@ -198,7 +198,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="买家">
+        <el-table-column label="买家" align="center">
           <template slot-scope="scope">
             <div class="goods">
               <div class="header">
@@ -213,7 +213,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="金额">
+        <el-table-column label="金额" align="center">
           <template slot-scope="scope">
             <div class="goods">
               <div class="header">
