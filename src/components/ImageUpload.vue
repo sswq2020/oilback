@@ -1,5 +1,5 @@
 <template>
-  <div class="avatar-uploader" :class="computedClassId">
+  <div class="avatar-ss-uploader" :class="computedClassId">
     <el-upload
       :action="actionUrl"
       :show-file-list="false"
@@ -7,7 +7,7 @@
       :on-error="handleAvatarFail"
       :before-upload="beforeAvatarUpload"
     >
-      <i class="el-icon-plus avatar-uploader-icon" :class="computedClassIcon"></i>
+      <i class="el-icon-plus avatar-ss-uploader-icon" :class="computedClassIcon"></i>
     </el-upload>
   </div>
 </template>
@@ -95,7 +95,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-.avatar-uploader {
+.avatar-ss-uploader{
   box-sizing: border-box;
   display: inline-block;
   border: 1px dashed #d9d9d9;
@@ -106,15 +106,15 @@ export default {
   width: 90px;
   height: 90px;
   padding: 8px;
+  &:hover{
+    border-color: #409eff;
+  }
   &.idcard {
     padding: 0px;
     border: 0px;
   }
 }
-.avatar-uploader:hover {
-  border-color: #409eff;
-}
-.avatar-uploader-icon {
+.avatar-ss-uploader-icon {
   font-size: 28px;
   color: #8c939d;
   width: 74px;
