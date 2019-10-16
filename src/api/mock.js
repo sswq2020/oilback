@@ -765,7 +765,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: '/web/hyw/admissionAudit/page',
+            router: '/admissionAudit/page',
             result(params) {
                 return {
                     ...body,
@@ -787,7 +787,7 @@ const mockRouterMap = {
         {
             isMock: IS_MOCK,
             methods: 'post',
-            router: '/web/hyw/admissionAudit/update',
+            router: '/admissionAudit/update',
             result() {
                 return {
                     ...body

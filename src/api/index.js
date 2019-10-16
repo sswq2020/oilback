@@ -542,7 +542,7 @@ export default {
      * @description 审核管理列表
      * */
     getInitiateAuditList(params) {
-        return fetch(oilURL + '/web/hyw/admissionAudit/page', params)
+        return fetch(oilURL + '/admissionAudit/page', params)
     },
     /**
      * @author sswq
@@ -550,7 +550,7 @@ export default {
      * @description 更新入会审核
      * */
     updateAdmissionAudit(params) {
-        return fetch(oilURL + '/web/hyw/admissionAudit/update', params)
+        return fetch(oilURL + '/admissionAudit/update', params)
     },
     /**
      * @author sswq
