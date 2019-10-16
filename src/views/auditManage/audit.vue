@@ -6,7 +6,7 @@
         <el-row>
           <el-col :md="24" :sm="24" :xs="24">
             <el-form-item
-              label="审核结果"
+              label="审核结果:"
               prop="checkResult"
               :rules="[{ required: true, message: '必填' }]"
             >
@@ -22,7 +22,7 @@
           </el-col>
           <el-col :md="12" :sm="12" :xs="24">
             <el-form-item
-              label="审核意见"
+              label="审核意见:"
               prop="checkAdvice"
               :rules="[{ required: true, message: '必填' }]"
             >
@@ -34,17 +34,18 @@
           </el-col>
         </el-row>
       </div>
-      <div class="bottom">
-        <el-form-item>
-          <el-button type="primary" @click="submitForm" :loading="viploading">确定</el-button>
-          <el-button @click="GoMember">取消</el-button>
-        </el-form-item>
-      </div>
     </el-form>
-    <historyAuditdialog
-      :visible="visible"
-      :cancelCb="cancel"
-    ></historyAuditdialog>
+    <div class="footer">
+      <el-form-item>
+        <el-button type="primary" @click="submitForm" :loading="viploading">
+          <span>确定</span>
+        </el-button>
+        <el-button @click="GoMember">
+          <span>取消</span>
+        </el-button>
+      </el-form-item>
+    </div>
+    <historyAuditdialog :visible="visible" :cancelCb="cancel"></historyAuditdialog>
   </div>
 </template>
 
@@ -123,7 +124,7 @@ export default {
 
 <style lang="less" scoped>
 .memberForm {
-  padding: 15px;
+  margin: 15px 20px 50px 20px;
   background: white;
   .el-table thead {
     color: #909399;
@@ -133,11 +134,27 @@ export default {
   .form-block {
     padding-bottom: 20px;
     .head {
-      margin-bottom: 15px;
-      font-size: 18px;
-      font-weight: 700;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      height: 45px;
+      line-height: 45px;
+      border-bottom: 1px solid #e1e1e2;
+      padding-left: 20px;
+      font-size: 14px;
     }
   }
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 142px;
+  right: 35px;
+  z-index: 100;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 20px;
+  background-color: #fff;
+  box-shadow: 0 1px 4px 0 hsla(0, 0%, 80%, 0.5);
 }
 </style>
 
