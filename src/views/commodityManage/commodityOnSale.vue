@@ -121,7 +121,7 @@
       <el-table-column label="库存" width="200px" align="center">
         <template slot-scope="scope">
           <div class="price">
-            {{listData.list[scope.$index].price}}
+            {{listData.list[scope.$index].totalWeightInventory}}
             <i
               v-if="listData.list[scope.$index].isYC !== Dict.IS_YC"
               @click="open(listData.list[scope.$index])"
