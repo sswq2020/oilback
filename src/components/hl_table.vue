@@ -25,7 +25,7 @@
         type="index"
         fixed="left"
         label="序号"
-        width="40"
+        width="55"
         align="center"
       ></el-table-column>
 
