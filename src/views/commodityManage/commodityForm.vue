@@ -530,7 +530,7 @@ export default {
   padding: 20px 15px 20px 20px;
   .form-block {
     .head {
-      margin-bottom: 10px;
+      margin-bottom: 20px;
       padding-left: 20px;
       height: 40px;
       line-height: 40px;
