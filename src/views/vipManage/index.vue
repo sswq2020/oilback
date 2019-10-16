@@ -1,7 +1,7 @@
 <template>
   <div class="container single-page">
     <hlBreadcrumb :data="breadTitle">
-      <el-button class="hlB_buts" size="small" icon="el-icon-plus" @click="add">新增</el-button>
+      <el-button type="primary" plain size="small" icon="el-icon-plus" @click="add">新增</el-button>
     </hlBreadcrumb>
     <div class="search-box">
       <div class="form-item">
