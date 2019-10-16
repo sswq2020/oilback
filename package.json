@@ -11,8 +11,8 @@
     "pro": "cross-env NODE_ENV=pro vue-cli-service build --mode pro"
   },
   "dependencies": {
+    "cookie-parse": "^0.4.0",
     "element-ui": "^2.7.2",
-    "hletong-ui": "^0.5.3",
     "jquery": "^3.3.1",
     "lodash": "^4.17.5",
     "mockjs": "^1.0.1-beta3",
