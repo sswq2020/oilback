@@ -204,7 +204,7 @@ export default {
             that.getListData();
             break;
           default:
-            that.$messageError(`删除成功,${res.mesg}`);
+            that.$messageError(`删除失败,${res.mesg}`);
             break;
         }
       });
