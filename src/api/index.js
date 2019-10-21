@@ -382,13 +382,6 @@ export default {
     },
     /**
      * @author sswq
-     * @description 生产商下拉列表
-     * */
-    getProducerSelectList() {
-        return fetch(oilURL + '/product/product/selectProducers', '', 'get')
-    },
-    /**
-     * @author sswq
      * @param params
      * @description 修改单价和库存
      * */
