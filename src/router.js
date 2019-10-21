@@ -122,7 +122,7 @@ let commonRoutes = {
         
         // #region  审核管理      
         {
-            path: '/web/hyw/admissionAudit/page',
+            path: '/admissionAudit/page',
             name: 'initiateAudit',
             component: InitiateAudit
         },
