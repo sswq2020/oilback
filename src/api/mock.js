@@ -22,7 +22,7 @@ export const imgHost = {
 };
 
 
-const IS_MOCK = false;
+const IS_MOCK = true;
 const oilURL = ""
 
 const dict = { 'SUCCESS': "000000" }
@@ -801,10 +801,18 @@ const mockRouterMap = {
             isMock: IS_MOCK,
             methods: 'post',
             router: '/web/hyw/admissionAuditHistory/page',
-            result() {
+            result(params) {
                 return {
                     ...body,
-                    'data|1-5': [AuditHistoryList]
+                    data: {
+                        'list|10-20': [AuditHistoryList],
+                        "paginator": {
+                            "currentPage": params.page,
+                            "pageSize": params.pageSize,
+                            "totalCount": 1000,
+                            "totalPage": 1000 / params.pageSize
+                        }
+                    }
                 };
             }
         },
