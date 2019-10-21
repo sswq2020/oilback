@@ -334,6 +334,9 @@ export default {
     min-width: 64px;
     margin-left: 20px;
     margin-top: 10px;
+    padding: 9px 15px;
+    font-size:12px;
+    border-radius:3px;
   }
 }
 </style>
