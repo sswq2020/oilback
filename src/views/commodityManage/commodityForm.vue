@@ -82,8 +82,8 @@
                   <el-option
                     v-for="(item,index) in HywManufacturerList"
                     :key="index"
-                    :label="item.name"
-                    :value="item.id"
+                    :label="item.label"
+                    :value="item.value"
                   ></el-option>
                 </el-select>
               </el-form-item>
@@ -195,7 +195,7 @@
     <div class="bottom">
         <el-button
           type="primary"
-          size="medium"
+          size="samll"
           :loading="loading"
           v-if="auth"
           @click="submitForm('form')"
@@ -235,8 +235,7 @@ const defualtFormParams = {
   price: null,
   totalWeightInventory: null,
   sellState: "1",
-  parameterList: [],
-  HywManufacturerList:[]
+  parameterList: []
 };
 
 export default {
@@ -260,7 +259,8 @@ export default {
       ExternalTrigger: false,
       reservaSecondClassId: null,
       ProvinceDataList: ProvinceDataList,
-      height: 0
+      height: 0,
+      HywManufacturerList:[]
     };
   },
   computed: {
@@ -569,6 +569,9 @@ export default {
     min-width: 64px;
     margin-left: 20px;
     margin-top: 10px;
+    padding: 9px 15px;
+    font-size:12px;
+    border-radius:3px;
   }
 }
 </style>
