@@ -36,14 +36,12 @@
       </div>
     </el-form>
     <div class="footer">
-      <el-form-item>
-        <el-button type="primary" @click="submitForm" :loading="viploading">
+        <el-button type="primary" size="small" @click="submitForm" :loading="viploading">
           <span>确定</span>
         </el-button>
-        <el-button @click="GoMember">
+        <el-button @click="GoMember" size="small">
           <span>取消</span>
         </el-button>
-      </el-form-item>
     </div>
     <historyAuditdialog :visible="visible" :cancelCb="cancel"></historyAuditdialog>
   </div>
