@@ -1,6 +1,6 @@
 <template>
   <div class="container single-page">
-    <hlBreadcrumb :data="breadTitle">
+    <HletongBreadcrumb :data="breadTitle">
       <el-button
         type="primary"
         plain
@@ -24,7 +24,7 @@
         :disabled="!selectedItems.length"
         icon="el-icon-download"
       >上架</el-button>
-    </hlBreadcrumb>
+    </HletongBreadcrumb>
     <div class="search-box">
       <div class="form-item">
         <label>品类</label>
@@ -192,7 +192,6 @@ import _ from "lodash";
 // import { judgeAuth } from "@/util/util.js";
 import Dict from "@/util/dict.js";
 import heltable from "@/components/hl_table";
-import hlBreadcrumb from "@/components/hl-breadcrumb";
 import pricedialog from "./pricedialog.vue";
 import releaseInventoryModal from "./releaseInventoryModal.vue";
 import { number3 } from "util/validate.js";
@@ -232,7 +231,6 @@ export default {
   mixins: [classMixin],
   components: {
     heltable,
-    hlBreadcrumb,
     pricedialog,
     releaseInventoryModal
   },

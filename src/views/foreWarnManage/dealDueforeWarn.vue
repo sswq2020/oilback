@@ -1,6 +1,6 @@
 <template>
   <div class="container single-page">
-    <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
+    <HletongBreadcrumb :data="breadTitle"></HletongBreadcrumb>
     <div class="search-box">
       <div class="form-item">
         <label>用户名</label>
@@ -68,7 +68,6 @@ import { requestParamsByTimeRange } from "common/util.js";
 import _ from "lodash";
 import Dict from "util/dict.js";
 import heltable from "components/hl_table";
-import hlBreadcrumb from "components/hl-breadcrumb";
 
 /**只是请求参数的key,页面中的观察属性却不需要，只在请求的那一刻由timeRange赋值*/
 const EXTRA_PARAMS_KEYS = ["startTime", "endTime"];
@@ -111,8 +110,7 @@ const defaulttableHeader = [
 export default {
   name: "dealDueforeWarn",
   components: {
-    heltable,
-    hlBreadcrumb
+    heltable
   },
   data() {
     return {

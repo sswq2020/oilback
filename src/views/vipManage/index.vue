@@ -1,8 +1,8 @@
 <template>
   <div class="container single-page">
-    <hlBreadcrumb :data="breadTitle">
+    <HletongBreadcrumb :data="breadTitle">
       <el-button type="primary" plain size="small" icon="el-icon-plus" @click="add">新增</el-button>
-    </hlBreadcrumb>
+    </HletongBreadcrumb>
     <div class="search-box">
       <div class="form-item">
         <label>用户名</label>
@@ -81,7 +81,6 @@
 import { mapMutations } from "vuex";
 import Dict from "util/dict.js";
 import heltable from "components/hl_table";
-import hlBreadcrumb from "components/hl-breadcrumb";
 import UserDialog from 'components/userDialog';
 import editMemberForm from './editMemberForm.vue'
 import permission from './permission.vue'
@@ -152,7 +151,6 @@ export default {
   name: "vipManage",
   components: {
     heltable,
-    hlBreadcrumb,
     UserDialog,
     editMemberForm,
     permission

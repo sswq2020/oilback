@@ -1,6 +1,6 @@
 <template>
   <div class="container single-page">
-    <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
+    <HletongBreadcrumb :data="breadTitle"></HletongBreadcrumb>
     <div class="search-box">
       <div class="form-item">
         <label>公司名称</label>
@@ -92,7 +92,6 @@ import { mapMutations } from "vuex";
 import Dict from "util/dict.js";
 import { DICT_SELECT_ARR } from "common/util.js";
 import heltable from "components/hl_table";
-import hlBreadcrumb from "components/hl-breadcrumb";
 import UserDialog from "components/userDialog";
 import editMemberForm from "../vipManage/editMemberForm.vue";
 import audit from "./audit.vue";
@@ -161,7 +160,6 @@ export default {
   name: "initiateAudit",
   components: {
     heltable,
-    hlBreadcrumb,
     UserDialog,
     editMemberForm,
     audit

@@ -1,6 +1,6 @@
 <template>
   <div class="container single-page">
-    <hlBreadcrumb :data="breadTitle">
+    <HletongBreadcrumb :data="breadTitle">
       <el-button
         type="primary"
         plain
@@ -9,7 +9,7 @@
         @click="completelyDel(null)"
         icon="el-icon-delete"
       >批量删除</el-button>
-    </hlBreadcrumb>
+    </HletongBreadcrumb>
     <heltable
       ref="tb"
       @sizeChange="changePageSize"
@@ -46,7 +46,6 @@
 <script>
 import Dict from "util/dict.js";
 import heltable from "components/hl_table";
-import hlBreadcrumb from "components/hl-breadcrumb";
 
 const defaultListParams = {
   pageSize: 20,
@@ -118,8 +117,7 @@ const rowAdapter = list => {
 export default {
   name: "recycleManage",
   components: {
-    heltable,
-    hlBreadcrumb
+    heltable
   },
   data() {
     return {

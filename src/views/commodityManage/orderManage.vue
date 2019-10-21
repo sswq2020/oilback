@@ -1,6 +1,6 @@
 <template>
   <div class="container single-page">
-    <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
+    <HletongBreadcrumb :data="breadTitle"></HletongBreadcrumb>
     <div class="tabs">
         <span class="tab-item" @click="activeName = 'unpay'"  :class="{'active':activeName==='unpay'}">待付款</span>
         <span class="tab-item" @click="activeName = 'payed'"  :class="{'active':activeName==='payed'}">已付款</span>
@@ -245,7 +245,6 @@
 </template>
 
 <script>
-import hlBreadcrumb from "components/hl-breadcrumb";
 import heltable from "components/hl_table";
 import countdown from "components/countdown";
 import Dict from "@/util/dict.js";
@@ -269,7 +268,6 @@ export default {
   name: "orderManage",
   components: {
     heltable,
-    hlBreadcrumb,
     countdown
   },
   data() {
