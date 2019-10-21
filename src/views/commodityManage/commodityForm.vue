@@ -215,6 +215,7 @@ import areaData from "components/areaData.js";
 import _ from "lodash";
 import $ from "jquery";
 import { judgeAuth } from "util/util.js";
+import { _toArray_ } from "common/util.js";
 
 const ProvinceDataList = areaData.map(item => {
   return {
@@ -234,7 +235,8 @@ const defualtFormParams = {
   price: null,
   totalWeightInventory: null,
   sellState: "1",
-  parameterList: []
+  parameterList: [],
+  HywManufacturerList:[]
 };
 
 export default {
@@ -432,6 +434,17 @@ export default {
           break;
       }
     },
+    async _getProducerSelectList() {
+      const res = await this.$api.getProducerSelectList();
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.HywManufacturerList = _toArray_(res.data);
+          break;
+        default:
+          this.$messageError(res.mesg);
+          break;
+      }
+    },    
     setHeight() {
       this.height =
         document.body.clientHeight -
@@ -471,7 +484,11 @@ export default {
   destroyed() {
     $(window).off("resize");
   },
-  created() {},
+  created() {
+    this._getValidList().then(()=>{
+        this._getProducerSelectList();
+    })    
+  },
   beforeDestroy() {
     this.setIsEdit(false);
     this.setCommodityId(null);
