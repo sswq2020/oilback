@@ -66,10 +66,10 @@
             <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
               <el-form-item
                 label="产品型号"
-                prop="serialNumber"
+                prop="productNumber"
                 :rules="[{ required: true, message: '必填' }]"
               >
-                <el-input v-model="form.serialNumber"></el-input>
+                <el-input v-model="form.productNumber"></el-input>
               </el-form-item>
             </el-col>
             <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
@@ -229,7 +229,7 @@ const defualtFormParams = {
   secondCatalogId: null,
   emissionStandard: null,
   density: null,
-  serialNumber: null,
+  productNumber: null,
   manufacturerId: null,
   addressProvince: null,
   price: null,
