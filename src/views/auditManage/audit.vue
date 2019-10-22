@@ -86,7 +86,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this._UpdateAudit_(
-            Object.assign({}, this.form, { id: this.auditId })
+            Object.assign({}, this.form, { id: this.auditId,userId:this.memberId })
           );
         } else {
           return false;
@@ -109,7 +109,7 @@ export default {
     }
   },
   computed: {
-    ...mapState("memberForm", ["auditId"])
+    ...mapState("memberForm", ["auditId","memberId"])
   },
   mounted() {
     if (!this.auditId) {
