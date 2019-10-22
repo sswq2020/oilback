@@ -439,6 +439,14 @@ export default {
     /**
      * @author sswq
      * @param params
+     * @description 库存发布列表查询云仓商品相关信息
+     * */
+    releaseycDetail(params) {
+        return fetch(oilURL + '/product/product/ycDetail', params,'get')
+    },
+    /**
+     * @author sswq
+     * @param params
      * @description 新增商品FROM云仓
      * */
     releaseYc(params) {
