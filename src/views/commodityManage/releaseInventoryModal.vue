@@ -20,7 +20,7 @@
         prop="price"
         :rules="[{ required: true, message: '请维护正确价格' }]"
       >
-        <el-input v-model="formParams.price"></el-input>
+        <el-input v-model="formParams.price" :disabled="releaseStatus"></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -68,6 +68,10 @@ export default {
     releaseObj: {
       type: Object,
       default: () => {}
+    },
+    releaseStatus:{
+      type: Boolean,
+      default: false      
     }
   },
   data() {
