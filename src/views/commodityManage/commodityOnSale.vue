@@ -1,13 +1,13 @@
 <template>
   <div class="container single-page">
     <HletongBreadcrumb :data="breadTitle">
-      <el-button
+      <!-- <el-button
         type="primary"
         plain
         size="small"
         @click="GoReleaseNewCommodity"
         icon="el-icon-plus"
-      >发布新商品</el-button>
+      >发布新商品</el-button> -->
       <el-button
         type="primary"
         plain

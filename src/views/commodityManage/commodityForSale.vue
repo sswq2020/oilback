@@ -9,13 +9,13 @@
         @click="completelyDel(null)"
         icon="el-icon-delete"
       >批量删除</el-button>
-      <el-button
+      <!-- <el-button
         type="primary"
         plain
         size="small"
         @click="GoReleaseNewCommodity"
         icon="el-icon-plus"
-      >发布新商品</el-button>
+      >发布新商品</el-button> -->
       <el-button
         type="primary"
         plain
