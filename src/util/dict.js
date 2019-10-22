@@ -134,4 +134,10 @@ DICT.AUDIT_RESULT = {
 }
 
 
+/**商品已发布 */
+DICT.RELEASE_DONE = 1
+/**商品未发布 */
+DICT.RELEASE_UNDONE = 0
+
+
 export default DICT;
