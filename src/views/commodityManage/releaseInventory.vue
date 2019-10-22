@@ -85,6 +85,7 @@
       :releaseLoading="releaseLoading"
       :visible="visible"
       :releaseObj="releaseObj"
+      :releaseStatus="releaseStatus"
     ></releaseInventoryModal>
   </div>
 </template>
@@ -202,7 +203,8 @@ export default {
       // #region 弹窗相关
       visible: false,
       releaseObj: Object.create(null),
-      releaseLoading: false
+      releaseLoading: false,
+      releaseStatus:false,
       // #endgion
     };
   },
@@ -281,19 +283,30 @@ export default {
           break;
       }
     },
-    editItem(obj) {
-      this.releaseObj = obj;
-      this.visible = true;
+    async editItem(obj) {
+     const {id} = obj;
+     const res = await this.$api.releaseycDetail({id});
+      switch (res.code) {
+        case Dict.SUCCESS:
+          this.releaseObj = res.data;
+          this.releaseStatus = res.data.isPublished === Dict.RELEASE_DONE
+          this.visible = true;
+          break;
+        default:
+          this.$messageError(res.mesg);
+          break;
+      }     
     },
     cancleCb() {
       this.releaseObj = null;
+      this.releaseStatus = false;
       this.visible = false;
     }
   },
   created() {
     this._getTransferBaseList(Dict.PRODUCT_OIL).then(() => {
-      this._getProducerSelectList();
       this.clearListParams();
+      this._getProducerSelectList();
     });
   },
   watch: {
