@@ -182,6 +182,9 @@ export default {
   methods: {
     ...mapMutations("memberForm", ["setAuditId", "setIsEdit", "setMemberId"]),
     updateVisible(bol){
+      if(!bol) {
+        this.getListData();
+      }
       this.visible = bol;
     },    
     clearListParams() {
