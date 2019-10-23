@@ -8,7 +8,8 @@
     "serve": "vue-cli-service serve",
     "lint": "vue-cli-service lint",
     "test": "cross-env NODE_ENV=test vue-cli-service build --mode test",
-    "pro": "cross-env NODE_ENV=pro vue-cli-service build --mode pro"
+    "append":"cross-env NODE_ENV=production node appended",
+    "pro": "cross-env NODE_ENV=production vue-cli-service build"
   },
   "dependencies": {
     "cookie-parse": "^0.4.0",

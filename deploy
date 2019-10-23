@@ -19,7 +19,7 @@ argv.forEach(row => {
 
 
 const splitLine = '==================================';
-const now = new Date();
+const now = new Date().getTime();
 
 function testDeploy() {
   shell.echo(splitLine);
@@ -34,7 +34,7 @@ function testDeploy() {
 }
 
 function testZipDeploy() {
-  const zipName = `hlyc_test_${now}.zip`;
+  const zipName = `oilback_test_${now}.zip`;
   shell.echo(splitLine);
   shell.echo('Testing zip deploy:');
   shell.echo(splitLine);
@@ -46,14 +46,20 @@ function testZipDeploy() {
 }
 
 function proZipDeploy() {
-  const zipName = `hlyc_pro_${now}.zip`;
+  const zipName = `oilback_pro_${now}.zip`;
   shell.echo(splitLine);
+  shell.echo('Start Shift Pro_Env URL');
+  shell.echo(splitLine);   
+  command('npm run append');
+  shell.echo('End Shift Pro_Env URL');
+  shell.echo(splitLine);    
   shell.echo('production zip deploy:');
   shell.echo(splitLine);
   command('npm run pro');
   shell.echo(`zip to ${zipName}`);
   shell.echo(splitLine);
   command(`zip -m -r -q ${zipName} ./dist`);
+  command('git checkout public/index.html');
   shell.echo('PRODUCTION_ZIP_ENV Deployed!');
 }
 
