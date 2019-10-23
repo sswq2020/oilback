@@ -100,7 +100,7 @@ const AuditResultList = DICT_SELECT_ARR(Dict.AUDIT_RESULT);
 
 const defaultFormData = {
   name: null, //公司名称
-  checkState: null, //审核状态
+  checkState: Dict.WAIT_AUDIT, //审核状态
   checkResult: null // 审核结果
 };
 const defaultListParams = {
