@@ -107,7 +107,7 @@ const rowAdapter = list => {
         ...row,
         emissionStandardText:
           (row.emissionStandardEnum && row.emissionStandardEnum.text) || "",
-        origin: row.isYc === Dict.IS_YC ? "云仓发布" : "本系统发布"
+        origin: row.isYC === Dict.IS_YC ? "云仓发布" : "本系统发布"
       });
     });
   }
