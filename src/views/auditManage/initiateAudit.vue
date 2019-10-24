@@ -11,7 +11,7 @@
       <div class="form-item">
         <label>审核状态</label>
         <div class="form-control">
-          <el-select v-model="form.checkState" placeholder="请选择">
+          <el-select v-model="form.checkState"  clearable placeholder="请选择">
             <el-option
               v-for="(item,index) in AuditStatusList"
               :key="index"
