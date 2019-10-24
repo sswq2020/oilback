@@ -6,7 +6,7 @@
       <el-form-item label="排放标准" style="margin-bottom:0px">{{formParams.emissionStandardEnumText}}</el-form-item>
       <el-form-item label="密度" style="margin-bottom:0px">{{formParams.density}}</el-form-item>
       <el-form-item label="生产商" style="margin-bottom:0px">{{formParams.manufacturerId_}}</el-form-item>
-      <el-form-item label="地址(区桩位)" style="margin-bottom:0px">{{formParams.pilePosition}}</el-form-item>
+      <el-form-item label="交割库" style="margin-bottom:0px">{{formParams.deliveryStore}}</el-form-item>
       <el-form-item label="库存吨数">{{formParams.totalWeightInventory}}</el-form-item>
       <el-form-item
         label="发布吨数(吨)"
@@ -38,7 +38,7 @@ const defaultFormParams = {
   emissionStandardEnumText: null,
   density: null,
   manufacturerId_: null,
-  pilePosition: null,
+  deliveryStore: null,
   weightInventory: null,
   price: null
 };
