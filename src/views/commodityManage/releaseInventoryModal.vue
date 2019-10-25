@@ -3,10 +3,10 @@
     <el-form :model="formParams" ref="ruleForm" label-position="right" label-width="135px">
       <el-form-item label="品名" style="margin-bottom:0px">{{formParams.firstCatalogName}}</el-form-item>
       <el-form-item label="牌号" style="margin-bottom:0px">{{formParams.secondCatalogName}}</el-form-item>
-      <el-form-item label="排放标准" style="margin-bottom:0px">{{formParams.emissionStandardEnumText}}</el-form-item>
+      <el-form-item label="排放标准" style="margin-bottom:0px">{{formParams.emissionStandard}}</el-form-item>
       <el-form-item label="密度" style="margin-bottom:0px">{{formParams.density}}</el-form-item>
       <el-form-item label="生产商" style="margin-bottom:0px">{{formParams.manufacturerId_}}</el-form-item>
-      <el-form-item label="交割库" style="margin-bottom:0px">{{formParams.deliveryStore}}</el-form-item>
+      <el-form-item label="交割库地址" style="margin-bottom:0px">{{formParams.deliveryStore}}</el-form-item>
       <el-form-item label="库存吨数">{{formParams.totalWeightInventory}}</el-form-item>
       <el-form-item
         label="发布吨数(吨)"
@@ -35,7 +35,7 @@ const defaultFormParams = {
   firstCatalogName: null,
   secondCatalogName:null,
   totalWeightInventory: null,
-  emissionStandardEnumText: null,
+  emissionStandard: null,
   density: null,
   manufacturerId_: null,
   deliveryStore: null,
