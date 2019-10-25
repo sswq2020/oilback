@@ -95,6 +95,9 @@ export default {
         },
         {
           validator(rule, value, callback) {
+            if(Number(weight) === 0) {
+               callback(new Error(`库存吨数为0,不可发布`));
+            }
             if (weight && value > weight) {
               callback(new Error(`超出可用量,请重新填写`));
             }
