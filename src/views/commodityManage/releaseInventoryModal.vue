@@ -90,8 +90,8 @@ export default {
           trigger: "blur"
         },
         {
-          pattern: /^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,3})?$/,
-          message: "正数可以包含3位小数"
+          pattern:  /^[1-9][0-9]{0,3}$/,
+          message: "只能是正整数,不超过9999"
         },
         {
           validator(rule, value, callback) {
