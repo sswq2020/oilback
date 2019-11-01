@@ -1,6 +1,6 @@
 <template>
   <div class="container single-page" style="position:relative">
-    <hlBreadcrumb :data="breadTitle"></hlBreadcrumb>
+    <HletongBreadcrumb :data="breadTitle"></HletongBreadcrumb>
     <div class="form">
       <el-form ref="form" :model="form" label-width="125px" size="small">
         <div class="form-block">
@@ -207,7 +207,6 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import { classMixin, dictMixin } from "@/common/mixin.js";
-import hlBreadcrumb from "components/hl-breadcrumb";
 import ImageBox from "components/ImageBox";
 import ImageUpload from "components/ImageUpload";
 import Dict from "util/dict.js";
@@ -242,7 +241,6 @@ export default {
   name: "commodityForm",
   mixins: [classMixin, dictMixin],
   components: {
-    hlBreadcrumb,
     ImageBox,
     ImageUpload
   },
