@@ -61,8 +61,9 @@
       <div class="form-item">
         <label>售价</label>
         <div class="form-control">
-          <el-input v-model="form.startPrice" placeholder="最低价" size="small"></el-input>至
-          <el-input v-model="form.endPrice" placeholder="最高价" size="small"></el-input>
+          <priceRange :low="form.startPrice" :high="form.endPrice" @lowest="getlow" @highest="gethigh" ></priceRange>
+          <!-- <el-input v-model="form.startPrice" placeholder="最低价" size="small"></el-input>至
+          <el-input v-model="form.endPrice" placeholder="最高价" size="small"></el-input> -->
         </div>
       </div>
       <div class="form-item">
@@ -162,7 +163,7 @@
 
       <el-table-column label="操作" width="250px" align="center">
         <template slot-scope="scope">
-          <el-button type="text" @click="GoEditOldCommodity(listData.list[scope.$index])">编辑商品</el-button>
+          <!-- <el-button type="text" @click="GoEditOldCommodity(listData.list[scope.$index])">编辑商品</el-button> -->
           <el-button type="text" @click="shelves(listData.list[scope.$index])">上架</el-button>
           <el-button type="text" @click="completelyDel(listData.list[scope.$index])">删除</el-button>
         </template>
@@ -192,6 +193,7 @@ import _ from "lodash";
 // import { judgeAuth } from "@/util/util.js";
 import Dict from "@/util/dict.js";
 import heltable from "@/components/hl_table";
+import priceRange from "@/components/priceRange";
 import pricedialog from "./pricedialog.vue";
 import releaseInventoryModal from "./releaseInventoryModal.vue";
 import { number3 } from "util/validate.js";
@@ -200,8 +202,8 @@ const defaultFormData = {
   firstCatalogId: null,
   secondCatalogId: null,
   productNumber: null,
-  startPrice: null,
-  endPrice: null
+  startPrice: "",
+  endPrice: ""
 };
 const defaultListParams = {
   pageSize: 5,
@@ -232,7 +234,8 @@ export default {
   components: {
     heltable,
     pricedialog,
-    releaseInventoryModal
+    releaseInventoryModal,
+    priceRange
   },
   data() {
     return {
@@ -468,6 +471,12 @@ export default {
           this.$messageError(res.mesg);
           break;
       }
+    },
+    getlow(number){
+      this.form.startPrice = number
+    },
+    gethigh(number){
+      this.form.endPrice = number
     },
     init() {
       setTimeout(() => {
