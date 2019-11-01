@@ -131,8 +131,8 @@ const defaulttableHeader = [
     align: "right"
   },
   {
-    prop: "productNumber",
-    label: "产品编号"
+    prop: "serialNumber",
+    label: "产品型号"
   },
   {
     prop: "manufacturerId_",
