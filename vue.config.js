@@ -38,7 +38,7 @@ module.exports = {
 	},
     lintOnSave: false,
     chainWebpack: config => {
-        if (process.env.NODE_ENV === 'test') {
+        if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'ywtest') {
             config.output.filename(`[name].${Time}.[hash].js`).end();
         }
         config.resolve.alias.set("@", resolve("src"));

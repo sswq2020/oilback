@@ -41,9 +41,14 @@ switch (env) {
         loginUrl = 'http://login.hlet.com';
         oilURL = 'oilhui'
         break;
+    case 'ywtest':
+        baseURL = 'http://10.1.15.110:8445/';
+        redirectUrl = 'http://oilhui.hletown.com';
+        loginUrl = 'http://login.hletown.com';
+        oilURL = 'oilhui'
+        break;
     default:
         break;
-
 }
 
 const goLogin = () => {

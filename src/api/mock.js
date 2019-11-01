@@ -8,6 +8,7 @@ export const hostList = {
     // dev: '//192.168.4.16:25091/hletoil', // 佘慧   13888888888   888888       admin 888888
     // dev: '//test.hletong.com/hletoil', // 佘慧   13888888888   888888       admin 888888
     test: '//10.1.15.106:8445',
+    ywtest:'//10.1.15.110:8445',    
     production: '//oilhui.hletong.com/apis',
     default: ""
 };
