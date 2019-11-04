@@ -55,7 +55,7 @@
       :loading="isListDataLoading"
     >
       <el-table-column
-        align="center"
+        :align="item.align || 'left'"
         :prop="item.prop"
         :label="item.label"
         :key="item.id"
@@ -66,7 +66,7 @@
           <span>{{listData.list[scope.$index][item.prop]}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100px" align="center">
+      <el-table-column label="操作" width="100px" align="left">
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -117,7 +117,7 @@ const defaultListData = {
 const defaulttableHeader = [
   {
     prop: "username",
-    label: "用户名"
+    label: "用户名",    
   },
   {
     prop: "name",
@@ -125,11 +125,13 @@ const defaulttableHeader = [
   },
   {
     prop: "telNo",
-    label: "公司电话"
+    label: "公司电话",
+    align: "right"
   },
   {
     prop: "applyTime",
-    label: "申请日期"
+    label: "申请日期",
+    align: "right"
   },
   {
     prop: "statusText",

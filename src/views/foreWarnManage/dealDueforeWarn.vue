@@ -48,7 +48,7 @@
       :loading="isListDataLoading"
     >
       <el-table-column
-        align="center"
+        :align="item.align ||'left' "
         :prop="item.prop"
         :label="item.label"
         :key="item.id"
@@ -103,7 +103,8 @@ const defaulttableHeader = [
   },
   {
     prop: "dueTime",
-    label: "到期时间"
+    label: "到期时间",
+    align:"right"
   }
 ];
 

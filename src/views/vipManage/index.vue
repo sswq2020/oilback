@@ -1,7 +1,7 @@
 <template>
   <div class="container single-page">
     <HletongBreadcrumb :data="breadTitle">
-      <el-button type="primary" plain size="small" icon="el-icon-plus" @click="add">新增</el-button>
+      <el-button type="primary" plain size="small" icon="el-icon-plus" class="text-btn" @click="add">新增</el-button>
     </HletongBreadcrumb>
     <div class="search-box">
       <div class="form-item">
@@ -43,7 +43,8 @@
       :loading="isListDataLoading"
     >
       <el-table-column
-        align="center"
+        :align="item.align ||'left' "
+        :width="item.width || null"
         :prop="item.prop"
         :label="item.label"
         :key="item.id"
@@ -120,11 +121,13 @@ const defaulttableHeader = [
   },
   {
     prop: "address",
-    label: "公司地址"
+    label: "公司地址",
+    width:"300px"
   },
   {
     prop: "grantTime",
-    label: "授权日期"
+    label: "授权日期",
+    align:"right"
   },
   {
     prop: "stateText",

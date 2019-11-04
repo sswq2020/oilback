@@ -63,6 +63,7 @@
     >
       <el-table-column
         :align="item.align || 'left'"
+        :width="item.width || null"
         :prop="item.prop"
         :label="item.label"
         :key="item.id"
@@ -140,7 +141,8 @@ const defaulttableHeader = [
   },
   {
     prop: "updatedTime",
-    label: "录入时间"
+    label: "录入时间",
+    align: "right"
   },
   {
     prop: "totalWeightInventory",
