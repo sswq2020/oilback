@@ -1,8 +1,8 @@
 <template>
   <div class="el-date-editor el-range-editor el-input__inner el-date-editor--daterange" style="height:32px;line-height:32px">
-    <input v-on="lowListeners" v-bind="$attrs" v-bind:value="low" placeholder="最低价"  class="el-range-input" />
-    <span class="el-range-separator">-</span>
-    <input v-on="highListeners" v-bind="$attrs" v-bind:value="high" placeholder="最高价"  class="el-range-input" />
+    <input style="font-size:13px" v-on="lowListeners" v-bind="$attrs" v-bind:value="low" placeholder="最低价"  class="el-range-input" />
+    <span class="el-range-separator" style="line-height:24px">-</span>
+    <input style="font-size:13px" v-on="highListeners" v-bind="$attrs" v-bind:value="high" placeholder="最高价"  class="el-range-input" />
   </div>
 </template>
 
