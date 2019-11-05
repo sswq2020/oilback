@@ -109,12 +109,12 @@
             <i
               v-if="listData.list[scope.$index].isYC !== Dict.IS_YC"
               @click="open(listData.list[scope.$index])"
-              class="el-icon-edit"
+              class="el-edit"
             ></i>
             <i
               v-if="listData.list[scope.$index].isYC === Dict.IS_YC"
               @click="editItem(listData.list[scope.$index])"
-              class="el-icon-edit"
+              class="el-edit"
             ></i>
           </div>
         </template>
@@ -126,12 +126,12 @@
             <i
               v-if="listData.list[scope.$index].isYC !== Dict.IS_YC"
               @click="open(listData.list[scope.$index])"
-              class="el-icon-edit"
+              class="el-edit"
             ></i>
             <i
               v-if="listData.list[scope.$index].isYC === Dict.IS_YC"
               @click="editItem(listData.list[scope.$index])"
-              class="el-icon-edit"
+              class="el-edit"
             ></i>
           </div>
         </template>
@@ -517,12 +517,13 @@ export default {
   text-align: center;
 }
 
-.el-icon-edit {
+.el-edit {
   padding: 5px;
   font-size: 16px;
-  color: #3c8bff;
+  vertical-align: sub;
+  margin-left:5px;
+  background: url("./edit.png");
   &:hover {
-    color: rgb(255, 83, 60);
     cursor: pointer;
   }
 }
