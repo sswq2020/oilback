@@ -518,8 +518,9 @@ export default {
 }
 
 .el-edit {
-  padding: 5px;
-  font-size: 16px;
+  display:inline-block;
+  width:14px;
+  height:14px;
   vertical-align: sub;
   margin-left:5px;
   background: url("./edit.png");
