@@ -38,6 +38,7 @@
         stylestripe
         border
         highlight-current-row
+        v-loading="isListDataLoading"
         :data="listData.list"
         @current-change="handleCurrentChange"
       >
