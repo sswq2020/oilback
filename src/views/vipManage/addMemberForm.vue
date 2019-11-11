@@ -132,7 +132,7 @@ const RetradestatusList = DICT_SELECT_ARR(Dict.RETRADE_STATUS);
 const defaulttableHeader = [
   {
     prop: "agreementName",
-    label: "协议名称",
+    label: "交易会员入会协议",
     width: "250"
   },
   {
