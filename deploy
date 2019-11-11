@@ -106,6 +106,8 @@ if (options.pz !== undefined) {
 }
 
 if (options.a !== undefined) {
+  testDeploy();
+  YwTestDeploy();
   return;
 }
 
