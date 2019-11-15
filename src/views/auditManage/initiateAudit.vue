@@ -44,7 +44,7 @@
         <el-button size="small" @click="clearListParams">重置</el-button>
       </div>
     </div>
-    <heltable
+    <HletongTable
       ref="tb"
       @sizeChange="changePageSize"
       @pageChange="changePage"
@@ -75,7 +75,7 @@
           >审核</el-button>
         </template>
       </el-table-column>
-    </heltable>
+    </HletongTable>
     <UserDialog :visible.sync="visible" @updateVisible="updateVisible">
       <el-tab-pane label="入会协议" v-if="visible">
         <editMemberForm @agreemtClose="updateVisible(false)" />
@@ -91,7 +91,6 @@
 import { mapMutations } from "vuex";
 import Dict from "util/dict.js";
 import { DICT_SELECT_ARR } from "common/util.js";
-import heltable from "components/hl_table";
 import UserDialog from "components/userDialog";
 import editMemberForm from "../vipManage/editMemberForm.vue";
 import audit from "./audit.vue";
@@ -161,7 +160,6 @@ const rowAdapter = list => {
 export default {
   name: "initiateAudit",
   components: {
-    heltable,
     UserDialog,
     editMemberForm,
     audit

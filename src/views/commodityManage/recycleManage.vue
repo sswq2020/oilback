@@ -10,7 +10,7 @@
         icon="el-icon-delete"
       >批量删除</el-button>
     </HletongBreadcrumb>
-    <heltable
+    <HletongTable
       ref="tb"
       @sizeChange="changePageSize"
       @pageChange="changePage"
@@ -40,14 +40,12 @@
           <el-button type="text" @click="completelyDel(listData.list[scope.$index])">彻底删除</el-button>
         </template>
       </el-table-column>
-    </heltable>
+    </HletongTable>
   </div>
 </template>
 
 <script>
 import Dict from "util/dict.js";
-import heltable from "components/hl_table";
-
 const defaultListParams = {
   pageSize: 20,
   page: 1
@@ -120,9 +118,6 @@ const rowAdapter = list => {
 
 export default {
   name: "recycleManage",
-  components: {
-    heltable
-  },
   data() {
     return {
       breadTitle: ["商品管理", "回收站"],

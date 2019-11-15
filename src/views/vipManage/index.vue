@@ -32,7 +32,7 @@
         <el-button size="small" @click="clearListParams">重置</el-button>
       </div>
     </div>
-    <heltable
+    <HletongTable
       ref="tb"
       @sizeChange="changePageSize"
       @pageChange="changePage"
@@ -65,7 +65,7 @@
           >{{listData.list[scope.$index].state === VIP_STATUS_NORMAL ? "禁用" : "激活"}}</el-button>
         </template>
       </el-table-column>
-    </heltable>
+    </HletongTable>
     <UserDialog :visible.sync="visible"  @updateVisible="updateVisible">
       <el-tab-pane label="权限中心" v-if="visible">
         <permission @permissionClose="updateVisible(false)"/>
@@ -81,7 +81,6 @@
 <script>
 import { mapMutations } from "vuex";
 import Dict from "util/dict.js";
-import heltable from "components/hl_table";
 import UserDialog from 'components/userDialog';
 import editMemberForm from './editMemberForm.vue'
 import permission from './permission.vue'
@@ -153,7 +152,6 @@ const rowAdapter = list => {
 export default {
   name: "vipManage",
   components: {
-    heltable,
     UserDialog,
     editMemberForm,
     permission
