@@ -36,13 +36,13 @@ switch (env) {
         oilURL = ''
         break;
     case 'test':
-        baseURL = 'http://10.1.15.106:8445';
+        baseURL = 'http://test.hletong.com/apis/';
         redirectUrl = 'http://oilhui.hlet.com';
         loginUrl = 'http://login.hlet.com';
         oilURL = 'oilhui'
         break;
     case 'ywtest':
-        baseURL = 'http://10.1.15.110:8445/';
+        baseURL = 'http://apis.hletown.com/';
         redirectUrl = 'http://oilhui.hletown.com';
         loginUrl = 'http://login.hletown.com';
         oilURL = 'oilhui'
