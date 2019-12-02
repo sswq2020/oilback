@@ -17,6 +17,7 @@
       </el-form-item>
       <el-form-item label="协议生效日期" prop="effectTime" :rules="[{ required: true, message: '必选'  }]">
         <el-date-picker
+          style="width:100%"
           size="small"
           v-model="agreeFormParams.effectTime"
           type="date"
@@ -30,6 +31,7 @@
         :rules="validDueTime(agreeFormParams.effectTime,checked)"
       >
         <el-date-picker
+          style="width:100%"
           size="small"
           v-model="agreeFormParams.dueTime"
           :disabled="dueTimeDisabled"

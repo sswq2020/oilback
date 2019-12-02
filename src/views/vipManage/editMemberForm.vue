@@ -15,7 +15,7 @@
               :prop="item.prop"
               :label="item.label"
               :width="item.width || 'auto'"
-              :align="item.align || 'center'"
+              :align="item.align || 'left'"
               header-align="center"
               :key="index"
               v-for="(item,index) in tableHeader"

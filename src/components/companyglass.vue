@@ -13,13 +13,13 @@
     >
       <div class="search-box" style="padding:0px;margin:0px 0px 10px 0px;">
         <div class="form-item">
-          <label>公司名称</label>
+          <label style="line-height:1">公司名称</label>
           <div class="form-control">
             <el-input v-model="form.name" placeholder="请输入" size="small"></el-input>
           </div>
         </div>
         <div class="form-item">
-          <label>业务联系人</label>
+          <label style="line-height:1">业务联系人</label>
           <div class="form-control">
             <el-input v-model="form.bizName" placeholder="请输入" size="small"></el-input>
           </div>
@@ -95,8 +95,7 @@ const defaultAuditResultTableHeader = [
   {
     prop: "name",
     label: "公司名称",
-    width: "200",
-    align:'center'
+    width: "200"
 
   },
   {
@@ -238,7 +237,7 @@ export default {
   font-size: 14px;
   .form-item {
     .el-button {
-      margin-top: 36px;
+      margin-top: 20px;
     }
   }
 }

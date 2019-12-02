@@ -125,8 +125,7 @@ const defaulttableHeader = [
   },
   {
     prop: "grantTime",
-    label: "授权日期",
-    align:"right"
+    label: "授权日期"
   },
   {
     prop: "stateText",
