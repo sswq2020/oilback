@@ -35,7 +35,7 @@
           <span>{{listData.list[scope.$index][item.prop]}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="250px" align="center">
+      <el-table-column label="操作" width="250px" align="center" fixed="right">
         <template slot-scope="scope">
           <el-button type="text" @click="completelyDel(listData.list[scope.$index])">彻底删除</el-button>
         </template>
@@ -90,8 +90,7 @@ const defaulttableHeader = [
   },
   {
     prop: "updatedTime",
-    label: "删除时间",
-    align:"right"
+    label: "删除时间"
   },
   {
     prop: "origin",

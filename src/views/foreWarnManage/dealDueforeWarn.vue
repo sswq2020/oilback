@@ -102,8 +102,7 @@ const defaulttableHeader = [
   },
   {
     prop: "dueTime",
-    label: "到期时间",
-    align:"right"
+    label: "到期时间"
   }
 ];
 

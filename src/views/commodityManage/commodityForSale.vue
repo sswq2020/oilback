@@ -76,7 +76,7 @@
         <el-button size="small" @click="clearListParams">重置</el-button>
       </div>
     </div>
-    <heltable
+    <HletongTable
       ref="tb"
       @pageChange="changePage"
       :total="listData.paginator.totalCount"
@@ -85,6 +85,7 @@
       :pageSizes="[5]"
       :data="listData.list"
       :multiple="true"
+      :blankCol="false"
       @selection-change="selectChange"
       :loading="isListDataLoading"
     >
@@ -168,7 +169,7 @@
           <el-button type="text" @click="completelyDel(listData.list[scope.$index])">删除</el-button>
         </template>
       </el-table-column>
-    </heltable>
+    </HletongTable>
     <pricedialog
       :title="editProductName"
       :priceLoading="priceLoading"
@@ -192,7 +193,7 @@ import { classMixin } from "@/common/mixin.js";
 import _ from "lodash";
 // import { judgeAuth } from "@/util/util.js";
 import Dict from "@/util/dict.js";
-import heltable from "@/components/hl_table";
+// import heltable from "@/components/hl_table";
 import priceRange from "@/components/priceRange";
 import pricedialog from "./pricedialog.vue";
 import releaseInventoryModal from "./releaseInventoryModal.vue";
@@ -232,7 +233,7 @@ export default {
   name: "commodityForSale",
   mixins: [classMixin],
   components: {
-    heltable,
+    // heltable,
     pricedialog,
     releaseInventoryModal,
     priceRange

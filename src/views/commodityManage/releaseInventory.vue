@@ -51,7 +51,7 @@
         <el-button size="small" @click="clearListParams">重置</el-button>
       </div>
     </div>
-    <heltable
+    <HletongTable
       ref="tb"
       @sizeChange="changePageSize"
       @pageChange="changePage"
@@ -79,7 +79,7 @@
           <el-button type="text" @click="editItem(listData.list[scope.$index])">发布</el-button>
         </template>
       </el-table-column>
-    </heltable>
+    </HletongTable>
     <releaseInventoryModal
       :cancleCb="cancleCb"
       :confirmCb="(obj)=>{this.releaseGoods(obj)}"
@@ -94,7 +94,7 @@
 <script>
 // import { judgeAuth } from "@/util/util.js";
 import Dict from "util/dict.js";
-import heltable from "components/hl_table";
+// import heltable from "components/hl_table";
 import { findIndexByValue, handleFilterSelf, _toArray_ } from "common/util.js";
 import releaseInventoryModal from "./releaseInventoryModal.vue";
 
@@ -141,8 +141,7 @@ const defaulttableHeader = [
   },
   {
     prop: "updatedTime",
-    label: "录入时间",
-    align: "right"
+    label: "录入时间"
   },
   {
     prop: "totalWeightInventory",
@@ -177,7 +176,7 @@ const rowAdapter = list => {
 export default {
   name: "releaseInventory",
   components: {
-    heltable,
+    // heltable,
     releaseInventoryModal
   },
   data() {

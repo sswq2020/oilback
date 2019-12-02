@@ -29,7 +29,7 @@
       </div>
     </div>
     <div v-if="activeName==='unpay'">
-      <heltable
+      <HletongTable
         ref="tb"
         @pageChange="changePage"
         :total="listData.paginator.totalCount"
@@ -134,10 +134,10 @@
             </div>
           </template>
         </el-table-column>
-      </heltable>
+      </HletongTable>
     </div>
     <div v-if="activeName==='payed'">
-      <heltable
+      <HletongTable
         ref="tb"
         @pageChange="changePage"
         :total="listData.paginator.totalCount"
@@ -239,13 +239,13 @@
             </div>
           </template>
         </el-table-column>
-      </heltable>
+      </HletongTable>
     </div>
   </div>
 </template>
 
 <script>
-import heltable from "components/hl_table";
+// import heltable from "components/hl_table";
 import countdown from "components/countdown";
 import Dict from "@/util/dict.js";
 const defaultFormData = {
@@ -267,7 +267,7 @@ const defaultListData = {
 export default {
   name: "orderManage",
   components: {
-    heltable,
+    // heltable,
     countdown
   },
   data() {

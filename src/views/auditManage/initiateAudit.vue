@@ -66,7 +66,7 @@
           <span>{{listData.list[scope.$index][item.prop]}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="100px" align="left">
+      <el-table-column label="操作" width="100px" align="left" fixed="right">
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -130,7 +130,6 @@ const defaulttableHeader = [
   {
     prop: "applyTime",
     label: "申请日期",
-    align: "right"
   },
   {
     prop: "statusText",
