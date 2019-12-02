@@ -59,6 +59,7 @@ export default {
 <style  scoped lang="less">
 .imgBox {
   box-sizing: border-box;
+  display: inline-block;  
   width: 90px;
   height: 90px;
   padding: 8px;

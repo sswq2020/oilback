@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :show-close="false" :title="title" :visible="agreedialogVisible" width="600px" append-to-body>
+  <el-dialog :show-close="false" :title="title" :visible="agreedialogVisible" width="575px" append-to-body>
     <el-form :model="agreeFormParams" ref="agreeForm" label-position="right" label-width="150px">
       <el-form-item label="协议名称" prop="agreementName" :rules="[{ required: true, message: '必选'  }]">
         <el-input v-model="agreeFormParams.agreementName" size="small"></el-input>
@@ -42,10 +42,10 @@
         <el-checkbox v-model="checked"></el-checkbox>
       </el-form-item>
       <el-form-item label="协议图片" prop="picLength" :rules="validPic()">
-        <div class="imgBox" :key="index" v-for="(url,index) in agreeFormParams.picUrlList">
+        <div class="imgBox" style="display:inline-block;margin-right:5px;" :key="index" v-for="(url,index) in agreeFormParams.picUrlList">
           <ImageBox :url="url" :onDelete="()=>{uploadDelete(index)}"></ImageBox>
         </div>
-        <div class="imgBox">
+        <div class="imgBox" style="display:inline-block;">
           <ImageUpload :onSuccess="(file)=>{this.uploadSuceess(file)}"></ImageUpload>
         </div>
         <el-input type="hidden" :value="agreeFormParams.picLength"></el-input>
