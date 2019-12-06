@@ -8,7 +8,7 @@
         </div>
       </div>
     </div>
-    <PreviewImage ref="previewimage" :dialogImageUrl="url"></PreviewImage>
+    <PreviewImage ref="previewimage" :images="urlArr"></PreviewImage>
   </div>
 </template>
 
@@ -37,6 +37,13 @@ export default {
     onDelete:{
       type: Function,
       default: ()=>{}  
+    }
+  },
+  computed: {
+    urlArr() {
+      let Arr = [];
+      Arr.push(this.url);
+      return Arr;
     }
   },
   components:{
