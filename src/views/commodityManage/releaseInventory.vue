@@ -111,29 +111,13 @@ const defaultListParams = {
 const defaulttableHeader = [
   {
     prop: "firstCatalogName",
-    label: "品名",
+    label: "品类",
     width: "150"
   },
   {
     prop: "secondCatalogName",
     label: "牌号",
-    width: "150",
-    align: "right"
-  },
-  {
-    prop: "emissionStandardEnumText",
-    label: "排放标准",
-    width: "120"
-  },
-  {
-    prop: "density",
-    label: "密度",
-    width: "120",
-    align: "right"
-  },
-  {
-    prop: "serialNumber",
-    label: "产品型号"
+    width: "150"
   },
   {
     prop: "manufacturerId_",
@@ -158,20 +142,6 @@ const defaultListData = {
   list: []
 };
 
-const rowAdapter = list => {
-  if (!list) {
-    return [];
-  }
-  if (list.length > 0) {
-    list = list.map(row => {
-      return (row = {
-        ...row,
-        emissionStandardEnumText: `${row.emissionStandardEnum.text}` || "-"
-      });
-    });
-  }
-  return list;
-};
 
 export default {
   name: "releaseInventory",
@@ -237,7 +207,7 @@ export default {
       this.isListDataLoading = false;
       switch (res.code) {
         case Dict.SUCCESS:
-          this.listData = { ...res.data, list: rowAdapter(res.data.list) };
+          this.listData = res.data;
           break;
         default:
           this.listData = { ...defaultListData };
