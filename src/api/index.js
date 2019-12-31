@@ -66,7 +66,6 @@ const goLogin = (type) => {
 			if(sessionFlag) {
 				MessageBox.confirm('您长时间未操作，会话已过期，咱们后会有期，江湖再见！','提示',{
 					confirmButtonText: '确定',
-                    type:'warning',
                     showClose:false,
                     showCancelButton:false
 				}).then(() => {
@@ -362,6 +361,38 @@ export default {
     },
 
     // #region 商品管理
+    /**
+     * @author sswq
+     * @param params
+     * @description 交割库分页
+     */
+    queryDeliveryStoreList(params) {
+        return fetch(oilURL + '/web/hyw/deliveryStore/page', params)
+    },
+    /**
+     * @author sswq
+     * @param params
+     * @description 新增交割库
+     */
+    addDeliveryStore(params) {
+        return fetch(oilURL + '/web/hyw/deliveryStore/add', params)
+    },
+    /**
+     * @author sswq
+     * @param params
+     * @description 修改交割库
+     * */
+    updateDeliveryStore(params) {
+        return fetch(oilURL + '/web/hyw/deliveryStore/update', params)
+    },
+    /**
+     * @author sswq
+     * @param params
+     * @description 修改交割库
+     * */
+    delDeliveryStore(params) {
+        return fetch(oilURL + '/web/hyw/deliveryStore/delOrResume', params)
+    },
     /**
      * @author sswq
      * @param params
