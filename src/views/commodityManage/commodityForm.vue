@@ -9,7 +9,7 @@
             <el-row>
               <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
                 <el-form-item
-                  label="品类"
+                  label="一级目录"
                   prop="firstCatalogId"
                   :rules="[{ required: true, message: '必选'  }]"
                 >
@@ -25,7 +25,7 @@
               </el-col>
               <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
                 <el-form-item
-                  label="牌号"
+                  label="二级目录"
                   prop="secondCatalogId"
                   :rules="[{ required: true, message:'必选'  }]"
                 >
@@ -39,72 +39,18 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
               <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
                 <el-form-item
-                  label="排放标准"
-                  prop="emissionStandard"
-                  :rules="[{ required: true, message: '必选' }]"
+                  label="交割库"
+                  prop="deliveryStoreId"
+                  :rules="[{ required: true, message: '必须选择一个交割库'}]"
                 >
-                  <el-select v-model="form.emissionStandard" placeholder="请选择" size="small">
-                    <el-option
-                      v-for="(item,index) in HywEmissionStandardList"
-                      :key="index"
-                      :label="item.name"
-                      :value="item.id"
-                    ></el-option>
-                  </el-select>
+                  <deliveryStoreglass @deliveryStoreSelect="_getDeliveryStoreInfo" :disabled="isEdit"></deliveryStoreglass>
+                  <el-input type="hidden" :value="form.deliveryStoreId" style="display:inline;height:0"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
-                <el-form-item
-                  label="密度(kg/m³)"
-                  prop="density"
-                  :rules="[{ required: true, message: '必填' }]"
-                >
-                  <el-input v-model="form.density"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
-                <el-form-item
-                  label="产品型号"
-                  prop="serialNumber"
-                  :rules="[{ required: true, message: '必填' }]"
-                >
-                  <el-input v-model="form.serialNumber"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
-                <el-form-item
-                  label="生产商"
-                  prop="manufacturerId"
-                  :rules="[{ required: true, message: '必填' }]"
-                >
-                  <el-select v-model="form.manufacturerId" placeholder="请选择" size="small">
-                    <el-option
-                      v-for="(item,index) in HywManufacturerList"
-                      :key="index"
-                      :label="item.label"
-                      :value="item.value"
-                    ></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
-                <el-form-item
-                  label="产地"
-                  prop="addressProvince"
-                  :rules="[{ required: true, message: '必填' }]"
-                >
-                  <el-select v-model="form.addressProvince" placeholder="请选择" size="small">
-                    <el-option
-                      v-for="(item,index) in ProvinceDataList"
-                      :key="index"
-                      :label="item.name"
-                      :value="item.name"
-                    ></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
+
 
               <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
                 <el-form-item
@@ -123,6 +69,17 @@
                         { pattern: /^[1-9][0-9]{0,3}$/,message: '只能输入1-9999'}]"
                 >
                   <el-input v-model="form.totalWeightInventory"></el-input>
+                </el-form-item>
+              </el-col>
+
+              <el-col :xl="8" :lg="12" :md="24" :sm="24" :xs="24">
+                <el-form-item
+                  label="需缴纳保证金"
+                  prop="leastPrice"
+                  :rules="validNeed(cautionMoneny)"              
+                >
+                {{form.leastPrice}}  <span style="margin-left:100px">(可用保证金余额:{{cautionMoneny}}元)</span>
+                <el-input type="hidden" :value="form.leastPrice" style="display:inline;height:0"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -157,7 +114,7 @@
                   :rules="[{ required: true, message: '必填' }]"
                 >
                   <el-radio
-                    v-for="item in HywSellStateList"
+                    v-for="item in SellStateList"
                     :key="item.id"
                     v-model="form.sellState"
                     :label="item.id"
@@ -207,15 +164,20 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
-import { classMixin, dictMixin } from "@/common/mixin.js";
+import { classMixin } from "@/common/mixin.js";
 import ImageBox from "components/ImageBox";
 import ImageUpload from "components/ImageUpload";
+import deliveryStoreglass from "components/deliveryStoreglass"
 import Dict from "util/dict.js";
 import areaData from "components/areaData.js";
 import _ from "lodash";
-import $ from "jquery";
 import { judgeAuth } from "util/util.js";
-import { _toArray_ } from "common/util.js";
+import {num2,num9999} from "util/reg.js"
+import { DICT_SELECT_ARR } from "common/util.js";
+import NP from "number-precision";
+
+
+const SellStateList = DICT_SELECT_ARR(Dict.SELL_STATE);
 
 const ProvinceDataList = areaData.map(item => {
   return {
@@ -227,23 +189,29 @@ const defualtFormParams = {
   fileId: null, // 图片上传成功后返回的id
   firstCatalogId: null,
   secondCatalogId: null,
-  emissionStandard: null,
-  density: null,
-  serialNumber: null,
-  manufacturerId: null,
-  addressProvince: null,
+  
+  deliveryStoreId:null, // 交割库Id
+  storeInventoryName:null, // 交割库名称
+  deliveryStore:null, // 交割库地址
+
   price: null,
   totalWeightInventory: null,
-  sellState: "1",
+  leastPrice : 0,
+  sellState: Dict.SELL_FOR_SALE,
   parameterList: []
 };
 
+/***系数***/
+const RATIO = 1;
+
+
 export default {
   name: "commodityForm",
-  mixins: [classMixin, dictMixin],
+  mixins: [classMixin],
   components: {
     ImageBox,
-    ImageUpload
+    ImageUpload,
+    deliveryStoreglass
   },
   data() {
     return {
@@ -257,17 +225,19 @@ export default {
       /**参数列表一般是由一牌号决定，但是编辑页面一开始进入的时候是唯一的外部触发*/
       ExternalTrigger: false,
       reservaSecondClassId: null,
-      ProvinceDataList: ProvinceDataList,
-      height: 0,
-      HywManufacturerList: []
+      ProvinceDataList,
+      SellStateList,
+      /***最低保证金**/
+      cautionMoneny:0
     };
   },
   computed: {
     ...mapState("releaseNewCommodity", ["isEdit", "commodityId"]),
+
     breadTitle() {
       return this.isEdit
         ? ["商品管理", "编辑商品"]
-        : ["商品管理", "发布新商品"];
+        : ["商品管理", "期货发布"];
     },
     auth() {
       if (this.isEdit) {
@@ -360,8 +330,7 @@ export default {
           },
           { url: this.url },
           {
-            sellStateEnum: null,
-            emissionStandardEnum: null
+            sellStateEnum: null
           }
         )
       );
@@ -377,6 +346,11 @@ export default {
     uploadDelete() {
       this.url = "#";
       this.form.fileId = null;
+    },
+    _getDeliveryStoreInfo(obj){
+        this.form.deliveryStoreId = obj.id;
+        this.form.storeInventoryName = obj.deliveryStore;
+        this.form.deliveryStore = obj.storeAddress;
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
@@ -430,16 +404,33 @@ export default {
           break;
       }
     },
-    async _getProducerSelectList() {
-      const res = await this.$api.getProducerSelectList();
+    async _cautionMoneny() {
+      const res = await this.$api.cautionMoneny();
       switch (res.code) {
         case Dict.SUCCESS:
-          this.HywManufacturerList = _toArray_(res.data);
+          this.cautionMoneny = res.data;
           break;
         default:
           this.$messageError(res.mesg);
           break;
       }
+    },
+    validNeed(cautionMoneny) {
+      return [
+        {
+          validator(rule, value, callback) {
+            if(cautionMoneny === 0) {
+              callback("可用保证金额余额为零,请充值保证金");
+            }
+            if(value) {
+              if(NP.times(value,RATIO) > Number(cautionMoneny)) {
+                callback("已超出可用保证金额度,请充值保证金,或减少发布货源量");
+              }
+            }
+            callback();
+          }
+        }
+      ];
     },
     perm() {
       this.hywGoodAdd = judgeAuth("hyw:productadd");
@@ -465,9 +456,7 @@ export default {
     this.init();
   },
   created() {
-    this._getValidList().then(() => {
-      this._getProducerSelectList();
-    });
+    this._cautionMoneny();
   },
   beforeDestroy() {
     this.setIsEdit(false);
@@ -516,7 +505,46 @@ export default {
           }
         }
       }
+    },
+    "form.price":{
+      handler(newV, oldV) {
+        const {totalWeightInventory} = this.form;
+        if(!newV){
+          this.form.leastPrice = null
+          return
+        }
+        if(!totalWeightInventory || !num9999(totalWeightInventory)) {
+          this.form.leastPrice = null
+          return
+        }
+        if (newV !== oldV && num2(newV)) {
+            this.form.leastPrice = NP.times(newV, totalWeightInventory);
+        }else {
+            this.form.leastPrice = null
+        }
+        
+      }      
+    },
+    "form.totalWeightInventory":{
+      handler(newV, oldV) {
+        const {price} = this.form;
+        if(!newV){
+          this.form.leastPrice = null
+          return
+        }
+        if(!price || !num2(price)) {
+          this.form.leastPrice = null
+          return
+        }
+        if (newV !== oldV && num9999(newV)) {
+            this.form.leastPrice = NP.times(newV, price);
+        }else {
+            this.form.leastPrice = null
+        }
+      }      
     }
+
+
   }
 };
 </script>

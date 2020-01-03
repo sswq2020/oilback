@@ -361,6 +361,15 @@ export default {
     },
 
     // #region 商品管理
+
+    /**
+     * @author sswq
+     * @param params
+     * @description 查询最低保证金
+     */
+    cautionMoneny(params) {
+        return fetch(oilURL + '/product/product/bzj', params, 'get')
+    },
     /**
      * @author sswq
      * @param params
