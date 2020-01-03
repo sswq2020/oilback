@@ -33,16 +33,26 @@ DICT.VIP_STATUS_FROZEN = 0
 DICT.VIP_STATUS_NORMAL = 1
 
 
+/**会员状态 */
+DICT.VIP_STATUS = {
+    [DICT.VIP_STATUS_NORMAL]: "正常",
+    [DICT.VIP_STATUS_FROZEN]: "禁用",
+}
+
 /**销售状态上架*/
 DICT.SELL_STATUS_ON = "0"
 /**销售状态下架*/
 DICT.SELL_STATUS_OFF = "1"
 
+/**销售状态出售中*/
+DICT.SELL_ON_SALE = "0"
+/**销售状态待售中*/
+DICT.SELL_FOR_SALE = "1"
 
-/**会员状态 */
-DICT.VIP_STATUS = {
-    [DICT.VIP_STATUS_NORMAL]: "正常",
-    [DICT.VIP_STATUS_FROZEN]: "禁用",
+/**销售状态**/
+DICT.SELL_STATE = {
+    [DICT.SELL_ON_SALE]: "出售中",
+    [DICT.SELL_FOR_SALE]: "待售中",
 }
 
 /**允许重复交易*/
