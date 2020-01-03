@@ -37,7 +37,7 @@
             <span>{{listData.list[scope.$index][item.prop]}}</span>
           </template>
         </el-table-column>
-        <el-table-column>
+        <el-table-column label="操作" fixed="right" width="100px">
           <template slot-scope="scope">
             <span @click="edit(listData.list[scope.$index])">编辑</span>
             <span @click="del(listData.list[scope.$index])">删除</span>
@@ -73,6 +73,7 @@
 </template>
 <script>
 import Dict from "util/dict.js";
+import deliveryEdit from "./deliveryEdit";
 const defaultListParams = {
   pageSize: 5,
   page: 1
@@ -88,15 +89,18 @@ const defaultListData = {
 const defaultAuditResultTableHeader = [
   {
     prop: "deliveryStore",
-    label: "名称"
+    label: "名称",
+    width:"200",
   },
   {
     prop: "storeAddress",
-    label: "地址"
+    label: "地址",
+    width: "250",
   },
   {
     prop: "storeAddressDetail",
-    label: "详细地址"
+    label: "详细地址",
+    width:"250",
   }
 ];
 
@@ -107,6 +111,9 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  components:{
+    deliveryEdit
   },
   data() {
     return {
