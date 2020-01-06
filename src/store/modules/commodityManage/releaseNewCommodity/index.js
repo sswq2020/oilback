@@ -2,7 +2,8 @@ const store = {
     namespaced: true,
     state: {
         isEdit:false,   // 默认都是新增商品的页面
-        commodityId:null // 编辑的默认商品
+        commodityId:null, // 编辑的默认商品,
+        commodityObj:Object.create(null)
     },
     mutations: {
         setIsEdit(state,payload) {
@@ -10,8 +11,10 @@ const store = {
         },
         setCommodityId(state,payload){
             state.commodityId = payload
+        },
+        setCommodityObj(state,payload){
+            state.commodityId = payload
         }
-
     },
     actions: {
 

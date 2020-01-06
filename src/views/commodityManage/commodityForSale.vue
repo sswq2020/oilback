@@ -280,7 +280,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations("releaseNewCommodity", ["setIsEdit", "setCommodityId"]),
+    ...mapMutations("releaseNewCommodity", ["setIsEdit", "setCommodityId","setCommodityObj"]),
     cancleCb(){
       this.releaseObj = Object.create(null);
       this.visible = false;
@@ -381,9 +381,10 @@ export default {
       });
     },
     GoEditOldCommodity(item) {
-      const { id } = item;
+      const { id,deliveryStore,deliveryStoreId } = item;
       this.setIsEdit(true);
       this.setCommodityId(id);
+      this.setCommodityObj({ id,deliveryStore,deliveryStoreId})
       this.$router.push({
         path: "/web/hyw/product/product/update"
       });

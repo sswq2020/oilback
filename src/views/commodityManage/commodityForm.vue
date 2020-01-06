@@ -46,7 +46,7 @@
                   prop="deliveryStoreId"
                   :rules="[{ required: true, message: '必须选择一个交割库'}]"
                 >
-                  <deliveryStoreglass @deliveryStoreSelect="_getDeliveryStoreInfo" :disabled="isEdit"></deliveryStoreglass>
+                  <deliveryStoreglass ref="deliveryStoreglass"  @deliveryStoreSelect="_getDeliveryStoreInfo" :disabled="isEdit"></deliveryStoreglass>
                   <el-input type="hidden" :value="form.deliveryStoreId" style="display:inline;height:0"></el-input>
                 </el-form-item>
               </el-col>
@@ -232,7 +232,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("releaseNewCommodity", ["isEdit", "commodityId"]),
+    ...mapState("releaseNewCommodity", ["isEdit", "commodityId","commodityObj"]),
 
     breadTitle() {
       return this.isEdit
@@ -445,6 +445,9 @@ export default {
   mounted() {
     if (this.isEdit && this.commodityId) {
       this.ExternalTrigger = true;
+      let {deliveryStore,deliveryStoreId} = this.commodityObj
+      this.form.deliveryStoreId = deliveryStoreId;
+      this.$refs.deliveryStoreglass.setDeliveryValue(deliveryStore);
       this._getClass().then(() => {
         this._getDetailCommodity(this.commodityId);
       });

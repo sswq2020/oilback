@@ -241,6 +241,9 @@ export default {
     },
     handleCurrentChange(row) {
       this.currentRow = row;
+    },
+    setDeliveryValue(value){
+      this.value = value
     }
   },
   watch: {
