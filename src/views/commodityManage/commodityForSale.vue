@@ -107,6 +107,7 @@
                   class="notyc"
                 >{{listData.list[scope.$index].firstCatalogName+listData.list[scope.$index].secondCatalogName+listData.list[scope.$index].emissionStandardEnum.text || '-'}}</span>
                 <span class="yc" v-if="listData.list[scope.$index].isYC === Dict.IS_YC">云仓</span>
+                <span class="yc" v-if="listData.list[scope.$index].isYC !== Dict.IS_YC">期货</span>
               </div>
               <div class="productNumber">商品编码:{{listData.list[scope.$index].productNumber}}</div>
             </div>
@@ -164,7 +165,7 @@
 
       <el-table-column label="操作" width="250px" align="center">
         <template slot-scope="scope">
-          <!-- <el-button type="text" @click="GoEditOldCommodity(listData.list[scope.$index])">编辑商品</el-button> -->
+          <el-button type="text"  v-if="listData.list[scope.$index].isYC !== Dict.IS_YC"   @click="GoEditOldCommodity(listData.list[scope.$index])">编辑商品</el-button>
           <el-button type="text" @click="shelves(listData.list[scope.$index])">上架</el-button>
           <el-button type="text" @click="completelyDel(listData.list[scope.$index])">删除</el-button>
         </template>
@@ -173,6 +174,9 @@
     <pricedialog
       :title="editProductName"
       :priceLoading="priceLoading"
+      :visible="priceVisible"
+      :priceObj="priceObj"
+      :cancleCb="()=>{this.priceVisible = false}"
       :confirmCb="(data)=>{this.updatePrice(data)}"
     ></pricedialog>
     <releaseInventoryModal
@@ -188,7 +192,7 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from "vuex";
+import { mapMutations } from "vuex";
 import { classMixin } from "@/common/mixin.js";
 import _ from "lodash";
 // import { judgeAuth } from "@/util/util.js";
@@ -248,13 +252,18 @@ export default {
       tableHeader: defaulttableHeader,
       showOverflowTooltip: true,
       selectedItems: [],
-      editProductName: "编辑修改",
-      priceLoading: false,
       Dict: Dict,
       /*****云仓弹窗的*****/
       visible:false,
       releaseObj:Object.create(null),
-      title:'修改'
+      title:'修改',
+
+      /*****期货弹窗的*****/
+      priceVisible:false,
+      editProductName: "编辑修改",
+      priceLoading: false, 
+      priceObj:Object.create(null) 
+
     };
   },
   computed: {
@@ -272,8 +281,6 @@ export default {
   },
   methods: {
     ...mapMutations("releaseNewCommodity", ["setIsEdit", "setCommodityId"]),
-    ...mapMutations("commodityOnSale", ["setPricedialog"]),
-    ...mapActions("commodityOnSale", ["openPriceDialog"]),
     cancleCb(){
       this.releaseObj = Object.create(null);
       this.visible = false;
@@ -365,7 +372,8 @@ export default {
       this.editProductName = `编辑商品${firstCatalogName +
         secondCatalogName +
         emissionStandardEnum.text},编码为${productNumber}`;
-      this.openPriceDialog({ id, price, totalWeightInventory });
+      this.priceObj = {id, price, totalWeightInventory};
+      this.priceVisible = true;
     },
     GoReleaseNewCommodity() {
       this.$router.push({
@@ -418,7 +426,7 @@ export default {
       switch (res.code) {
         case Dict.SUCCESS:
           this.$messageSuccess(`修改成功`);
-          this.setPricedialog(false);
+          this.priceVisible = false;
           this.getListData();
           break;
         default:
